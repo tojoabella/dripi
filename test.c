@@ -2,7 +2,7 @@
 #include <signal.h>
 #include <stdio.h>
 
-#define ledPin 0
+#define ledPin 17
 
 static int cont = 1;
 
@@ -14,7 +14,7 @@ void cleanup(int sig){
 int main(void){
 	signal(SIGINT, cleanup);
 	printf("Program is starting ... \n");	
-	wiringPiSetup();	//Initialize wiringPi.
+	wiringPiSetupGpio();	//Initialize wiringPi.
 	pinMode(ledPin, OUTPUT);//Set the pin mode
 	printf("Using pin%d\n",ledPin);	//Output information on terminal
 	
@@ -28,30 +28,3 @@ int main(void){
 	}
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
