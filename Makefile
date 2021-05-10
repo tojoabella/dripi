@@ -1,12 +1,18 @@
 CC = gcc
 
-CFLAGS = -g -Wall
+INCLUDES = 
 
-LDFLAGS = -lwiringPi
+CFLAGS = -g -Wall $(INCLUDES)
 
-test:
+LDFLAGS = -g
 
-test.o:
+LDLIBS = -lwiringPi
+
+test: pinsetup.o
+
+test.o: pinsetup.h
+
+pinsetup.o: pinsetup.h
 
 .PHONY: clean
 clean:

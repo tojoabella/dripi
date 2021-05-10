@@ -1,6 +1,7 @@
 #include <wiringPi.h>
 #include <signal.h>
 #include <stdio.h>
+#include "pinsetup.h"
 
 #define ledPin 17
 
@@ -15,7 +16,7 @@ int main(void){
 	signal(SIGINT, cleanup);
 	printf("Program is starting ... \n");	
 	wiringPiSetupGpio();	//Initialize wiringPi.
-	pinMode(ledPin, OUTPUT);//Set the pin mode
+	pinSetup(ledPin);	
 	printf("Using pin%d\n",ledPin);	//Output information on terminal
 	
 	while(cont){
