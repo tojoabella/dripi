@@ -8,7 +8,6 @@ LDLIBS = -lwiringPi
 
 ####################
 
-#TARGETS = pinsetup test buttontest
 TARGETS = pinsetup test buttontest
 OBJDIR = ./build
 
@@ -40,4 +39,4 @@ cleanobjects:
 
 .PHONY: clean
 clean:
-	rm -f *.o test buttontest ./build/*.o ./pi/parts/*.o ./pi/parts/buttontest
+	rm -f test buttontest ./build/*.o

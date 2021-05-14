@@ -8,5 +8,3 @@ OBJDIR = ../build
 
 $(OBJDIR)/pinsetup.o: pinsetup.c pinsetup.h
 	$(CC) $(CFLAGS) -c -o $@ $<
-
-#pinsetup.o: pinsetup.h
