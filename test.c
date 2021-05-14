@@ -2,7 +2,13 @@
 #include <signal.h>
 #include <stdio.h>
 
+#define ledPin 17
 static int cont = 1;
+
+void setup(){
+	pinSetup();
+	pinAssign(ledPin, "led");
+}
 
 void cleanup(int sig){
 	cont = 0;
@@ -11,11 +17,7 @@ void cleanup(int sig){
 
 int main(void){
 	signal(SIGINT, cleanup);
-	printf("Program is starting ... \n");	
-	pinSetup();
-	pinAssign(ledPin, "led");	
-	printf("Using pin%d\n",ledPin);	//Output information on terminal
-	
+	setup();	
 	while(cont){
 		digitalWrite(ledPin, HIGH);  //Make GPIO output HIGH level
 		printf("led turned on >>>\n");		//Output information on terminal
