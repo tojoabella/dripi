@@ -18,14 +18,3 @@ $(HOMEDIR)/buttontest: $(OBJDIR)/buttontest.o $(OBJDIR)/pinsetup.o
 
 $(OBJDIR)/buttontest.o: buttontest.c pinsetup.h	
 	$(CC) $(CFLAGS) -c -o $@ $<
-
-.PHONY: cleano
-cleano:
-	rm -f *.o
-
-.PHONY: clean
-clean:
-	rm -f *.o buttontest
-
-.PHONY: all
-all: clean default

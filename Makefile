@@ -33,10 +33,6 @@ buttontest:
 
 ####################
 
-.PHONY: cleanobjects
-cleanobjects:
-	rm -f *.o
-
 .PHONY: clean
 clean:
 	rm -f test buttontest ./build/*.o
