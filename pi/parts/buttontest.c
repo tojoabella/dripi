@@ -1,4 +1,4 @@
-#include "pinsetup.h"
+#include "../pinsetup.h"
 #include <signal.h>
 #include <stdio.h>
 

@@ -1,34 +1,43 @@
-TARGETS = test buttontest
-
-VPATH = pi
+VPATH = pi:build
 
 CC = gcc
-
 INCLUDES = 
 CFLAGS = -g -Wall $(INCLUDES)
-
 LDFLAGS = -g
-
 LDLIBS = -lwiringPi
 
+####################
+
+#TARGETS = pinsetup test buttontest
+TARGETS = pinsetup test buttontest
+OBJDIR = ./build
+
+####################
 
 .PHONY: default
 default: $(TARGETS)
 
-test: pinsetup.o
 
-test.o: pinsetup.h
-
-pinsetup.o: pinsetup.h
+pinsetup:
+	$(MAKE) -C ./pi
 
 
-buttontest: pinsetup.o
+test: $(OBJDIR)/test.o $(OBJDIR)/pinsetup.o
 
-buttontest.o: pinsetup.h	
+$(OBJDIR)/test.o: test.c pinsetup.h
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+
+buttontest:
+	$(MAKE) -C ./pi/parts
+
+
+####################
+
+.PHONY: cleanobjects
+cleanobjects:
+	rm -f *.o
 
 .PHONY: clean
 clean:
-	rm -f *.o test buttontest
-
-.PHONY: all
-all: clean default
+	rm -f *.o test buttontest ./build/*.o ./pi/parts/*.o ./pi/parts/buttontest

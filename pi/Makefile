@@ -1,32 +1,12 @@
-TARGETS = test buttontest
-
 CC = gcc
-
 INCLUDES = 
 CFLAGS = -g -Wall $(INCLUDES)
-
 LDFLAGS = -g
-
 LDLIBS = -lwiringPi
 
+OBJDIR = ../build
 
-.PHONY: default
-default: $(TARGETS)
+$(OBJDIR)/pinsetup.o: pinsetup.c pinsetup.h
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-test: pinsetup.o
-
-test.o: pinsetup.h
-
-pinsetup.o: pinsetup.h
-
-
-buttontest: pinsetup.o
-
-buttontest.o: pinsetup.h	
-
-.PHONY: clean
-clean:
-	rm -f *.o test buttontest
-
-.PHONY: all
-all: clean default
+#pinsetup.o: pinsetup.h
