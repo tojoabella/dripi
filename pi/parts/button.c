@@ -1,8 +1,8 @@
-#include "pi/pinsetup.h"
+#include "pinsetup.h"
 #include <signal.h>
 #include <stdio.h>
 
-#define ledPin 17
+#define button 23
 static int cont = 1;
 
 void setup(){

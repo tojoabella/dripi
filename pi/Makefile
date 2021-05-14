@@ -1,7 +1,5 @@
 TARGETS = test buttontest
 
-VPATH = pi
-
 CC = gcc
 
 INCLUDES = 
