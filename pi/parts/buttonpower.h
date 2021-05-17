@@ -1,1 +1,1 @@
-void powerCheck();
+void powerCheck(int);

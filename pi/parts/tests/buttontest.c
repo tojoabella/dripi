@@ -52,7 +52,7 @@ int main(void){
 	setup();
 	ledOn();
 	while(cont){
-		powerCheck();
+		powerCheck(buttonPower);
 		
 		currentReading = digitalRead(buttonMode);
 		if(currentReading != lastReading){
