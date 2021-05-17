@@ -1,12 +1,13 @@
 #include "../pinsetup.h"
+#include "buttonpower.h"
 #include <signal.h>
 #include <stdio.h>
 
 static int cont = 1;
 
-#define led 17
-#define button 23
-#define buttonPower 24
+int led = 17;
+int buttonMode = 23;
+int buttonPower = 24;
 
 int modeMax = 3;
 int mode = 1;
@@ -20,7 +21,8 @@ long timePress = 50;
 void setup(){
 	pinSetup();
 	pinAssign(led, "led");
-	pinAssign(button, "button");
+	pinAssign(buttonPower, "button");
+	pinAssign(buttonMode, "button");
 }
 
 void cleanup(int sig){
@@ -45,12 +47,6 @@ void ledOff(){
 	digitalWrite(led, 0);
 }
 
-void powerCheck(){
-	if (digitalRead(buttonPower)){
-		cleanup(2);
-	}
-}
-
 int main(void){
  	signal(SIGINT, cleanup);
 	setup();
@@ -58,7 +54,7 @@ int main(void){
 	while(cont){
 		powerCheck();
 		
-		currentReading = digitalRead(button);
+		currentReading = digitalRead(buttonMode);
 		if(currentReading != lastReading){
 			timeChanged = millis();
 		}
@@ -82,6 +78,5 @@ int main(void){
 		}
 		lastReading = currentReading;
 	}
-
 	return 0;
 }

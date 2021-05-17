@@ -8,13 +8,16 @@ LDLIBS = -lwiringPi
 
 OBJDIR = ../../build
 HOMEDIR = ../..
-TARGETS = $(HOMEDIR)/buttontest
+TARGETS = $(HOMEDIR)/buttontest $(OBJDIR)/buttonpower.o 
 
 .PHONY: default
 default: $(TARGETS)
 
-$(HOMEDIR)/buttontest: $(OBJDIR)/buttontest.o $(OBJDIR)/pinsetup.o
+$(HOMEDIR)/buttontest: $(OBJDIR)/buttontest.o $(OBJDIR)/pinsetup.o $(OBJDIR)/buttonpower.o
 	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-$(OBJDIR)/buttontest.o: buttontest.c pinsetup.h	
+$(OBJDIR)/buttontest.o: buttontest.c pinsetup.h buttonpower.h
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR)/buttonpower.o: buttonpower.c pinsetup.h buttonpower.h
 	$(CC) $(CFLAGS) -c -o $@ $<
