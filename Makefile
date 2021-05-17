@@ -8,7 +8,8 @@ LDLIBS = -lwiringPi
 
 ####################
 
-TARGETS = pinsetup test buttontest
+#TARGETS = pinsetup piparts test
+TARGETS = pinsetup piparts test tests
 OBJDIR = ./build
 
 ####################
@@ -16,9 +17,13 @@ OBJDIR = ./build
 .PHONY: default
 default: $(TARGETS)
 
+####################
 
 pinsetup:
 	$(MAKE) -C ./pi
+
+piparts:
+	$(MAKE) -C ./pi/parts
 
 
 test: $(OBJDIR)/test.o $(OBJDIR)/pinsetup.o
@@ -26,13 +31,12 @@ test: $(OBJDIR)/test.o $(OBJDIR)/pinsetup.o
 $(OBJDIR)/test.o: test.c pinsetup.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-
-buttontest:
-	$(MAKE) -C ./pi/parts
-
-
 ####################
 
 .PHONY: clean
 clean:
 	rm -f test buttontest ./build/*.o
+
+.PHONY: tests
+tests:
+	$(MAKE) -C ./pi/parts/tests

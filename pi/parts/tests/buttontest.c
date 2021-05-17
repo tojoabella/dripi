@@ -1,5 +1,5 @@
-#include "../pinsetup.h"
-#include "buttonpower.h"
+#include "../../pinsetup.h"
+#include "../buttonpower.h"
 #include <signal.h>
 #include <stdio.h>
 
