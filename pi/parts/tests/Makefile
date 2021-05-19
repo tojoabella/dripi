@@ -1,7 +1,7 @@
 VPATH = ../../:../
 
 CC = gcc
-INCLUDES = 
+INCLUDES = -I../.. -I..
 CFLAGS = -g -Wall $(INCLUDES)
 LDFLAGS = -g
 LDLIBS = -lwiringPi
