@@ -6,8 +6,8 @@ CFLAGS = -g -Wall $(INCLUDES)
 LDFLAGS = -g
 LDLIBS = -lwiringPi
 
-OBJDIR = ../../build
 HOMEDIR = ../..
+OBJDIR = $(HOMEDIR)/build
 TARGETS = $(OBJDIR)/buttonpower.o 
 
 .PHONY: default

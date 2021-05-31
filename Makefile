@@ -11,6 +11,7 @@ LDLIBS = -lwiringPi
 #TARGETS = pinsetup piparts test
 TARGETS = pinsetup piparts test tests
 OBJDIR = ./build
+EXECUTABLES = test buttontest
 
 ####################
 
@@ -25,8 +26,7 @@ pinsetup:
 piparts:
 	$(MAKE) -C ./pi/parts
 
-
-test: $(OBJDIR)/test.o $(OBJDIR)/pinsetup.o
+test: test.o pinsetup.o
 
 $(OBJDIR)/test.o: test.c pinsetup.h
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -35,7 +35,7 @@ $(OBJDIR)/test.o: test.c pinsetup.h
 
 .PHONY: clean
 clean:
-	rm -f test buttontest ./build/*.o
+	rm -f $(EXECUTABLES) ./build/*.o
 
 .PHONY: tests
 tests:
