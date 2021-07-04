@@ -1,0 +1,67 @@
+/* represents <html> element. use to define global vars */
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --grey: #121212;
+    --green: #199319;
+}
+
+/* applies to all page elements */
+* {
+    color: var(--fontColor);
+    font-family: helvetica;
+}
+
+body {
+    background: var(--backgroundColor);
+}
+
+.light-theme {
+    --backgroundColor: var(--white);
+    --fontColor: var(--black);
+    --btnBg: var(--black);
+    --btnFontColor: var(--white);
+}
+  
+.dark-theme {
+    --backgroundColor: var(--grey);
+    --fontColor: var(--white);
+    --btnBg: var(--white);
+    --btnFontColor: var(--black);
+}
+
+h1 {
+    text-align: center;
+}
+
+.btn {
+    background-color: #199319;
+    color: white;
+    
+    padding: 10px;
+    
+    width: 120px;
+    
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: medium;
+  }
+.btn:hover {
+background-color: #223094;
+}
+
+.btn2 {
+    position: absolute;
+    top: 20px;
+    right: 250px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: none;
+    color: var(--btnFontColor);
+    background-color: var(--btnBg);
+  }
+.btn2:focus { outline-style: none; }
