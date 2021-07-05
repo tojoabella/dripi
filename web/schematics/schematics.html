@@ -10,22 +10,35 @@
 
 
 <body class="dark-theme">
-   <!---Title and buttons-->
+   <!---Title and buttons--> <!---NEED A CONSTANT SIDE MENU INSTEAD-->
    <h1>DriPi Schematics</h1>
-   <!---<a target="_blank" class="btn" href="https://www.github.com/tojoabella/dripi">Dripi</a>-->
-   <input type="button" value="Buttons" class="btn" onclick="visitPage('test1.html');">
-   <input type="button" value="GPS" class="btn" onclick="visitPage('test1.html');">
-   <input type="button" value="LED" class="btn" onclick="visitPage('test1.html');">
+   <div>
+   <input type="button" value="Buttons" class="btn" onclick="document.getElementById('buttons').scrollIntoView();">
+   <input type="button" value="GPS" class="btn" onclick="document.getElementById('gps').scrollIntoView();">
+   <input type="button" value="LED" class="btn" onclick="document.getElementById('led').scrollIntoView();">
    <button class="btn2">Dark</button>
-   <br><br>
-      
-   <img src="hamiltonlibrary.jpg" width="400" height="500" alt="why ltspice no work on new mac"> 
-<hr>
+   </div>
 
-<div>
-   <input type="button" class="btn" onclick="visitPage('https://www.github.com/tojoabella/dripi');" value="Dripi Github">
-   <input type="button" class="btn" onclick="visitPage('./schematics/schematics.html');" value="Schematics">
-</div>
+   <br>
+
+   <!---Overall build--> <!---NEED IMAGE MAP OF LTSPICE SCHEMATIC-->
+   <div>
+      <img src="hamiltonlibrary.jpg" width="400" height="500" alt="why ltspice no work on new mac"> 
+   </div>
+
+   <!---Specific schematics-->
+   <div>
+      <p id="buttons">buttons</p>
+      <p id="gps">gps</p>
+      <p id="led">led</p>
+   </div>
+
+   <div>
+      <input type="button" class="btn" onclick="visitPageNewWindow('https://www.github.com/tojoabella/dripi');" value="Dripi Github">
+      <input type="button" class="btn" onclick="visitPageNewWindow('./schematics/schematics.html');" value="Schematics">
+   </div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 <script type="text/javascript" src="../app.js"></script>
 <noscript>You need to enable JavaScript to view the full site.</noscript>
 </body>

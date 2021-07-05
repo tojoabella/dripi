@@ -36,21 +36,19 @@ h1 {
 
 .btn {
     background-color: #199319;
-    color: white;
-    
+    color: rgb(243, 226, 226);
     padding: 10px;
-    
     width: 120px;
-    
     font-weight: bold;
     text-decoration: none;
-    cursor: pointer;
     border: none;
     font-family:Georgia, 'Times New Roman', Times, serif;
     font-size: medium;
   }
 .btn:hover {
-background-color: #223094;
+    cursor:pointer;
+    background-color: #223094;
+    color: rgb(243, 226, 226);
 }
 
 .btn2 {
@@ -65,3 +63,27 @@ background-color: #223094;
     background-color: var(--btnBg);
   }
 .btn2:focus { outline-style: none; }
+
+.container_grid_row {
+    height:250px; 
+}
+
+.container_grid_col {
+    position: relative;
+    height: 250px;
+}
+.container_tile {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    height:200px;
+    width:300px;
+    text-align: center;
+}
+.container_tile:hover {
+    cursor:pointer;
+    
+}
