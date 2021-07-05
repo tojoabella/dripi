@@ -1,4 +1,4 @@
-/*import {themeToggler} from './theme.js';*/
+/*import themeToggler from './theme.js';*/
 
 function visitPageNewWindow(link){
     window.open(link);

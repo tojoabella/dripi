@@ -1,27 +1,13 @@
-/*
-export function themeToggler() {
-    document.body.classList.toggle('dark-theme');
-    document.body.classList.toggle('light-theme');
-
-    /*
+export default function themeToggler() {
     let bodyClassName = document.body.className;
     if (bodyClassName == "light-theme") {
         this.textContent = "Dark";
-        let tileColors = document.getElementsByClassName("bg-light");
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
     }
-    else {
+    else{
         this.textContent = "Light";
-        let tileColors = document.getElementsByClassName("bg-dark");
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
     }
-    let i;
-    for (i = 0; i < tileColors.length; i++) {
-        tileColors[i].toggle("bg-dark");
-        tileColors[i].toggle("bg-light");
-    }
-    
-}
-*/
-
-export function themeToggler() {
-    console.log("hi");
 }
