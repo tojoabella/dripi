@@ -1,3 +1,4 @@
+/*GENERAL*/
 /* represents <html> element. use to define global vars */
 :root {
     --white: #ffffff;
@@ -17,6 +18,40 @@ body {
     background: var(--backgroundColor);
 }
 
+h1 {
+    text-align: center;
+    color: var(--white);
+}
+
+.inline_container {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.item_absolute_center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.item_absolute_vertically_center {
+    position: absolute;
+    top: 50%;
+    -ms-transform: translate(0%, -50%);
+    transform: translate(0%, -50%);
+}
+
+.item_relative_horizontally_center {
+    margin: auto;
+}
+
+.item_relative_right {
+    float: right;
+}
+
+/* PAGE THEMES */
 .light-theme {
     --backgroundColor: var(--white);
     --fontColor: var(--black);
@@ -33,34 +68,32 @@ body {
     --topBarColor: var(--lightgrey);
 }
 
-h1 {
-    text-align: center;
-    color: var(--white);
-}
 
+/*TOP BAR*/
 .topBar {
+    position: relative;
+    /*
     padding-top: 5px;
-    padding-bottom: 5px;
+    padding-bottom: 5px;*/
     background: var(--topBarColor);
     overflow: hidden;
     margin-bottom: 25px;
 }
 
 .topBar a {
-    float: right;
     color: #f2f2f2;
     text-align: center;
-    padding: 16px 14px;
+    padding: 16px 20px;
     text-decoration: none;
     font-size: 17px;
-  }
-  .topBar a:hover {
+}
+.topBar a:hover {
     background-color: #ddd;
     color: black;
-  }
+}
 
 
-
+/* BUTTONS */
 .btn {
     background-color: #199319;
     color: rgb(243, 226, 226);
@@ -91,6 +124,8 @@ h1 {
   }
 .btn2:focus { outline-style: none; }
 
+
+/* TILES */
 .container_grid_row {
     height:250px; 
 }
@@ -112,4 +147,16 @@ h1 {
 }
 .container_tile:hover {
     cursor:pointer;
+}
+
+/* ICONS */
+.settings_icon {
+    width: 35px;
+    height: 5px;
+    background-color: var(--white);;
+    margin: 6px 0;
+}
+.settings_icon_pos {
+    position:absolute;
+    left:90%;
 }

@@ -1,4 +1,3 @@
-
 function visitPageNewWindow(link){
     window.open(link);
 };
