@@ -13,6 +13,6 @@ function themeToggler() {
             document.body.classList.remove('dark-theme');
         }
     });
-}
+};
 
-export { themeToggler }
+themeToggler();
