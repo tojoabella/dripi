@@ -43,13 +43,14 @@ h1 {
     padding-bottom: 5px;
     background: var(--topBarColor);
     overflow: hidden;
+    margin-bottom: 25px;
 }
 
 .topBar a {
     float: right;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 14px;
+    padding: 16px 14px;
     text-decoration: none;
     font-size: 17px;
   }

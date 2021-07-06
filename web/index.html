@@ -13,7 +13,7 @@
 
 
 <body class="dark-theme">
-   <!---Title and buttons-->
+   <!---TOP BAR-->
    <div class=topBar>
       <a href="#">Log in</a>
       <a href="#">Settings</a>
@@ -21,24 +21,40 @@
    </div>
 
 
+   <!---BUTTONS-->
    <div class="container">
    <input type="button" class="btn" onclick="visitPageNewWindow('test1.html');" value="Mode">
    <br><br>
    <button class="btn2">Light</button>
 
-   <!---Modes-->
+   <!---MODES-->
    <div class="container">
       <div class="row container_grid_row justify-content-center align-items-center">
          <!--mode 1-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4 offset=2 ">
             <div class="container_tile border rounded" onclick="start">
-               mode 1
+               mode 1: major street change alerter and cache
             </div>
          </div>
          <!--mode 2-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4">
             <div class="container_tile border rounded" onclick="visitPageNewWindow('https://www.github.com/tojoabella/dripi');">
-               mode 2
+               mode 2: major city change alerter and cache
+            </div>
+         </div>
+      </div>
+
+      <div class="row container_grid_row justify-content-center align-items-center">
+         <!--mode 1-->
+         <div class="container_grid_col col-sm-12 col-md-6 col-lg-4 offset=2 ">
+            <div class="container_tile border rounded" onclick="start">
+               mode 3: street lengths
+            </div>
+         </div>
+         <!--mode 2-->
+         <div class="container_grid_col col-sm-12 col-md-6 col-lg-4">
+            <div class="container_tile border rounded" onclick="visitPageNewWindow('https://www.github.com/tojoabella/dripi');">
+               mode 4: major destinations from offramps
             </div>
          </div>
       </div>
@@ -47,13 +63,28 @@
          <!--mode 3-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4 offset=2">
             <div class="container_tile border rounded">
-               mode 3
+               mode 5: ahupua'a and moku change alerter
             </div>
          </div>
          <!--mode 4-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4">
             <div class="container_tile border rounded">
-               mode 4
+               mode 6: beach names and surf report
+            </div>
+         </div>
+      </div>
+
+      <div class="row container_grid_row justify-content-center align-items-center">
+         <!--mode 5-->
+         <div class="container_grid_col col-sm-12 col-md-6 col-lg-4 offset=2">
+            <div class="container_tile border rounded">
+               mode 7: back camera: reverse helper, curb proximity
+            </div>
+         </div>
+         <!--mode 6-->
+         <div class="container_grid_col col-sm-12 col-md-6 col-lg-4">
+            <div class="container_tile border rounded">
+               mode 8: front camera: oncoming traffic, curb proximity
             </div>
          </div>
       </div>
