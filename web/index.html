@@ -13,7 +13,7 @@
 
 
 <body class="dark-theme">
-   <!---TOP BAR-->
+   <!--TOP BAR-->
    <div class=topBar>
       <a href="#">Log in</a>
       <a href="#">Settings</a>
@@ -21,13 +21,13 @@
    </div>
 
 
-   <!---BUTTONS-->
+   <!--BUTTONS-->
    <div class="container">
    <input type="button" class="btn" onclick="visitPageNewWindow('test1.html');" value="Mode">
    <br><br>
    <button class="btn2">Light</button>
 
-   <!---MODES-->
+   <!--MODES-->
    <div class="container">
       <div class="row container_grid_row justify-content-center align-items-center">
          <!--mode 1-->
@@ -45,13 +45,13 @@
       </div>
 
       <div class="row container_grid_row justify-content-center align-items-center">
-         <!--mode 1-->
+         <!--mode 3-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4 offset=2 ">
             <div class="container_tile border rounded" onclick="start">
                mode 3: street lengths
             </div>
          </div>
-         <!--mode 2-->
+         <!--mode 4-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4">
             <div class="container_tile border rounded" onclick="visitPageNewWindow('https://www.github.com/tojoabella/dripi');">
                mode 4: major destinations from offramps
@@ -60,13 +60,13 @@
       </div>
 
       <div class="row container_grid_row justify-content-center align-items-center">
-         <!--mode 3-->
+         <!--mode 5-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4 offset=2">
             <div class="container_tile border rounded">
                mode 5: ahupua'a and moku change alerter
             </div>
          </div>
-         <!--mode 4-->
+         <!--mode 6-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4">
             <div class="container_tile border rounded">
                mode 6: beach names and surf report
@@ -75,34 +75,48 @@
       </div>
 
       <div class="row container_grid_row justify-content-center align-items-center">
-         <!--mode 5-->
+         <!--mode 7-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4 offset=2">
             <div class="container_tile border rounded">
                mode 7: back camera: reverse helper, curb proximity
             </div>
          </div>
-         <!--mode 6-->
+         <!--mode 8-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4">
             <div class="container_tile border rounded">
                mode 8: front camera: oncoming traffic, curb proximity
             </div>
          </div>
       </div>
+   <hr>
+   <p>to add to user account</p>
+      <div class="row container_grid_row justify-content-center align-items-center">
+         <!--mode 9-->
+         <div class="container_grid_col col-sm-12 col-md-6 col-lg-4 offset=2">
+            <div class="container_tile border rounded">
+               mode 9: driving history (all places visited. path in last 24)
+            </div>
+         </div>
+         <!--mode 9-->
+         <div class="container_grid_col col-sm-12 col-md-6 col-lg-4">
+            <div class="container_tile border rounded">
+               mode 10: quota for user
+            </div>
+         </div>
+      </div>
    </div>
-   
-
-
+   maybe a speed limit provider
    <!---Extra links-->
    <div>
       <hr>
       <input type="button" class="btn" onclick="visitPageNewWindow('https://www.github.com/tojoabella/dripi');" value="Dripi Github">
       <input type="button" class="btn" onclick="visitPageNewWindow('schematics/schematics.html');" value="Schematics">
    </div>
-
+   </div>
    <!---js, bootstrap imports-->
    <!---<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
-   <script type="module" src="app.js"></script>
+   <script type="module" src="./app.js"></script>
    <noscript>You need to enable JavaScript to view the full site.</noscript>
 </div>
 </body>
