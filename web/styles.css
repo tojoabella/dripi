@@ -4,6 +4,7 @@
     --black: #000000;
     --grey: #121212;
     --green: #199319;
+    --lightgrey: #181818
 }
 
 /* applies to all page elements */
@@ -21,6 +22,7 @@ body {
     --fontColor: var(--black);
     --btnBg: var(--black);
     --btnFontColor: var(--white);
+    --topBarColor: var(--lightgrey);
 }
   
 .dark-theme {
@@ -28,11 +30,35 @@ body {
     --fontColor: var(--white);
     --btnBg: var(--white);
     --btnFontColor: var(--black);
+    --topBarColor: var(--lightgrey);
 }
 
 h1 {
     text-align: center;
+    color: var(--white);
 }
+
+.topBar {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: var(--topBarColor);
+    overflow: hidden;
+}
+
+.topBar a {
+    float: right;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 14px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  .topBar a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+
 
 .btn {
     background-color: #199319;
