@@ -24,8 +24,35 @@
       <h1>DriPi: A Driving Pi</h1>
    </div>
 
-   <!--BUTTONS-->
+   <!--ACTIVE MODES BAR-->
+   <div class="sticky side_bar">
+         <p class="item_relative_horizontally_center">ACTIVE MODES </p>
+         <ul>
+            <li><a class="sidebar_element active_item" href="default.asp">a</a></li>
+            <li><a class="sidebar_element" href="news.asp">street change alerter</a></li>
+            <li><a class="sidebar_element" href="contact.asp">city change alerter</a></li>
+            <li><a class="sidebar_element" href="about.asp">street length</a></li>
+            <li><a class="sidebar_element" href="about.asp">offramp major dest</a></li>
+            <li><a class="sidebar_element" href="about.asp">ahapua'a and moku</a></li>
+            <li><a class="sidebar_element" href="about.asp">cameras</a></li>
+            <li><a class="sidebar_element" href="about.asp">driving history</a></li>
+         </ul>
+         <hr style="margin:0">
+         <p class="item_relative_horizontally_center">INACTIVE MODES </p>
+         <ul>
+            <li><a class="sidebar_element" href="default.asp">beach and surf</a></li>
+            <li><a class="sidebar_element" href="news.asp">speed limit</a></li>
+            <li><a class="sidebar_element" href="contact.asp">quota</a></li>
+            <li><a class="sidebar_element" href="about.asp">current location</a></li>
+         </ul>
+   </div>
+
+   
+   <!---->
    <div class="container">
+   <!---->
+
+   <!--BUTTONS-->
    <input type="button" class="btn" onclick="visitPageNewWindow('test1.html');" value="Mode">
    <br><br>
    <button class="btn2">Light</button>
@@ -114,8 +141,9 @@
    <!---BOTTOM LINKS-->
    <div>
       <hr>
-      <input type="button" class="btn" onclick="visitPageNewWindow('https://www.github.com/tojoabella/dripi');" value="Dripi Github">
-      <input type="button" class="btn" onclick="visitPageNewWindow('schematics/schematics.html');" value="Schematics">
+      <input type="button" class="btn active_item" onclick="visitPageNewWindow('index.html');" value="Home">
+      <input type="button" class="btn inactive_item" onclick="visitPageNewWindow('https://www.github.com/tojoabella/dripi');" value="Dripi Github">
+      <input type="button" class="btn inactive_item" onclick="visitPageNewWindow('schematics/schematics.html');" value="Schematics">
    </div>
    </div>
    <!--JS AND BOOTSTRAP IMPORTS-->
