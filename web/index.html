@@ -12,8 +12,9 @@
 </head>
 
 
+<!----- BODY ----->
 <body class="dark-theme">
-   <!--TOP BAR-->
+   <!--------- TOP BAR --------->
    <div class=topBar>
       <a class="item_relative_right" href="#">Log in</a>
       <div class="inline_container item_absolute_vertically_center settings_icon_pos" onclick="myFunction(this)">
@@ -23,41 +24,45 @@
       </div>
       <h1>DriPi: A Driving Pi</h1>
    </div>
-
-   <!--ACTIVE MODES BAR-->
-   <div class="sticky side_bar">
-         <p class="item_relative_horizontally_center">ACTIVE MODES </p>
-         <ul>
-            <li><a class="sidebar_element active_item" href="default.asp">a</a></li>
-            <li><a class="sidebar_element" href="news.asp">street change alerter</a></li>
-            <li><a class="sidebar_element" href="contact.asp">city change alerter</a></li>
-            <li><a class="sidebar_element" href="about.asp">street length</a></li>
-            <li><a class="sidebar_element" href="about.asp">offramp major dest</a></li>
-            <li><a class="sidebar_element" href="about.asp">ahapua'a and moku</a></li>
-            <li><a class="sidebar_element" href="about.asp">cameras</a></li>
-            <li><a class="sidebar_element" href="about.asp">driving history</a></li>
-         </ul>
-         <hr style="margin:0">
-         <p class="item_relative_horizontally_center">INACTIVE MODES </p>
-         <ul>
-            <li><a class="sidebar_element" href="default.asp">beach and surf</a></li>
-            <li><a class="sidebar_element" href="news.asp">speed limit</a></li>
-            <li><a class="sidebar_element" href="contact.asp">quota</a></li>
-            <li><a class="sidebar_element" href="about.asp">current location</a></li>
-         </ul>
-   </div>
+   <!--------------------------->
 
    
-   <!---->
-   <div class="container">
-   <!---->
+   <!--------- SIDE BAR: MODES-ACTIVE --------->
+   <div class="sticky side_bar">
+      <p class="item_relative_horizontally_center">ACTIVE MODES </p>
+      <ul>
+         <li><a class="sidebar_element active_item" href="default.asp">a</a></li>
+         <li><a class="sidebar_element" href="news.asp">street change alerter</a></li>
+         <li><a class="sidebar_element" href="contact.asp">city change alerter</a></li>
+         <li><a class="sidebar_element" href="about.asp">street length</a></li>
+         <li><a class="sidebar_element" href="about.asp">offramp major dest</a></li>
+         <li><a class="sidebar_element" href="about.asp">ahapua'a and moku</a></li>
+         <li><a class="sidebar_element" href="about.asp">cameras</a></li>
+         <li><a class="sidebar_element" href="about.asp">driving history</a></li>
+      </ul>
+      <hr style="margin:0">
+      <p class="item_relative_horizontally_center">INACTIVE MODES </p>
+      <ul>
+         <li><a class="sidebar_element" href="default.asp">beach and surf</a></li>
+         <li><a class="sidebar_element" href="news.asp">speed limit</a></li>
+         <li><a class="sidebar_element" href="contact.asp">quota</a></li>
+         <li><a class="sidebar_element" href="about.asp">current location</a></li>
+      </ul>
+   </div>
+   <!------------------------------------------>
 
-   <!--BUTTONS-->
-   <input type="button" class="btn" onclick="visitPageNewWindow('test1.html');" value="Mode">
-   <br><br>
-   <button class="btn2">Light</button>
+   <!--------- MAIN: TOP BUTTONS AND MODES-OVERVIEW --------->
+   <div class="main_container">
 
-   <!--MODES-->
+   <!----- BUTTONS ----->
+   <div class="btn_container">
+      <input type="button" class="btn" onclick="visitPageNewWindow('test1.html');" value="Mode">
+      <br><br>
+      <button class="btn2">Light</button>
+   </div> 
+   <!------------------->
+
+   <!----- MODES ----->
    <div class="container">
       <div class="row container_grid_row justify-content-center align-items-center">
          <!--mode 1-->
@@ -118,8 +123,8 @@
             </div>
          </div>
       </div>
-   <hr>
-   <p>to add to user account</p>
+      <hr>
+      <p>to add to user account</p>
       <div class="row container_grid_row justify-content-center align-items-center">
          <!--mode 9-->
          <div class="container_grid_col col-sm-12 col-md-6 col-lg-4 offset=2">
@@ -136,22 +141,27 @@
       </div>
    </div>
    maybe a speed limit
+   <!----------------->
 
-
-   <!---BOTTOM LINKS-->
+   <!----- BOTTOM BUTTONS ----->
    <div>
       <hr>
       <input type="button" class="btn active_item" onclick="visitPageNewWindow('index.html');" value="Home">
       <input type="button" class="btn inactive_item" onclick="visitPageNewWindow('https://www.github.com/tojoabella/dripi');" value="Dripi Github">
       <input type="button" class="btn inactive_item" onclick="visitPageNewWindow('schematics/schematics.html');" value="Schematics">
    </div>
+   <!-------------------------->
+   <br>
    </div>
-   <!--JS AND BOOTSTRAP IMPORTS-->
+   <!-------------------------------------------------------->
+
+   <!----- JS AND BOOTSTRAP IMPORTS ----->
    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
    <script type="text/JavaScript" src="./app.js"></script>
    <script type="module" src="./theme.js"></script>
    <noscript>You need to enable JavaScript to view the full site.</noscript>
-</div>
+   <!------------------------------------>
 </body>
+<!---------------->
 </html>

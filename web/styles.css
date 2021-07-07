@@ -19,6 +19,10 @@ body {
     background: var(--backgroundColor);
 }
 
+.main_container {
+    margin-top: -550px;
+}
+
 h1 {
     text-align: center;
     color: var(--white);
@@ -73,7 +77,6 @@ h1 {
     background-color: var(--blue);
 }
 
-
 /* PAGE THEMES */
 .light-theme {
     --backgroundColor: var(--white);
@@ -95,12 +98,10 @@ h1 {
 /*TOP BAR*/
 .topBar {
     position: relative;
-    /*
     padding-top: 5px;
-    padding-bottom: 5px;*/
+    padding-bottom: 5px;
     background: var(--topBarColor);
     overflow: hidden;
-    /*margin-bottom: 25px;*/
 }
 
 .topBar a {
@@ -117,11 +118,13 @@ h1 {
 
 /* SIDE BAR */
 .side_bar {
+    position:sticky;
     display: block;
-    margin: 2px;
+    margin-left: 2px;
     width: 100px;
     background: var(--blue);
 }
+
 .side_bar p{
     text-align: center;
     padding-top: 10px;
@@ -161,6 +164,10 @@ li:last-child {
 }
 
 /* BUTTONS */
+.btn_container {
+    margin-left: 10%;
+}
+
 .btn {
     color: rgb(243, 226, 226);
     padding: 10px;
