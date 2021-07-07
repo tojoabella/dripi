@@ -121,7 +121,7 @@ h1 {
     position:sticky;
     display: block;
     margin-left: 2px;
-    width: 100px;
+    width: 150px;
     background: var(--blue);
 }
 
@@ -144,7 +144,7 @@ h1 {
     display: block;
     color: var(--black);
     background-color: #dddddd;
-    padding: 2px 8px;
+    padding: 10px 8px;
     text-decoration: none;
     border-bottom:1px solid;
     border-color: var(--white);
@@ -164,8 +164,9 @@ li:last-child {
 }
 
 /* BUTTONS */
+
 .btn_container {
-    margin-left: 10%;
+    padding-left:200px;
 }
 
 .btn {
