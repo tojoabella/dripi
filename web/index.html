@@ -28,31 +28,31 @@
 
    
    <!--------- SIDE BAR: MODES-ACTIVE --------->
-   <div class="sticky side_bar">
-      <p class="item_relative_horizontally_center">ACTIVE MODES </p>
+   <label class="sticky side_bar">
+      <p class="item_relative_horizontally_center">CONTINUOUS MODES</p>
       <ul>
-         <li><a class="sidebar_element active_item" href="default.asp">a</a></li>
-         <li><a class="sidebar_element" href="news.asp">street change alerter</a></li>
-         <li><a class="sidebar_element" href="contact.asp">city change alerter</a></li>
-         <li><a class="sidebar_element" href="about.asp">street length</a></li>
-         <li><a class="sidebar_element" href="about.asp">offramp major dest</a></li>
-         <li><a class="sidebar_element" href="about.asp">ahapua'a and moku</a></li>
-         <li><a class="sidebar_element" href="about.asp">cameras</a></li>
-         <li><a class="sidebar_element" href="about.asp">driving history</a></li>
+         <li><a class="side_bar_element constant" onclick="activationToggler(this)">street change alerter</a></li>
+         <li><a class="side_bar_element constant"  onclick="activationToggler(this)">city change alerter</a></li>
+         <li><a class="side_bar_element constant"  onclick="activationToggler(this)">street length</a></li>
+         <li><a class="side_bar_element constant" onclick="activationToggler(this)">offramp major dest</a></li>
+         <li><a class="side_bar_element constant" onclick="activationToggler(this)">ahapua'a and moku</a></li>
+         <li><a class="side_bar_element constant" onclick="activationToggler(this)">cameras</a></li>
+         <li><a class="side_bar_element constant" onclick="activationToggler(this)">driving history</a></li>
       </ul>
       <hr style="margin:0">
-      <p class="item_relative_horizontally_center">INACTIVE MODES </p>
+      <p class="item_relative_horizontally_center">AT-CALL-TIME MODES</p>
       <ul>
-         <li><a class="sidebar_element" href="default.asp">beach and surf</a></li>
-         <li><a class="sidebar_element" href="news.asp">speed limit</a></li>
-         <li><a class="sidebar_element" href="contact.asp">quota</a></li>
-         <li><a class="sidebar_element" href="about.asp">current location</a></li>
+         <li><a class="side_bar_element one_time" onmousedown="colorChanger(this,'#889bac')" onmouseup="colorChanger(this, '#dddddd')">beach and surf</a></li>
+         <li><a class="side_bar_element one_time" onmousedown="colorChanger(this,'#889bac')" onmouseup="colorChanger(this, '#dddddd')">speed limit</a></li>
+         <li><a class="side_bar_element one_time" onmousedown="colorChanger(this,'#889bac')" onmouseup="colorChanger(this, '#dddddd')">quota</a></li>
+         <li><a class="side_bar_element one_time" onmousedown="colorChanger(this,'#889bac')" onmouseup="colorChanger(this, '#dddddd')">current location</a></li>
       </ul>
-   </div>
+   </label>
    <!------------------------------------------>
 
    <!--------- MAIN: TOP BUTTONS AND MODES-OVERVIEW --------->
    <div class="main_container">
+   <div class="container">
 
    <!----- TOP BUTTONS ----->
    <div class="btn_container">
@@ -60,7 +60,6 @@
       <input type="button" class="btn inactive_item" onclick="visitPageNewWindow('test1.html');" value="Mode">
       <button class="btn2">Light</button>
    </div>
-    
    <!----------------------->
 
    <!----- MODES ----->
@@ -141,8 +140,9 @@
          </div>
       </div>
    </div>
-   maybe a speed limit
-   <!----------------->
+
+   </div>
+   <!--end of bootstrap container-->
 
    <!----- BOTTOM BUTTONS ----->
    <div>
@@ -152,6 +152,7 @@
       <input type="button" class="btn inactive_item" onclick="visitPageNewWindow('schematics/schematics.html');" value="Schematics">
    </div>
    <!-------------------------->
+   
    
    <br>
    </div>

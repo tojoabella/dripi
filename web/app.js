@@ -3,5 +3,13 @@ function visitPageNewWindow(link){
 };
 
 function scrollTo(id){
-    document.getElementById('led').scrollIntoView();
+    document.getElementById(id).scrollIntoView();
+};
+
+function activationToggler(element){
+    element.classList.toggle('active_item');
+};
+
+function colorChanger(element, color){
+        element.style.backgroundColor = color;
 };
