@@ -1,4 +1,4 @@
-function themeToggler() {
+export default function themeToggler() {
     const theme = document.querySelector('.btn2');
     theme.addEventListener('click', function(){
         let bodyClassName = document.body.className;
@@ -14,5 +14,3 @@ function themeToggler() {
         }
     });
 };
-
-themeToggler();
