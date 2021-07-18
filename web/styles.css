@@ -152,23 +152,15 @@ h1 {
 }
 .side_bar_element:hover{
     cursor: pointer;
+    color: burlywood;
 }
 li:last-child {
     border-bottom: none;
-}
-.side_bar_element.constant:hover:not(.active_item) {
-    /*background-color: #555;*/
-    color: burlywood;
 }
 .side_bar_element.constant.active_item {
     background-color: var(--lightblue);
     color:burlywood;
 }
-
-.side_bar_element.one_time:hover {
-    color:burlywood;
-}
-
 /* BUTTONS */
 .btn_container {
     padding-left:100px;
