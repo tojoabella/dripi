@@ -21,32 +21,26 @@
          top_bar('DriPi: A Driving Pi');
       </script>
    </div>
-   <!--------------------------->
+   <!---------!TOP BAR --------->
    
    <!--------- SIDE BAR: MODES-ACTIVE --------->
-   <label class="sticky side_bar">
-      <p class="item_relative_horizontally_center">CONTINUOUS MODES</p>
-      <ul>
-         <li><a class="side_bar_element constant" onclick="activationToggler(this)">street change alerter</a></li>
-         <li><a class="side_bar_element constant"  onclick="activationToggler(this)">city change alerter</a></li>
-         <li><a class="side_bar_element constant"  onclick="activationToggler(this)">street length</a></li>
-         <li><a class="side_bar_element constant" onclick="activationToggler(this)">offramp major dest</a></li>
-         <li><a class="side_bar_element constant" onclick="activationToggler(this)">ahapua'a and moku</a></li>
-         <li><a class="side_bar_element constant" onclick="activationToggler(this)">cameras</a></li>
-         <li><a class="side_bar_element constant" onclick="activationToggler(this)">driving history</a></li>
-      </ul>
-      <hr style="margin:0">
-      <p class="item_relative_horizontally_center">AT-CALL-TIME MODES</p>
-      <ul>
-         <li><a class="side_bar_element one_time" onmousedown="colorChanger(this,'#889bac')" onmouseup="colorChanger(this, '#dddddd')">beach and surf</a></li>
-         <li><a class="side_bar_element one_time" onmousedown="colorChanger(this,'#889bac')" onmouseup="colorChanger(this, '#dddddd')">speed limit</a></li>
-         <li><a class="side_bar_element one_time" onmousedown="colorChanger(this,'#889bac')" onmouseup="colorChanger(this, '#dddddd')">quota</a></li>
-         <li><a class="side_bar_element one_time" onmousedown="colorChanger(this,'#889bac')" onmouseup="colorChanger(this, '#dddddd')">current location</a></li>
-      </ul>
-   </label>
-   <!------------------------------------------>
+   <label class="sticky side_bar" id="side_bar">
+      <script type="module">
+         import side_bar from './components/side_bar.js';
 
-   <!--------- MAIN: TOP BUTTONS AND MODES-OVERVIEW --------->
+         const contmodes = ["street change alerter", "city change alerter", "street length", "offramp major dest", "ahapua'a and moku", "cameras", "driving history"];
+         const cont = [{title: "CONTINUOUS MODES", elements:contmodes}];
+
+         const noncontmodes = ["beach and surf", "speed limit", "quota", "current location"];
+         const noncont = [{title: "AT-CALL-TIME MODES", elements:noncontmodes}];
+
+         let sidebar = {continuous:cont, noncontinuous:noncont}
+         side_bar(sidebar);
+      </script>
+   </label>
+   <!---------!SIDE BAR: MODES-ACTIVE --------->
+
+   <!---------!MAIN: TOP BUTTONS AND MODES-OVERVIEW --------->
    <div class="main_container">
    <div class="container">
 
@@ -56,7 +50,7 @@
       <input type="button" class="btn inactive_item" onclick="visitPageNewWindow('test1.html');" value="Mode">
       <button class="btn2">Light</button>
    </div>
-   <!----------------------->
+   <!-----!TOP BUTTONS ----->
 
    <!----- MODES ----->
    <div>
@@ -136,6 +130,7 @@
          </div>
       </div>
    </div>
+   <!-----!MODES ----->
 
    </div>
    <!--end of bootstrap container-->
@@ -147,12 +142,11 @@
       <input type="button" class="btn inactive_item" onclick="visitPageNewWindow('https://www.github.com/tojoabella/dripi');" value="Dripi Github">
       <input type="button" class="btn inactive_item" onclick="visitPageNewWindow('schematics/schematics.html');" value="Schematics">
    </div>
-   <!-------------------------->
-   
+   <!-----!BOTTOM BUTTONS ----->
    
    <br>
    </div>
-   <!-------------------------------------------------------->
+   <!---------!MAIN: TOP BUTTONS AND MODES-OVERVIEW --------->
 
    <!----- JS AND BOOTSTRAP IMPORTS ----->
       <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
@@ -160,7 +154,7 @@
    <script type="" src="./app.js"></script>
    <script type="module" src="./components/theme_toggler.js"></script>
    <noscript>You need to enable JavaScript to view the full site.</noscript>
-   <!------------------------------------>
+   <!-----!JS AND BOOTSTRAP IMPORTS ----->
 </body>
-<!---------------->
+<!-----!BODY ----->
 </html>

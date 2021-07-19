@@ -1,5 +1,5 @@
 
-
+/*
 <p>
       <b>mode button</b> 
       <br>
@@ -18,3 +18,4 @@
          <li>pressed: 3.3v -> mode button -> resistor -> gpio23</li>
       </ul>
    </p>
+*/

@@ -1,7 +1,7 @@
 export default function top_bar(title) {
-   var topBar = document.getElementById("top_bar");
+   let topBar = document.getElementById("top_bar");
    topBar.innerHTML = ('\
-   <div class=topBar>\
+   <div class=top_bar>\
      <a class="item_relative_right" href="#">Log in</a>\
      <div class="inline_container item_absolute_vertically_center settings_icon_pos" onclick="myFunction(this)">\
         <div class="settings_icon"></div>\
