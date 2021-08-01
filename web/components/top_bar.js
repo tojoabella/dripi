@@ -5,19 +5,13 @@ export default function top_bar(title) {
       <a class="item_relative_right" href="#">Log in</a>\
       \
       <div class="item_relative_right">\
-         <button class="dropbtn" onclick="myFunction()">Dropdown</button>\
-         <div class="dropdown-content" id="myDropdown">\
-            <a href="#">Link 1</a>\
-            <a href="#">Link 2</a>\
+         <button class="dropdown-btn" onclick="dropDown()">Settings</button>\
+         <div class="dropdown-content" id="top_bar_dropdown">\
+            <a href="#">Profile</a>\
+            <a href="#" class="btn2">Theme</a>\
          </div>\
       </div>\
-      <h1>' + title + '</h1>\
+      <h1 class="item_absolute_center">' + title + '</h1>\
    </div>\
    ');
 };
-
-//<div class="inline_container item_absolute_vertically_center">\
-//</div>\
-// <div class="settings_icon"></div>\
-//         <div class="settings_icon"></div>\
- //        <div class="settings_icon"></div>\

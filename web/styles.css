@@ -98,8 +98,6 @@ h1 {
 /*TOP BAR*/
 .top_bar {
     position: relative;
-    /*padding-top: 5px;
-    padding-bottom: 5px;*/
     height:65px;
     background: var(--topBarColor);
     overflow: visible;
@@ -119,7 +117,7 @@ h1 {
     background-color: var(--blue);
 }
 
-.top_bar .dropbtn {
+.top_bar .dropdown-btn {
     background: var(--topBarColor);
     color: white;
     font-size: 17px;
@@ -127,29 +125,33 @@ h1 {
     cursor: pointer;
     height:65px;
     width: 125px;
-  }
-  
-  .dropbtn:hover, .dropbtn:focus {
+}
+.dropdown-btn:hover, .dropdown-btn:focus {
     background-color: var(--blue);
-  }
+}
 
-  .dropdown-content {/* Dropdown Content (Hidden by Default) */
-      display: none;
-      position: absolute;
-      background-color: #f1f1f1;
-  }
-  
-  .dropdown-content a {/* Links inside the dropdown */
-      float: none;
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-  }
-  
-  .dropdown-content a:hover {background-color: #ddd}
-  
-  .show {display:block;}
+.dropdown-content {/* Dropdown Content (Hidden by Default) */ 
+    display: none;
+    position: absolute;
+    background-color: #dddddd;
+}
+
+.dropdown-content a {/* Links inside the dropdown */
+    display: block;
+    padding-left: 10px;
+    text-align: left;
+    height:40px;
+    color: black;
+    text-decoration: none;
+}
+.dropdown-content a:hover {
+    background-color: #dddddd;
+    color:burlywood;
+}
+.show {display:block;}
+.btn2 {
+    color:black;
+}
 
 /* SIDE BAR */
 .side_bar {
@@ -172,6 +174,7 @@ h1 {
     border-color: var(--blue);
     margin: 0;
     padding: 0;
+    list-style:none;
 }
 .side_bar_element {
     display: block;
@@ -215,20 +218,6 @@ li:last-child {
     color: rgb(243, 226, 226);
 }
 
-.btn2 {
-    position: absolute;
-    top: 20px;
-    right: 250px;
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    border: none;
-    color: var(--btnFontColor);
-    background-color: var(--btnBg);
-  }
-.btn2:focus { outline-style: none; }
-
-
 /* TILES */
 .container_grid_row {
     height:250px; 
@@ -251,16 +240,4 @@ li:last-child {
 }
 .container_tile:hover {
     cursor:pointer;
-}
-
-/* ICONS */
-.settings_icon {
-    width: 35px;
-    height: 5px;
-    background-color: var(--white);;
-    margin: 6px 0;
-}
-.item_absolute_vertically_center {
-    position:absolute;
-    left:90%;
 }

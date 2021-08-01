@@ -30,7 +30,7 @@ export default function side_bar(sideBarCategories) {
     }
 }
 
-/*homapage example
+/*homepage example
 <label class="sticky side_bar" id="side_bar">
       <p class="item_relative_horizontally_center">CONTINUOUS MODES</p>
       <ul>
