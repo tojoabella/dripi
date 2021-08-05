@@ -1,0 +1,25 @@
+{
+  "name": "dripi",
+  "version": "1.0.0",
+  "description": "a driving pi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tojoabella/dripi.git"
+  },
+  "keywords": [
+    "dripi"
+  ],
+  "author": "Tojo Abella",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tojoabella/dripi/issues"
+  },
+  "homepage": "https://github.com/tojoabella/dripi#readme",
+  "dependencies": {
+    "socket.io": "^4.1.3"
+  }
+}
