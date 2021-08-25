@@ -1,0 +1,24 @@
+{
+  "name": "dripi",
+  "version": "1.0.0",
+  "description": "Wea? Ovah dea. No worry beef curry",
+  "main": "index.js",
+  "dependencies": {
+    "jquery": "^3.6.0",
+    "socket.io": "^4.1.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tojoabella/dripi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tojoabella/dripi/issues"
+  },
+  "homepage": "https://github.com/tojoabella/dripi#readme"
+}

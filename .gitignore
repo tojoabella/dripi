@@ -3,3 +3,5 @@
 dripic/
 test
 buttontest
+node_modules
+.idea/
