@@ -57,6 +57,22 @@
     </div>
     <!-----!TOP BUTTONS ----->
 
+
+    <!----- MAP ----->
+    <div id="map"></div>
+    <script>
+      function initMap(){
+        let options = {
+          zoom: 14,
+          center: {lat: 21.2871, lng: -157.8312}
+        }
+        let map = new google.maps.Map(document.getElementById("map"), options);
+      }
+    </script>
+    <!----- !MAP ----->
+
+
+
     <!----- MODES ----->
     <div>
       <!--category 1: roads-->
@@ -229,13 +245,15 @@
 </div>
 <!---------!MAIN: TOP BUTTONS AND MODES-OVERVIEW --------->
 
-<!----- JS AND BOOTSTRAP IMPORTS ----->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
+<!----- JS ----->
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBR3urEI8Mfxrcji7c42ZcsDGUoCXwK8A&callback=initMap">
+</script>
+
 <script type="" src="./app.js"></script>
 <script type="module" src="./components/theme_toggler.js"></script>
 <noscript>You need to enable JavaScript to view the full site.</noscript>
-<!-----!JS AND BOOTSTRAP IMPORTS ----->
+<!-----!JS ----->
 </body>
 <!-----!BODY ----->
 </html>

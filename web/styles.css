@@ -173,3 +173,11 @@ h1 {
 .container_tile:hover {
     cursor:pointer;
 }
+
+
+/* map */
+#map {
+    height:400px;
+    width:60%;
+    margin: auto;
+}
