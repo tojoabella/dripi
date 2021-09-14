@@ -4,6 +4,7 @@
   "description": "Wea? Ovah dea. No worry beef curry",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.21.1",
     "jquery": "^3.6.0",
     "socket.io": "^4.1.3"
   },

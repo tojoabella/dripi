@@ -62,16 +62,28 @@
     <div id="map"></div>
     <script>
       function initMap(){
+        //map options
         let options = {
           zoom: 14,
           center: {lat: 21.2871, lng: -157.8312}
         }
-        let map = new google.maps.Map(document.getElementById("map"), options);
+        //new map
+        let map1 = new google.maps.Map(document.getElementById("map"), options);
+        //markers
+        addMarker({coords: {lat: 21.285, lng: -157.85}}, map1);
+
+        function addMarker(properties, mapNum) {
+          let marker = new google.maps.Marker(
+          {
+            position: properties.coords,
+            map: mapNum
+          });
+        }
       }
     </script>
     <!----- !MAP ----->
 
-
+    
 
     <!----- MODES ----->
     <div>
@@ -246,13 +258,26 @@
 <!---------!MAIN: TOP BUTTONS AND MODES-OVERVIEW --------->
 
 <!----- JS ----->
+<!-- MAP -->
 <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBR3urEI8Mfxrcji7c42ZcsDGUoCXwK8A&callback=initMap">
 </script>
-
+<!-- THEMETOGGLER, JS FUNCTIONS -->
 <script type="" src="./app.js"></script>
-<script type="module" src="./components/theme_toggler.js"></script>
+<script type="module" >
+  import themeToggler from './components/theme_toggler.js'; 
+  themeToggler();
+</script>
 <noscript>You need to enable JavaScript to view the full site.</noscript>
+
+<!--TEST MODES-->
+<
+<script type="module" >
+  import road_lengths from '../modes/road_lengths.js';
+  road_lengths();
+</script>
+
+
 <!-----!JS ----->
 </body>
 <!-----!BODY ----->
