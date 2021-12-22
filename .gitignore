@@ -1,6 +1,4 @@
-*.o
-*.txt
-dripic/
 test
 buttontest
 .idea/
+*.DS_Store
