@@ -1,6 +1,6 @@
 import os
-from datetime import datetime
 import googlemaps
+import road_identity
 
-gmaps = googlemaps.Client(key=os.environ.get('GOOGLE_API_KEY'))
-s
+def road_length(lat, lon):
+    street = road_identity.get_street(lat, lon)
