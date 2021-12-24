@@ -7,8 +7,23 @@ def reverse_geocode(lat, lon):
     return gmaps.reverse_geocode((lat, lon))
 
 def get_street(lat, lon):
+    """
+    https://googlemaps.github.io/google-maps-services-java/v0.1.3/javadoc/com/google/maps/model/AddressType.html
+    """
     geocodes = reverse_geocode(lat, lon)
-    potential_address = geocodes[0]['address_components']
-    street = potential_address[1]['long_name']
-    print(street)
-    return street
+    try:
+        for geocode in geocodes:
+            type = geocode['types'][0]
+            if type == 'street_address':
+                potential_address = geocode['address_components'][1]['long_name']
+                return potential_address
+            elif type == 'premise':
+                potential_address = geocode['address_components'][1]['long_name']
+                return potential_address
+            elif type == 'route':
+                potential_address = geocodes['address_components'][0]['long_name']
+                return potential_address
+    except:
+        print("the geocodes are:")
+        for i in range(len(geocodes)):
+            print(f"{i}: {geocodes[i]}")
