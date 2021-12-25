@@ -30,6 +30,3 @@ def new_points(lat, lon, distance, direction):
     new_lat  = lat  + (dy/r_earth) * (180/math.pi)
     new_lon = lon + (dx/r_earth) * (180/math.pi)/math.cos(lat*math.pi/180)
     return new_lat, new_lon
-
-
-print(new_points(21.296477, -157.855742, 30, 'SE'))

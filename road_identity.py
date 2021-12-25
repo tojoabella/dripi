@@ -21,7 +21,7 @@ def get_street(lat, lon):
                 potential_address = geocode['address_components'][1]['long_name']
                 return potential_address
             elif type == 'route':
-                potential_address = geocodes['address_components'][0]['long_name']
+                potential_address = geocode['address_components'][0]['long_name']
                 return potential_address
     except:
         print("the geocodes are:")
