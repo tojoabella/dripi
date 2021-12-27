@@ -4,6 +4,13 @@
     margin-left: 0px;
     width: 150px;
     background: var(--blue);
+    position: fixed;
+    top:9%;
+    left:0%;
+}
+
+.side_bar:hover{
+    cursor: pointer;
 }
 
 .side_bar p{

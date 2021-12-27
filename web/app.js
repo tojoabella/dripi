@@ -2,10 +2,6 @@ function visitPageNewWindow(link){
     window.open(link);
 };
 
-function activationToggler(element){
-    element.classList.toggle('active_item');
-};
-
 function colorChanger(element, color){
         element.style.backgroundColor = color;
 };
@@ -28,8 +24,3 @@ window.onclick = function(event) {
         }
     }
 }
-
-document.getElementById('modes').addEventListener('click', () => {
-    document.getElementById('side_bar').classList.toggle("d-none");
-    document.getElementById('main_container').classList.toggle("main_container");
-})
