@@ -37,7 +37,7 @@
 <!---------!TOP BAR --------->
 
 <!--------- SIDE BAR --------->
-<label class="sticky side_bar" id="side_bar">
+<label class="d-none sticky side_bar" id="side_bar">
   <p id="modes" class="item_relative_horizontally_center">MODES</p>
   <ul>
     <li><a class="side_bar_element constant" onclick="activationToggler(this)">street change alerter</a></li>
@@ -57,7 +57,7 @@
 <!---------!SIDE BAR --------->
 
 <!---------MAIN: TOP BUTTONS AND MODES-OVERVIEW --------->
-<div id="main_container" class="main_container"> 
+<div id="main_container" class=""> 
     <!----- TOP BUTTONS ----->
     <div class="text-center top-button">
       <input type="button" class="dripibtn inactive_item" onclick="visitPageNewWindow('test1.html');" value="Start">
@@ -92,42 +92,41 @@
     
 
     <!----- MODES ----->
-    <div class="container border">
+
+    <div id="modes" class="container">
       <!--category 1: roads-->
-      <div class="row">
-        <div class="categories_col0 col-sm-10 col-md-10 col-lg-11 offset-lg-1">
+      <div id="category_1" class="row">
+        <div>
           <br>
           ROADS
           <hr>
         </div>
-      </div>
-      <div class="border row modes_row">
         <!--mode 1-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 offset-lg-1">
+        <div class="col-md-auto">
           <div id="mode1" class="container_tile border rounded" onclick="start">
             Mode 1: Street Change Alerter and cache
           </div>
         </div>
         <!--mode 2-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 ">
+        <div class="col-md-auto">
           <div id="mode2" class="container_tile border rounded" onclick="start">
             Mode 2: City Change Alerter and cache
           </div>
         </div>
         <!--mode 3-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 ">
+        <div class="col-md-auto">
           <div id="mode3" class="container_tile border rounded" onclick="start">
             Mode 3: Road Length
           </div>
         </div>
         <!--mode 4-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 ">
+        <div class="col-md-auto">
           <div id="mode4" class="container_tile border rounded" onclick="start">
             Mode 4: Nearby and Intersecting Roads
           </div>
         </div>
         <!--mode 5-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 ">
+        <div class="col-md-auto">
           <div id="mode5" class="container_tile border rounded" onclick="start">
             Mode 5: Speed Limit
           </div>
@@ -135,34 +134,32 @@
       </div>
 
       <!--category 2: places-->
-      <div class="row">
-        <div class="categories_col1 col-sm-10 col-md-10 col-lg-10 offset-lg-1 ">
+      <div id="category_2" class="row">
+        <div>
           <br>
           PLACES
           <hr>
         </div>
-      </div>
-      <div class="row modes_row">
         <!--mode 6-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 offset-lg-1 ">
+        <div class="col-md-auto">
           <div id="mode6" class="container_tile border rounded" onclick="start">
             Mode 6: Major Destinations Nearby
           </div>
         </div>
         <!--mode 7-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 ">
+        <div class="col-md-auto">
           <div id="mode7" class="container_tile border rounded" onclick="start">
             Mode 7: Major Streets and Destinations from Offramps
           </div>
         </div>
         <!--mode 8-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 ">
+        <div class="col-md-auto">
           <div id="mode8" class="container_tile border rounded" onclick="start">
             Mode 8: Nearby Beaches and Surf Report
           </div>
         </div>
         <!--mode 9-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 ">
+        <div class="col-md-auto">
           <div id="mode9" class="container_tile border rounded" onclick="start">
             Mode 9: Route, Time, Length, Business from User Search
           </div>
@@ -170,22 +167,20 @@
       </div>
 
       <!--category 3: hawai'i -->
-      <div class="row">
-        <div class="categories_col2 col-sm-10 col-md-10 col-lg-10 offset-lg-1 ">
+      <div id="category_3" class="row">
+        <div>
           <br>
           KAMAʻĀINA
           <hr>
         </div>
-      </div>
-      <div class="row modes_row">
         <!--mode 10-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 offset-lg-1 ">
+        <div class="col-md-auto">
           <div id="mode10" class="container_tile border rounded">
             Mode 10: Ahupuaʻa and Moku Change Alerter
           </div>
         </div>
         <!--mode 11-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 ">
+        <div class="col-md-auto">
           <div id="mode11" class="container_tile border rounded">
             Mode 11: Major and Sacred Landmarks
           </div>
@@ -193,22 +188,20 @@
       </div>
 
       <!--category 4: cameras -->
-      <div class="row">
-        <div class="categories_col2 col-sm-10 col-md-10 col-lg-10 offset-lg-1 ">
+      <div id="category_4" class="row">
+        <div>
           <br>
           CAMERAS
           <hr>
         </div>
-      </div>
-      <div class="row modes_row">
         <!--mode 12-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 offset-lg-1 ">
+        <div class="col-md-auto">
           <div id="mode12" class="container_tile border rounded">
             Mode 12: Front Camera (oncoming traffic, curb/line proximity)
           </div>
         </div>
         <!--mode 13-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 ">
+        <div class="col-md-auto">
           <div id="mode13" class="container_tile border rounded">
             Mode 13: Rear Camera (reverse helper, curb/line proximity)
           </div>
@@ -216,22 +209,20 @@
       </div>
 
       <!--category 5: user -->
-      <div class="row">
-        <div class="categories_col2 col-sm-10 col-md-10 col-lg-10 offset-lg-1 ">
+      <div id="category_5" class="row">
+        <div>
           <br>
           USER-SPECIFIC
           <hr>
         </div>
-      </div>
-      <div class="row modes_row">
         <!--mode 14-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 offset-lg-1 ">
+        <div class="col-md-auto">
           <div id="mode14" class="container_tile border rounded">
             Mode 14: Driving History (filter day, week, all)
           </div>
         </div>
         <!--mode 15-->
-        <div class="modes_col col-sm-12 col-md-6 col-lg-2 ">
+        <div class="col-md-auto">
           <div id="mode15" class="container_tile border rounded">
             Mode 15: Quota
           </div>
