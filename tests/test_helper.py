@@ -26,7 +26,7 @@ class TestHelper(unittest.TestCase):
     
     def test_3(self):
         '''
-        D 100
+        E 100
         '''
         direction = 'E'
         distance = 100
