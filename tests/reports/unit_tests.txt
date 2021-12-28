@@ -1,0 +1,28 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.0, pytest-6.2.5, py-1.11.0, pluggy-1.0.0 -- /Users/tojo/opt/miniconda3/envs/dripienv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/tojo/Desktop/dripi/tests
+collecting ... collected 10 items
+
+test_helper.py::TestHelper::test_1 (100, 0)
+PASSED
+test_helper.py::TestHelper::test_2 (70.71067811865474, 70.71067811865474)
+PASSED
+test_helper.py::TestHelper::test_3 (0, 100)
+PASSED
+test_helper.py::TestHelper::test_4 (-70.71067811865474, 70.71067811865474)
+PASSED
+test_helper.py::TestHelper::test_5 (-100, 0)
+PASSED
+test_helper.py::TestHelper::test_6 (-70.71067811865474, -70.71067811865474)
+PASSED
+test_helper.py::TestHelper::test_7 (0, -100)
+PASSED
+test_helper.py::TestHelper::test_8 (70.71067811865474, -70.71067811865474)
+PASSED
+test_road_identity.py::TestRoadIdentity::test_1 street_adress
+PASSED
+test_road_lengths.py::TestRoadLength::test_1 street_adress
+PASSED
+
+============================== 10 passed in 0.45s ==============================

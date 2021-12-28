@@ -1,29 +1,27 @@
-import os
-import googlemaps
+from services.modes_microservice.lib.gmaps_api import GMaps
 
-gmaps = googlemaps.Client(key=os.environ.get('GOOGLE_API_KEY'))
-
-def reverse_geocode(lat, lon):
-    return gmaps.reverse_geocode((lat, lon))
-
-def get_street(lat, lon):
+def get_road(lat, lon):
     """
     https://googlemaps.github.io/google-maps-services-java/v0.1.3/javadoc/com/google/maps/model/AddressType.html
     """
-    geocodes = reverse_geocode(lat, lon)
+    geocodes = GMaps.reverse_geocode(lat, lon)
     try:
         for geocode in geocodes:
             type = geocode['types'][0]
             if type == 'street_address':
+                print('street_adress')
                 potential_address = geocode['address_components'][1]['long_name']
                 return potential_address
             elif type == 'premise':
+                print('premise')
                 potential_address = geocode['address_components'][1]['long_name']
                 return potential_address
             elif type == 'route':
+                print('route')
                 potential_address = geocode['address_components'][0]['long_name']
                 return potential_address
     except:
+        print("FAILED ROAD_IDENTITY ATTEMPT")
         print("the geocodes are:")
         for i in range(len(geocodes)):
             print(f"{i}: {geocodes[i]}")

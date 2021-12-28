@@ -1,8 +1,9 @@
 import math
 
-def new_points(lat, lon, distance, direction):
-    #https://stackoverflow.com/questions/7477003/calculating-new-longitude-latitude-from-old-n-meters
-    r_earth = 6378137
+def radius_earth():
+    return 6378137
+
+def vector_decomposition(direction, distance):
     if direction == 'N':
         dy = distance
         dx = 0
@@ -27,6 +28,7 @@ def new_points(lat, lon, distance, direction):
     elif direction == 'NW':
         dy = distance/math.sqrt(2)
         dx = -distance/math.sqrt(2)
-    new_lat  = lat  + (dy/r_earth) * (180/math.pi)
-    new_lon = lon + (dx/r_earth) * (180/math.pi)/math.cos(lat*math.pi/180)
-    return new_lat, new_lon
+    else:
+        return None
+    
+    return dy, dx
