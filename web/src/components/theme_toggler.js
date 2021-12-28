@@ -1,4 +1,4 @@
-export default function themeToggler() {
+export function theme_toggler() {
     const theme = document.querySelector('.btn2');
     theme.addEventListener('click', function(){
         let bodyClassName = document.body.className;
