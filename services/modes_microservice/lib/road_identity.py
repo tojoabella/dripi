@@ -8,7 +8,11 @@ def get_road(lat, lon):
     try:
         for geocode in geocodes:
             type = geocode['types'][0]
-            if type == 'street_address':
+            if type == 'route':
+                print('route')
+                potential_address = geocode['address_components'][0]['long_name']
+                return potential_address
+            elif type == 'street_address':
                 print('street_adress')
                 potential_address = geocode['address_components'][1]['long_name']
                 return potential_address
@@ -16,10 +20,8 @@ def get_road(lat, lon):
                 print('premise')
                 potential_address = geocode['address_components'][1]['long_name']
                 return potential_address
-            elif type == 'route':
-                print('route')
-                potential_address = geocode['address_components'][0]['long_name']
-                return potential_address
+            elif type == 'plus_code' or type == 'neighborhood' or type == 'postal_code' or type == 'locality' or type == 'administrative_area_level_1' or type == 'administrative_area_level_2' or type == 'country':
+                break
     except:
         print("FAILED ROAD_IDENTITY ATTEMPT")
         print("the geocodes are:")
