@@ -3,7 +3,7 @@ import math
 def radius_earth():
     return 6378137
 
-def vector_decomposition(direction, distance):
+def vector_decomposition(distance, direction):
     if direction == 'N':
         dy = distance
         dx = 0

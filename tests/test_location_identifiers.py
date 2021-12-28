@@ -20,6 +20,25 @@ class TestLocationIdentity(unittest.TestCase):
         expected_result = 'Kapolei'
         actual_result = locationIdentifiers.get_city(lat, lon)
         self.assertEqual(actual_result, expected_result)
+
+    def test_city_3(self):
+        '''
+        geocodes have both nanakuli and waianae.
+        seems like nanakuli is both in waianae and different area than waianae
+        '''
+        lat, lon = 21.407290, -158.138380
+        expected_result = 'Nanakuli'
+        actual_result = locationIdentifiers.get_city(lat, lon)
+        self.assertEqual(actual_result, expected_result)
+    
+    def test_city_4(self):
+        '''
+        geocodes are just waianae
+        '''
+        lat, lon = 21.407290, -158.138380
+        expected_result = 'Nanakuli'
+        actual_result = locationIdentifiers.get_city(lat, lon)
+        self.assertEqual(actual_result, expected_result)
     
     def test_neighborhood_1(self):
         lat, lon = 21.340514, -157.885905
