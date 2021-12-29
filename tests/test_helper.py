@@ -9,7 +9,7 @@ class TestHelper(unittest.TestCase):
         direction = 'N'
         distance = 100
         expected_result = (100, 0)
-        actual_result = helper.vector_decomposition(direction, distance)
+        actual_result = helper.vector_decomposition(distance, direction)
         print(actual_result)
         self.assertEqual(actual_result, expected_result)
 
@@ -20,7 +20,7 @@ class TestHelper(unittest.TestCase):
         direction = 'NE'
         distance = 100
         expected_result = (70.71067811865474, 70.71067811865474)
-        actual_result = helper.vector_decomposition(direction, distance)
+        actual_result = helper.vector_decomposition(distance, direction)
         print(actual_result)
         self.assertEqual(actual_result, expected_result)
     
@@ -31,7 +31,7 @@ class TestHelper(unittest.TestCase):
         direction = 'E'
         distance = 100
         expected_result = (0, 100)
-        actual_result = helper.vector_decomposition(direction, distance)
+        actual_result = helper.vector_decomposition(distance, direction)
         print(actual_result)
         self.assertEqual(actual_result, expected_result)
     
@@ -42,7 +42,7 @@ class TestHelper(unittest.TestCase):
         direction = 'SE'
         distance = 100
         expected_result = (-70.71067811865474, 70.71067811865474)
-        actual_result = helper.vector_decomposition(direction, distance)
+        actual_result = helper.vector_decomposition(distance, direction)
         print(actual_result)
         self.assertEqual(actual_result, expected_result)
     
@@ -53,7 +53,7 @@ class TestHelper(unittest.TestCase):
         direction = 'S'
         distance = 100
         expected_result = (-100, 0)
-        actual_result = helper.vector_decomposition(direction, distance)
+        actual_result = helper.vector_decomposition(distance, direction)
         print(actual_result)
         self.assertEqual(actual_result, expected_result)
     
@@ -64,7 +64,7 @@ class TestHelper(unittest.TestCase):
         direction = 'SW'
         distance = 100
         expected_result = (-70.71067811865474, -70.71067811865474)
-        actual_result = helper.vector_decomposition(direction, distance)
+        actual_result = helper.vector_decomposition(distance, direction)
         print(actual_result)
         self.assertEqual(actual_result, expected_result)
     
@@ -75,7 +75,7 @@ class TestHelper(unittest.TestCase):
         direction = 'W'
         distance = 100
         expected_result = (0, -100)
-        actual_result = helper.vector_decomposition(direction, distance)
+        actual_result = helper.vector_decomposition(distance, direction)
         print(actual_result)
         self.assertEqual(actual_result, expected_result)
     
@@ -86,6 +86,6 @@ class TestHelper(unittest.TestCase):
         direction = 'NW'
         distance = 100
         expected_result = (70.71067811865474, -70.71067811865474)
-        actual_result = helper.vector_decomposition(direction, distance)
+        actual_result = helper.vector_decomposition(distance, direction)
         print(actual_result)
         self.assertEqual(actual_result, expected_result)

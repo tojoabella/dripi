@@ -14,30 +14,39 @@ class TestLocationIdentity(unittest.TestCase):
 
     def test_city_2(self):
         '''
-        road type: street_adress
+        geocodes are just waianae
         '''
-        lat, lon = 21.352688, -158.079959
-        expected_result = 'Kapolei'
+        lat, lon = 21.446484, -158.170989
+        expected_result = 'Waianae'
         actual_result = locationIdentifiers.get_city(lat, lon)
         self.assertEqual(actual_result, expected_result)
 
-    def test_city_3(self):
+    def test_all_localities_1(self):
         '''
         geocodes have both nanakuli and waianae.
         seems like nanakuli is both in waianae and different area than waianae
         '''
         lat, lon = 21.407290, -158.138380
-        expected_result = 'Nanakuli'
-        actual_result = locationIdentifiers.get_city(lat, lon)
+        expected_result = ['Nānākuli', 'Waianae']
+        actual_result = locationIdentifiers.get_all_localities(lat, lon)
+        self.assertEqual(actual_result, expected_result)
+
+    def test_get_all_localities_2(self):
+        '''
+        road type: street_adress
+        '''
+        lat, lon = 21.352688, -158.079959
+        expected_result = ['Kapolei', 'Makakilo']
+        actual_result = locationIdentifiers.get_all_localities(lat, lon)
         self.assertEqual(actual_result, expected_result)
     
-    def test_city_4(self):
+    def test_all_localities_3(self):
         '''
         geocodes are just waianae
         '''
-        lat, lon = 21.407290, -158.138380
-        expected_result = 'Nanakuli'
-        actual_result = locationIdentifiers.get_city(lat, lon)
+        lat, lon = 21.446484, -158.170989
+        expected_result = ['Waianae']
+        actual_result = locationIdentifiers.get_all_localities(lat, lon)
         self.assertEqual(actual_result, expected_result)
     
     def test_neighborhood_1(self):
