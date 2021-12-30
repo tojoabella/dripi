@@ -11,7 +11,13 @@ class locationIdentifiers:
     @staticmethod
     def get_all_localities(lat, lon, printall=False):
         """
-        :return list of string current_localities:
+        get all localities
+
+        :param bool printall: whether to print all geocodes
+        :param float lat: latitude
+        :param float lon: longitude
+
+        :return list of string: all localities
         """
         geocodes = GMaps.reverse_geocode(lat, lon)
         try:
@@ -44,8 +50,12 @@ class locationIdentifiers:
         :param bool printall: whether to print all geocodes
 
         :return list current_routes:
-            if format is None: list of string (e.g. ['Farrington Highway', 'Queen Liliuokalani Freeway', 'Kamehameha Highway'])
-            if format == 'detailed': list of dict (e.g. ['Kamehameha Highway': (place_id)])
+            if format is None: 
+                list of string (e.g. ['Farrington Highway', 'Queen Liliuokalani Freeway', 'Kamehameha Highway'])
+            if format == 'detailed': 
+                list of dict (e.g. ['Kamehameha Highway': (place_id)])
+                Note: place_id is the place_id for the address that has type: ['routes']
+                currently potentially all addresses of type 'routes' for all geocodes of type 'routes' because place_id must be for a geocode with type route
         """
         geocodes = GMaps.reverse_geocode(lat, lon)
         try:
@@ -56,7 +66,6 @@ class locationIdentifiers:
                     if type == 'route' or type == 'street_address' or type == 'premise':
                         for address in geocode['address_components']:
                             if 'route' in address['types']:
-                                print(geocode)
                                 potential_address = address['long_name']
                                 if potential_address not in current_routes:
                                     current_routes.append(potential_address)
@@ -100,7 +109,6 @@ class locationIdentifiers:
                 if 'route' in geocode['types']:
                     for address in geocode['address_components']:
                         if 'route' in address['types']:
-                            print(geocode)
                             potential_address = address['long_name']
                             break
                     place_id = geocode['place_id']

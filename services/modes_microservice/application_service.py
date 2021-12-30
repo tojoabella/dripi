@@ -6,6 +6,35 @@ import services.modes_microservice.lib.road_lengths as road_lengths
 class ApplicationService(BaseApplicationService, DatabaseService):
     
     def __init__(self):
-        DatabaseService.__init__(self, database_url=database_url)
+        #DatabaseService.__init__(self, database_url=database_url)
+        pass
     
+    @staticmethod
+    def get_localities(lat, lon):
+        res = locationIdentifiers.get_all_localities(lat, lon)
+        res = {'localities': res}
+        return res
+    
+    @staticmethod
+    def get_neighborhood(lat, lon):
+        res = locationIdentifiers.get_neighborhood(lat, lon)
+        res = {'neighborhood': res}
+        return res
+    
+    @staticmethod
+    def get_road(lat, lon):
+        res = locationIdentifiers.get_neighborhood(lat, lon)
+        res = {'neighborhood': res}
+        return res
+    
+    @staticmethod
+    def get_roads(lat, lon):
+        res = locationIdentifiers.get_all_roads(lat, lon)
+        res = {'roads': res}
+        return res
+    
+    @staticmethod
+    def get_road(lat, lon):
+        res = locationIdentifiers.get_road(lat, lon)
+        return res
     

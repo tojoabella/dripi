@@ -2,8 +2,7 @@ from flask import Flask, Response, request
 from flask_cors import CORS
 import logging
 
-from services.modes_microservice.lib.location_identifiers import locationIdentifiers
-
+from services.modes_microservice.application_service import ApplicationService
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger()
@@ -17,18 +16,17 @@ def index():
     """
     a health check
     """
-    return f"""hello and welcome to dripi
-    hi"""
+    return f"""hello and welcome to dripi"""
 
-@app.route('/get_city', methods=['GET'])
-def get_city():
+@app.route('/get_localities', methods=['GET'])
+def get_localities():
     """
     get city
     """
     lat = request.args.get('lat')
     lng = request.args.get('lng')
 
-    res = locationIdentifiers.get_city(lat, lng)
+    res = ApplicationService.get_localities(lat, lng)
     if res is None:
         return "None"
     return res
@@ -41,7 +39,7 @@ def get_neighborhood():
     lat = request.args.get('lat')
     lng = request.args.get('lng')
 
-    res = locationIdentifiers.get_neighborhood(lat, lng)
+    res = ApplicationService.get_neighborhood(lat, lng)
     if res is None:
         return "None"
     return res
@@ -54,7 +52,20 @@ def get_road():
     lat = request.args.get('lat')
     lng = request.args.get('lng')
 
-    res = locationIdentifiers.get_road(lat, lng)
+    res = ApplicationService.get_road(lat, lng)
+    if res is None:
+        return "None"
+    return res
+
+@app.route('/get_roads', methods=['GET'])
+def get_roads():
+    """
+    get roads
+    """
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+
+    res = ApplicationService.get_roads(lat, lng)
     if res is None:
         return "None"
     return res
