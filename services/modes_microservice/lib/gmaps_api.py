@@ -27,3 +27,23 @@ class GMaps:
             }
         """
         return cls.gmaps.reverse_geocode((lat, lon))
+
+    @classmethod
+    def reverse_geocode_place_id(cls, place_id):
+        """
+        :return list of dictionaries:
+            {
+                'address_components': list of dictionaries: {
+                    'long_name': string
+                    'short_name': string
+                    'types': list of string
+                },
+                'formatted_address': string,
+                'geometry': dictionary,
+                'place_id': string,
+                'plus_code': string,
+                'global_code': string,
+                'types': list of string
+            }
+        """
+        return cls.gmaps.reverse_geocode(place_id)
