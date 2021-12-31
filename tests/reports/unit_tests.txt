@@ -2,38 +2,35 @@
 platform darwin -- Python 3.10.0, pytest-6.2.5, py-1.11.0, pluggy-1.0.0 -- /Users/tojo/opt/miniconda3/envs/dripienv/bin/python
 cachedir: .pytest_cache
 rootdir: /Users/tojo/Desktop/dripi/tests
-collecting ... ['Pueonani Street']
-collected 18 items
+collecting ... ['Kamehameha Highway']
+collected 27 items
 
-test_helper.py::TestHelper::test_1 (100, 0)
-PASSED
-test_helper.py::TestHelper::test_2 (70.71067811865474, 70.71067811865474)
-PASSED
-test_helper.py::TestHelper::test_3 (0, 100)
-PASSED
-test_helper.py::TestHelper::test_4 (-70.71067811865474, 70.71067811865474)
-PASSED
-test_helper.py::TestHelper::test_5 (-100, 0)
-PASSED
-test_helper.py::TestHelper::test_6 (-70.71067811865474, -70.71067811865474)
-PASSED
-test_helper.py::TestHelper::test_7 (0, -100)
-PASSED
-test_helper.py::TestHelper::test_8 (70.71067811865474, -70.71067811865474)
-PASSED
+test_helper.py::TestHelper::test_1 PASSED
+test_helper.py::TestHelper::test_2 PASSED
+test_helper.py::TestHelper::test_3 PASSED
+test_helper.py::TestHelper::test_4 PASSED
+test_helper.py::TestHelper::test_5 PASSED
+test_helper.py::TestHelper::test_6 PASSED
+test_helper.py::TestHelper::test_7 PASSED
+test_helper.py::TestHelper::test_8 PASSED
+test_helper.py::TestHelper::test_direction_finder_1 PASSED
+test_helper.py::TestHelper::test_direction_finder_2 PASSED
+test_helper.py::TestHelper::test_direction_finder_3 PASSED
+test_helper.py::TestHelper::test_direction_finder_4 PASSED
+test_helper.py::TestHelper::test_direction_finder_5 PASSED
+test_helper.py::TestHelper::test_direction_finder_6 PASSED
+test_helper.py::TestHelper::test_direction_finder_7 PASSED
+test_helper.py::TestHelper::test_direction_finder_8 PASSED
+test_helper.py::TestHelper::test_direction_finder_9 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_all_localities_1 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_all_localities_3 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_city_1 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_city_2 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_get_all_localities_2 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_neighborhood_1 PASSED
-test_location_identifiers.py::TestLocationIdentity::test_road_1 street_adress
-PASSED
-test_location_identifiers.py::TestLocationIdentity::test_road_2 premise
-PASSED
-test_location_identifiers.py::TestLocationIdentity::test_road_3 route
-PASSED
-test_road_lengths.py::TestRoadLength::test_1 street_adress
-PASSED
+test_location_identifiers.py::TestLocationIdentity::test_road_1 PASSED
+test_location_identifiers.py::TestLocationIdentity::test_road_2 PASSED
+test_location_identifiers.py::TestLocationIdentity::test_road_3 PASSED
+test_road_lengths.py::TestRoadLength::test_1 PASSED
 
-============================== 18 passed in 1.63s ==============================
+============================== 27 passed in 1.27s ==============================
