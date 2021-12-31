@@ -47,3 +47,7 @@ class GMaps:
             }
         """
         return cls.gmaps.reverse_geocode(place_id)
+    
+    @classmethod
+    def geocode(cls, address):
+        return cls.gmaps.geocode(address)
