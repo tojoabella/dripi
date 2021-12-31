@@ -28,8 +28,16 @@ class ApplicationService(BaseApplicationService, DatabaseService):
         return res
     
     @staticmethod
-    def get_roads(lat, lon):
-        res = locationIdentifiers.get_all_roads(lat, lon)
+    def get_roads(lat, lon, format):
+        if format:
+            if format == 'detailed':
+                res = locationIdentifiers.get_all_roads(lat, lon, format)
+            elif format == 'None':
+                res = locationIdentifiers.get_all_roads(lat, lon)
+            else:
+                res = "format should be None or 'detailed'"
+        else:
+            res = locationIdentifiers.get_all_roads(lat, lon)
         res = {'roads': res}
         return res
     

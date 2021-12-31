@@ -44,6 +44,21 @@ def get_neighborhood():
         return "None"
     return res
 
+@app.route('/get_roads', methods=['GET'])
+def get_roads():
+    """
+    get roads
+    """
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+    format = request.args.get('format')
+
+
+    res = ApplicationService.get_roads(lat, lng, format)
+    if res is None:
+        return "None"
+    return res
+
 @app.route('/get_road', methods=['GET'])
 def get_road():
     """
@@ -57,18 +72,6 @@ def get_road():
         return "None"
     return res
 
-@app.route('/get_roads', methods=['GET'])
-def get_roads():
-    """
-    get roads
-    """
-    lat = request.args.get('lat')
-    lng = request.args.get('lng')
-
-    res = ApplicationService.get_roads(lat, lng)
-    if res is None:
-        return "None"
-    return res
 
 if __name__ == '__main__':
     app.run(debug=True)
