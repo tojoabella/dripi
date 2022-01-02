@@ -12,7 +12,13 @@ def new_points(lat, lon, distance, direction):
     return new_lat, new_lon
 
 def road_length(lat, lon):
+    #get current road and id
     road = locationIdentifiers.get_road(lat, lon)
+    for k, v in road.items():
+        name = k
+        id = v
+    #test nearby points
+
 
 
     

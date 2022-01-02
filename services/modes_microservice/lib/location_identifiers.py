@@ -29,9 +29,9 @@ class locationIdentifiers:
             for geocode in geocodes:
                 for address in geocode['address_components']:
                     if address['types'][0] == 'locality':
-                        potential_address = address['long_name']
-                        if potential_address not in current_localities:
-                            current_localities.append(potential_address)
+                        address_name = address['long_name']
+                        if address_name not in current_localities:
+                            current_localities.append(address_name)
             return current_localities
         except:
             print("FAILED GET_ALL_LOCALITIES ATTEMPT")
@@ -66,17 +66,19 @@ class locationIdentifiers:
                     if type == 'route' or type == 'street_address' or type == 'premise':
                         for address in geocode['address_components']:
                             if 'route' in address['types']:
-                                potential_address = address['long_name']
-                                if potential_address not in current_routes:
-                                    current_routes.append(potential_address)
+                                address_name = address['long_name']
+                                if address_name not in current_routes:
+                                    current_routes.append(address_name)
             elif format == 'detailed':
                 for geocode in geocodes:
                     if 'route' in geocode['types']:
                         for address in geocode['address_components']:
                             if 'route' in address['types']:
-                                potential_address = address['long_name']
+                                address_name = address['long_name']
                                 place_id = geocode['place_id']
-                                tmp_dict = {potential_address: place_id}
+                                tmp_dict = {'name': address_name,
+                                            'id': place_id}
+                                #address_name: place_id}
                                 if tmp_dict not in current_routes:
                                     current_routes.append(tmp_dict)
             if printall:
@@ -109,10 +111,12 @@ class locationIdentifiers:
                 if 'route' in geocode['types']:
                     for address in geocode['address_components']:
                         if 'route' in address['types']:
-                            potential_address = address['long_name']
+                            address_name = address['long_name']
                             break
                     place_id = geocode['place_id']
-                    return {potential_address: place_id}
+                    return {'name': address_name,
+                            'id': place_id}
+                    #return {address_name: place_id}
         except:
             print("FAILED GET_ROAD ATTEMPT")
             print(f"the ({lat}, {lon}) the geocodes are:")
@@ -151,8 +155,8 @@ class locationIdentifiers:
         try:
             for geocode in geocodes:
                 if 'locality' in geocode['types']:
-                    potential_address = geocode['address_components'][0]['long_name']
-            return potential_address
+                    address_name = geocode['address_components'][0]['long_name']
+            return address_name
         except:
             print("FAILED GET_CITY ATTEMPT")
             print(f"the ({lat}, {lon}) the geocodes are:")
@@ -170,16 +174,16 @@ class locationIdentifiers:
                 type = geocode['types'][0]
                 if type == 'route':
                     print('route')
-                    potential_address = geocode['address_components'][0]['long_name']
-                    return potential_address
+                    address_name = geocode['address_components'][0]['long_name']
+                    return address_name
                 elif type == 'street_address':
                     print('street_adress')
-                    potential_address = geocode['address_components'][1]['long_name']
-                    return potential_address
+                    address_name = geocode['address_components'][1]['long_name']
+                    return address_name
                 elif type == 'premise':
                     print('premise')
-                    potential_address = geocode['address_components'][1]['long_name']
-                    return potential_address
+                    address_name = geocode['address_components'][1]['long_name']
+                    return address_name
                 elif type == 'plus_code' or type == 'neighborhood' or type == 'postal_code' or type == 'locality' or type == 'administrative_area_level_1' or type == 'administrative_area_level_2' or type == 'country':
                     break
         except:
@@ -206,9 +210,9 @@ class locationIdentifiers:
                 if type == 'route' or type == 'street_address' or type == 'premise':
                     for address in geocode['address_components']:
                         if 'route' in address['types']:
-                            potential_address = address['long_name']
+                            address_name = address['long_name']
                             place_id = geocode['place_id']
-                            tmp_dict = {potential_address: place_id}
+                            tmp_dict = {address_name: place_id}
                             if tmp_dict not in current_routes:
                                 current_routes.append(tmp_dict)
             return current_routes
