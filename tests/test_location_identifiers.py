@@ -60,7 +60,7 @@ class TestLocationIdentity(unittest.TestCase):
         road type: street_adress
         '''
         lat, lon = 21.321789, -157.879638
-        expected_result = {'North Nimitz Highway': 'ChIJqw2z7mduAHwRxMwx2Bitfmk'}
+        expected_result = {'name': 'North Nimitz Highway', 'id': 'ChIJqw2z7mduAHwRxMwx2Bitfmk'}
         actual_result = locationIdentifiers.get_road(lat, lon)
         self.assertEqual(actual_result, expected_result)
 
@@ -69,7 +69,7 @@ class TestLocationIdentity(unittest.TestCase):
         road type: premise
         '''
         lat, lon = 21.364855, -158.075853
-        expected_result = {'Pueonani Street': 'ChIJI72m1qNjAHwRkCTjfgwBQm4'}
+        expected_result = {'name': 'Pueonani Street', 'id': 'ChIJI72m1qNjAHwRkCTjfgwBQm4'}
         actual_result = locationIdentifiers.get_road(lat, lon)
         self.assertEqual(actual_result, expected_result)
     
@@ -78,6 +78,6 @@ class TestLocationIdentity(unittest.TestCase):
         road type: route
         '''
         lat, lon = 21.357599, -157.931699
-        expected_result = {'Queen Liliuokalani Freeway': 'ChIJiddTXWxvAHwRyvkjE7TtuWI'}
+        expected_result = {'name': 'Queen Liliuokalani Freeway', 'id': 'ChIJiddTXWxvAHwRyvkjE7TtuWI'}
         actual_result = locationIdentifiers.get_road(lat, lon)
         self.assertEqual(actual_result, expected_result)
