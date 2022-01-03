@@ -19,10 +19,8 @@ class TestHelper(unittest.TestCase):
         '''
         direction = math.pi/4
         distance = 100
-        expected_result = (70.71068, 70.71068)
+        expected_result = (71, 71)
         dy, dx = helper.vector_decomposition(distance, direction)
-        dy = round(dy, 5)
-        dx = round(dx, 5)
         self.assertEqual((dy, dx), expected_result)
     
     def test_3(self):
@@ -32,10 +30,8 @@ class TestHelper(unittest.TestCase):
         direction = 90
         distance = 100
         expected_result = (0, 100)
-        dy, dx = helper.vector_decomposition(distance, direction, dir_deg=True)
-        dy = round(dy)
-        dx = round(dx)
-        self.assertEqual((dy, dx), expected_result)
+        actual_result = helper.vector_decomposition(distance, direction, dir_deg=True)
+        self.assertEqual(actual_result, expected_result)
     
     def test_4(self):
         '''
@@ -43,11 +39,9 @@ class TestHelper(unittest.TestCase):
         '''
         direction = 135
         distance = 100
-        expected_result = (-70.71068, 70.71068)
-        dy, dx = helper.vector_decomposition(distance, direction, dir_deg=True)
-        dy = round(dy, 5)
-        dx = round(dx, 5)
-        self.assertEqual((dy, dx), expected_result)
+        expected_result = (-71, 71)
+        actual_result = helper.vector_decomposition(distance, direction, dir_deg=True)
+        self.assertEqual(actual_result, expected_result)
     
     def test_5(self):
         '''
@@ -56,10 +50,8 @@ class TestHelper(unittest.TestCase):
         direction = math.pi
         distance = 100
         expected_result = (-100, 0)
-        dy, dx = helper.vector_decomposition(distance, direction)
-        dy = round(dy, 2)
-        dx = round(dx, 2)
-        self.assertEqual((dy, dx), expected_result)
+        actual_result = helper.vector_decomposition(distance, direction)
+        self.assertEqual(actual_result, expected_result)
     
     def test_6(self):
         '''
@@ -67,11 +59,9 @@ class TestHelper(unittest.TestCase):
         '''
         direction = 5*math.pi/4
         distance = 100
-        expected_result = (-70.71, -70.71)
-        dy, dx = helper.vector_decomposition(distance, direction)
-        dy = round(dy, 2)
-        dx = round(dx, 2)
-        self.assertEqual((dy, dx), expected_result)
+        expected_result = (-71, -71)
+        actual_result = helper.vector_decomposition(distance, direction)
+        self.assertEqual(actual_result, expected_result)
     
     def test_7(self):
         '''
@@ -80,10 +70,8 @@ class TestHelper(unittest.TestCase):
         direction = 3*math.pi/2
         distance = 100
         expected_result = (0, -100)
-        dy, dx = helper.vector_decomposition(distance, direction)
-        dy = round(dy, 2)
-        dx = round(dx, 2)
-        self.assertEqual((dy, dx), expected_result)
+        actual_result = helper.vector_decomposition(distance, direction)
+        self.assertEqual(actual_result, expected_result)
     
     def test_8(self):
         '''
@@ -91,11 +79,9 @@ class TestHelper(unittest.TestCase):
         '''
         direction = 315
         distance = 100
-        expected_result = (70.71, -70.71)
-        dy, dx = helper.vector_decomposition(distance, direction, dir_deg=True)
-        dy = round(dy, 2)
-        dx = round(dx, 2)
-        self.assertEqual((dy, dx), expected_result)
+        expected_result = (71, -71)
+        actual_result = helper.vector_decomposition(distance, direction, dir_deg=True)
+        self.assertEqual(actual_result, expected_result)
     
     def test_direction_finder_1(self):
         expected_result = None
