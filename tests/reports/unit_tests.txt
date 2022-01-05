@@ -3,25 +3,8 @@ platform darwin -- Python 3.10.0, pytest-6.2.5, py-1.11.0, pluggy-1.0.0 -- /User
 cachedir: .pytest_cache
 rootdir: /Users/tojo/Desktop/dripi/tests
 collecting ... ['Kamehameha Highway']
-collected 27 items
+collected 26 items
 
-test_helper.py::TestHelper::test_1 PASSED
-test_helper.py::TestHelper::test_2 PASSED
-test_helper.py::TestHelper::test_3 PASSED
-test_helper.py::TestHelper::test_4 PASSED
-test_helper.py::TestHelper::test_5 PASSED
-test_helper.py::TestHelper::test_6 PASSED
-test_helper.py::TestHelper::test_7 PASSED
-test_helper.py::TestHelper::test_8 PASSED
-test_helper.py::TestHelper::test_direction_finder_1 PASSED
-test_helper.py::TestHelper::test_direction_finder_2 PASSED
-test_helper.py::TestHelper::test_direction_finder_3 PASSED
-test_helper.py::TestHelper::test_direction_finder_4 PASSED
-test_helper.py::TestHelper::test_direction_finder_5 PASSED
-test_helper.py::TestHelper::test_direction_finder_6 PASSED
-test_helper.py::TestHelper::test_direction_finder_7 PASSED
-test_helper.py::TestHelper::test_direction_finder_8 PASSED
-test_helper.py::TestHelper::test_direction_finder_9 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_all_localities_1 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_all_localities_3 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_city_1 PASSED
@@ -31,6 +14,22 @@ test_location_identifiers.py::TestLocationIdentity::test_neighborhood_1 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_road_1 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_road_2 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_road_3 PASSED
-test_road_lengths.py::TestRoadLength::test_1 PASSED
+test_road_lengths.py::TestRoadLength::test_direction_finder_1 PASSED
+test_road_lengths.py::TestRoadLength::test_direction_finder_2 PASSED
+test_road_lengths.py::TestRoadLength::test_direction_finder_3 PASSED
+test_road_lengths.py::TestRoadLength::test_direction_finder_4 PASSED
+test_road_lengths.py::TestRoadLength::test_direction_finder_5 PASSED
+test_road_lengths.py::TestRoadLength::test_direction_finder_6 PASSED
+test_road_lengths.py::TestRoadLength::test_direction_finder_7 PASSED
+test_road_lengths.py::TestRoadLength::test_direction_finder_8 PASSED
+test_road_lengths.py::TestRoadLength::test_direction_finder_9 PASSED
+test_road_lengths.py::TestRoadLength::test_vector_decomposition_1 PASSED
+test_road_lengths.py::TestRoadLength::test_vector_decomposition_2 PASSED
+test_road_lengths.py::TestRoadLength::test_vector_decomposition_3 PASSED
+test_road_lengths.py::TestRoadLength::test_vector_decomposition_4 PASSED
+test_road_lengths.py::TestRoadLength::test_vector_decomposition_5 PASSED
+test_road_lengths.py::TestRoadLength::test_vector_decomposition_6 PASSED
+test_road_lengths.py::TestRoadLength::test_vector_decomposition_7 PASSED
+test_road_lengths.py::TestRoadLength::test_vector_decomposition_8 PASSED
 
-============================== 27 passed in 1.22s ==============================
+============================== 26 passed in 1.22s ==============================

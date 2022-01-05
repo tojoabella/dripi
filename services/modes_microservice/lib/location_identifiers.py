@@ -98,7 +98,8 @@ class locationIdentifiers:
 
         :return dict: 
             {
-                (road_name): (place_id)
+             'name': road_name,
+             'id': place_id
             }
         """
         geocodes = GMaps.reverse_geocode(lat, lon)
