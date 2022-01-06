@@ -1,5 +1,4 @@
 import unittest
-from unittest.case import expectedFailure
 from services.modes_microservice.lib.location_identifiers import locationIdentifiers
 
 class TestLocationIdentity(unittest.TestCase):
