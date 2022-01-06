@@ -11,6 +11,8 @@ class GMaps:
     @classmethod
     def reverse_geocode(cls, lat, lon):
         """
+        from a lat/lng point to a list of geocodes for that point
+
         :return list of dictionaries:
             {
                 'address_components': list of dictionaries: {
@@ -31,6 +33,8 @@ class GMaps:
     @classmethod
     def reverse_geocode_place_id(cls, place_id):
         """
+        from a place_id to its geocode (single geocode in list)
+
         :return list of dictionaries:
             {
                 'address_components': list of dictionaries: {
@@ -50,4 +54,24 @@ class GMaps:
     
     @classmethod
     def geocode(cls, address):
+        """
+        from an address to a geocode
+
+        :param string address: a route. ie. Queen Liliuokalani Freeway
+
+        :return : a geocode of that address
+        """
         return cls.gmaps.geocode(address)
+
+    
+    @classmethod
+    def snap_to_roads(cls, points):
+        """
+        :param list of tuples of floats points:
+            e.g. [(21.529143, -158.039847), (21.545911, -158.045314)]
+        """
+        return cls.gmaps.snap_to_roads(points)
+    
+
+li = [(21.529143, -158.039847), (21.545911, -158.045314)]
+print(GMaps.snap_to_roads(li))

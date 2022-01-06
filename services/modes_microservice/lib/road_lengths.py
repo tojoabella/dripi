@@ -6,9 +6,9 @@ def vector_decomposition(distance, direction, dir_deg = False):
     """
     given a distance and a direction, get dx and dy
 
-    :param direction: angle from north clockwise
-    :param distance: in meters
-    :param dir_deg: direction given in degrees (over radians)
+    :param numerical direction: angle from north clockwise
+    :param numerical distance: in meters
+    :param bool dir_deg: direction given in degrees (over radians)
 
     :return tuple of int:
         dy: change in meters north
@@ -42,6 +42,65 @@ def new_points(lat, lon, distance, direction, dir_deg = False):
     new_lat  = lat  + (dy/r_earth) * (180/math.pi)
     new_lon = lon + (dx/r_earth) * (180/math.pi)/math.cos(lat*math.pi/180)
     return new_lat, new_lon
+
+def direction_finder_rad(lat1, lon1, lat2, lon2):
+    """
+    given point1 and point2, get the direction from point1 to point2
+
+    :param numerical lat1: latitude of point1
+    :param numerical lon1: longitude of point1
+    :param numerical lat2: latitude of point2
+    :param numerical lon2: longitude of point2
+
+    :return numerical rad: angle in radians clockwise from north
+    """
+    dy = lat2 - lat1
+    dx = lon2 - lon1
+    #undefined when dy is 0
+    if dy == 0 and dx == 0:
+        return None
+    elif dy == 0 and dx > 0:
+        return math.pi/2
+    elif dy < 0 and dx == 0:
+        return math.pi
+    elif dy == 0 and dx < 0:
+        return 3*math.pi/2
+    rad = math.atan(dx/dy)
+    #quadrants
+    if dy < 0 and dx < 0:
+        rad = math.pi + rad
+    elif dy < 0 and dx > 0:
+        rad = math.pi + rad
+    elif dy > 0 and dx < 0:
+        rad = 2*math.pi + rad
+    return rad
+
+
+def direction_finder_deg(lat1, lon1, lat2, lon2):
+    """
+    degrees from north, clockwise
+    """
+    dy = lat2 - lat1
+    dx = lon2 - lon1
+    #undefined when dy is 0
+    if dy == 0 and dx == 0:
+        return None
+    elif dy == 0 and dx > 0:
+        return 90
+    elif dy < 0 and dx == 0:
+        return 180
+    elif dy == 0 and dx < 0:
+        return 270
+    rad = math.atan(dx/dy)
+    deg = helper.radians_to_degrees(rad)
+    #quadrants
+    if dy < 0 and dx < 0:
+        deg = 180 + deg
+    elif dy < 0 and dx > 0:
+        deg = 180 + deg
+    elif dy > 0 and dx < 0:
+        deg = 360 + deg
+    return deg
 
 def road_length(lat, lon):
     #static
