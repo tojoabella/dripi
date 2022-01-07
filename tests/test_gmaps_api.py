@@ -11,3 +11,4 @@ class TestGMaps(unittest.TestCase):
                             ]
         actual_result = GMaps.snap_to_roads(li)
         self.assertEqual(actual_result, expected_result)
+    

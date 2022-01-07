@@ -1,5 +1,7 @@
 import math
 from services.modes_microservice.lib.location_identifiers import locationIdentifiers
+from services.modes_microservice.lib.location_identifiers import GMaps
+
 import services.modes_microservice.lib.helper as helper
 
 def vector_decomposition(distance, direction, dir_deg = False):
@@ -22,7 +24,7 @@ def vector_decomposition(distance, direction, dir_deg = False):
     dy = round(dy)
     return dy, dx
 
-def new_points(lat, lon, distance, direction, dir_deg = False):
+def new_point(lat, lon, distance, direction, dir_deg = False):
     """
     given a point, a distance, and a direction, get a new point
 
@@ -102,6 +104,34 @@ def direction_finder_deg(lat1, lon1, lat2, lon2):
         deg = 360 + deg
     return deg
 
+
+def road_attempt(lat, lon, road_name, distance, direction, attempts=8):
+    current_points = [(lat, lon)]
+    denominator = attempts/2
+    for attempt in range(0, attempts):
+        #get attempt direction, then attempt point
+        if attempt%2 == 0:
+            numerator = (attempts - attempt/2)*math.pi
+        else:
+            numerator = (int(attempt/2) + 1)*math.pi
+        dir_attempt = direction + numerator/denominator
+        point_attempt = new_point(lat, lon, distance, dir_attempt)
+        current_points.append(point_attempt)
+        snap_results = GMaps.snap_to_roads(current_points)
+        point_attempt_result = snap_results[-1]
+        point_attempt_result_id = point_attempt_result['placeId']
+        point_attempt_result_geocode = GMaps.reverse_geocode_place_id(point_attempt_result_id)[0]
+        point_attempt_result_name = None
+        for address in point_attempt_result_geocode['address_components']:
+            if 'route' in address['types']:
+                point_attempt_result_name = address['long_name']
+        
+        if point_attempt_result_name:
+            if point_attempt_result_name == road_name:
+                return point_attempt_result
+        
+    return None
+
 def road_length(lat, lon):
     #static
     distance = 25
@@ -111,12 +141,50 @@ def road_length(lat, lon):
     road_name = road['name']
     id = road['id']
 
-    current_points = []
-    found_new_point = False
-    #snap nearby points and see if its in the same road
-    for i in range(0, 8):
-        direction = i*math.pi/4
-        new_lat, new_lon = new_points(lat, lon, distance, direction)
-        #snap points to new road
+    #instantiate
+    direction = 0
+    road_points = [(lat, lon)]
+    queue = [(lat, lon, direction)] #points to be explored
+    ids = [id]
+    directions = []
 
-        #if point's id is same as current road's id, add the point to current_points. get the point's direction. test the opposite direction
+    #get initial directions
+    initial = road_attempt(lat, lon, road_name, distance, 0)
+    if initial:
+        initial_lat = initial['location']['latitude']
+        initial_lon = initial['location']['longitude']
+        direction = direction_finder_rad(initial_lat, initial_lon, lat, lon)
+        queue.append((initial_lat, initial_lon, direction))
+        road_points.append((initial_lat, initial_lon))
+
+    initial_2 = road_attempt(lat, lon, road_name, distance, -direction)
+    if initial_2:
+        initial_lat = initial_2['location']['latitude']
+        initial_lon = initial_2['location']['longitude']
+        direction2 = direction_finder_rad(initial_lat, initial_lon, lat, lon)
+        if direction2 != direction:
+            queue.append(initial_lat, initial_lon, direction2)
+            road_points.append((initial_lat, initial_lon))
+
+    #snap nearby points and see if its in the same road
+    while queue: 
+        lat, lon, dir = queue.pop(-1)
+        #attempts
+        attempt = road_attempt(lat, lon, road_name, distance, dir)
+        if attempt:           
+            #append to road_points
+            attempt_lat = attempt['location']['latitude']
+            attempt_lon = attempt['location']['longitude']
+            road_points.append((attempt_lat, attempt_lon))
+
+            #update direction and append to directions
+            direction = direction_finder_rad(attempt_lat, attempt_lon, lat, lon)
+            directions.append(direction)
+
+            #append to ids
+            ids.append(attempt['placeId'])
+
+            #append to queue
+            queue.append(attempt_lat, attempt_lon, direction)
+
+            
