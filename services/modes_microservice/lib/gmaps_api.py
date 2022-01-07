@@ -72,7 +72,8 @@ class GMaps:
         """
         return cls.gmaps.snap_to_roads(points)
     
-
+'''
 li = [(21.529143, -158.039847), (21.545911, -158.045314)]
 print(GMaps.snap_to_roads(li))
 print(GMaps.reverse_geocode_place_id('ChIJz8N9dChcAHwRcfV5HGWhU2g'))
+'''

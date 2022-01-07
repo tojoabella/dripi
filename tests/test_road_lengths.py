@@ -90,40 +90,40 @@ class TestRoadLength(unittest.TestCase):
     
     def test_direction_finder_2(self):
         expected_result = 0.0
-        actual_result = road_lengths.direction_finder_deg(0, 0, 1, 0)
+        actual_result = road_lengths.direction_finder_deg(1, 0, 0, 0)
         self.assertEqual(actual_result, expected_result)
     
     def test_direction_finder_3(self):
         expected_result = 45
-        actual_result = road_lengths.direction_finder_deg(0, 0, 1, 1)
+        actual_result = road_lengths.direction_finder_deg(1,1,0,0)
         self.assertEqual(actual_result, expected_result)
     
     def test_direction_finder_4(self):
         expected_result = 90
-        actual_result = road_lengths.direction_finder_deg(0, 0, 0, 1)
+        actual_result = road_lengths.direction_finder_deg(0,1,0,0)
         self.assertEqual(actual_result, expected_result)
     
     def test_direction_finder_5(self):
         expected_result = 135
-        actual_result = road_lengths.direction_finder_deg(0, 0, -1, 1)
+        actual_result = road_lengths.direction_finder_deg(-1, 1,0,0)
         self.assertEqual(actual_result, expected_result)
 
     def test_direction_finder_6(self):
         expected_result = 180
-        actual_result = road_lengths.direction_finder_deg(0, 0, -1, 0)
+        actual_result = road_lengths.direction_finder_deg(-1, 0,0,0)
         self.assertEqual(actual_result, expected_result)
     
     def test_direction_finder_7(self):
         expected_result = 225
-        actual_result = road_lengths.direction_finder_deg(0, 0, -1, -1)
+        actual_result = road_lengths.direction_finder_deg(-1, -1,0,0)
         self.assertEqual(actual_result, expected_result)
 
     def test_direction_finder_8(self):
         expected_result = 270
-        actual_result = road_lengths.direction_finder_deg(0, 0, 0, -1)
+        actual_result = road_lengths.direction_finder_deg(0, -1,0,0)
         self.assertEqual(actual_result, expected_result)
 
     def test_direction_finder_9(self):
         expected_result = 315
-        actual_result = road_lengths.direction_finder_deg(0, 0, 1, -1)
+        actual_result = road_lengths.direction_finder_deg(1, -1,0,0)
         self.assertEqual(actual_result, expected_result)

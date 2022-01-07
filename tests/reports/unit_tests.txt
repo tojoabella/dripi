@@ -2,9 +2,9 @@
 platform darwin -- Python 3.10.0, pytest-6.2.5, py-1.11.0, pluggy-1.0.0 -- /Users/tojo/opt/miniconda3/envs/dripienv/bin/python
 cachedir: .pytest_cache
 rootdir: /Users/tojo/Desktop/dripi/tests
-collecting ... ['Kamehameha Highway']
-collected 26 items
+collecting ... collected 27 items
 
+test_gmaps_api.py::TestGMaps::test_snap_to_roads PASSED
 test_location_identifiers.py::TestLocationIdentity::test_all_localities_1 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_all_localities_3 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_city_1 PASSED
@@ -32,4 +32,4 @@ test_road_lengths.py::TestRoadLength::test_vector_decomposition_6 PASSED
 test_road_lengths.py::TestRoadLength::test_vector_decomposition_7 PASSED
 test_road_lengths.py::TestRoadLength::test_vector_decomposition_8 PASSED
 
-============================== 26 passed in 1.22s ==============================
+============================== 27 passed in 2.62s ==============================

@@ -45,7 +45,7 @@ def new_point(lat, lon, distance, direction, dir_deg = False):
     new_lon = lon + (dx/r_earth) * (180/math.pi)/math.cos(lat*math.pi/180)
     return new_lat, new_lon
 
-def direction_finder_rad(lat1, lon1, lat2, lon2):
+def direction_finder_rad(lat2, lon2, lat1, lon1):
     """
     given point1 and point2, get the direction from point1 to point2
 
@@ -78,7 +78,7 @@ def direction_finder_rad(lat1, lon1, lat2, lon2):
     return rad
 
 
-def direction_finder_deg(lat1, lon1, lat2, lon2):
+def direction_finder_deg(lat2, lon2, lat1, lon1):
     """
     degrees from north, clockwise
     """
@@ -104,6 +104,11 @@ def direction_finder_deg(lat1, lon1, lat2, lon2):
         deg = 360 + deg
     return deg
 
+def distance_calculator(lat2, lon2, lat1, lon1):
+    dy = lat2 - lat1
+    dx = lon2 - lon1
+    return math.sqrt(dy**2 + dx**2)
+
 
 def road_attempt(lat, lon, road_name, distance, direction, attempts=8):
     current_points = [(lat, lon)]
@@ -119,12 +124,16 @@ def road_attempt(lat, lon, road_name, distance, direction, attempts=8):
         current_points.append(point_attempt)
         snap_results = GMaps.snap_to_roads(current_points)
         point_attempt_result = snap_results[-1]
+        distance_point_attempt = distance_calculator(point_attempt_result['location']['latitude'], point_attempt_result['location']['longitude'], lat, lon)
+        if distance_point_attempt < 5:
+            continue
         point_attempt_result_id = point_attempt_result['placeId']
         point_attempt_result_geocode = GMaps.reverse_geocode_place_id(point_attempt_result_id)[0]
         point_attempt_result_name = None
         for address in point_attempt_result_geocode['address_components']:
             if 'route' in address['types']:
                 point_attempt_result_name = address['long_name']
+                break
         
         if point_attempt_result_name:
             if point_attempt_result_name == road_name:
@@ -163,7 +172,7 @@ def road_length(lat, lon):
         initial_lon = initial_2['location']['longitude']
         direction2 = direction_finder_rad(initial_lat, initial_lon, lat, lon)
         if direction2 != direction:
-            queue.append(initial_lat, initial_lon, direction2)
+            queue.append((initial_lat, initial_lon, direction2))
             road_points.append((initial_lat, initial_lon))
 
     #snap nearby points and see if its in the same road
@@ -185,6 +194,7 @@ def road_length(lat, lon):
             ids.append(attempt['placeId'])
 
             #append to queue
-            queue.append(attempt_lat, attempt_lon, direction)
+            queue.append((attempt_lat, attempt_lon, direction))
 
-            
+
+road_length(21.364075, -158.077205)

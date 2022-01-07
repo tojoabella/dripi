@@ -223,5 +223,3 @@ class locationIdentifiers:
             for i in range(len(geocodes)):
                 print(f"{i}: {geocodes[i]}")         
 
-li = locationIdentifiers.get_all_roads(21.390231, -157.961168)
-print(li)
