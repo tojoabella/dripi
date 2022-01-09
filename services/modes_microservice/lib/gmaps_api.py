@@ -70,7 +70,7 @@ class GMaps:
         :param list of tuples of floats points:
             e.g. [(21.529143, -158.039847), (21.545911, -158.045314)]
         """
-        return cls.gmaps.snap_to_roads(points)
+        return cls.gmaps.snap_to_roads(points, interpolate=True)
     
 '''
 li = [(21.529143, -158.039847), (21.545911, -158.045314)]
