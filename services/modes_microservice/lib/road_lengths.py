@@ -105,45 +105,87 @@ def direction_finder_deg(lat2, lon2, lat1, lon1):
     return deg
 
 def distance_calculator(lat2, lon2, lat1, lon1):
-    dy = lat2 - lat1
-    dx = lon2 - lon1
-    return math.sqrt(dy**2 + dx**2)
+    #https://cloud.google.com/blog/products/maps-platform/how-calculate-distances-map-maps-javascript-api
+    r = 6371071
+    lat2 = lat2 * (math.pi/180)
+    lat1 = lat1 * (math.pi/180)
+    difflat = lat2 - lat1
+    difflon = (lon2 - lon1) * (math.pi/180)
+    d = 2 * r * math.asin(math.sqrt(math.sin(difflat/2)*math.sin(difflat/2)+math.cos(lat1)*math.cos(lat2)*math.sin(difflon/2)*math.sin(difflon/2)))
+    return d
 
-
-def road_attempt(lat, lon, road_name, distance, direction, attempts=8):
-    current_points = [(lat, lon)]
+def nearest_road_attempt(lat, lon, road_name, direction, distance=10, attempts=8):
     denominator = attempts/2
     for attempt in range(0, attempts):
         #get attempt direction, then attempt point
-        if attempt%2 == 0:
+        if attempt == 0:
+            numerator = 0
+        elif attempt%2 == 0:
+            numerator = (attempts - attempt/2)*math.pi
+        else:
+            numerator = (int(attempt/2) + 1)*math.pi
+        
+        dir_attempt = direction + numerator/denominator
+        point_attempt = new_point(lat, lon, distance, dir_attempt)
+        point_attempt_result = GMaps.nearest_roads([point_attempt])
+        point_name = None
+        for address in point_attempt_result['address_components']:
+            if 'route' in address['types']:
+                point_name = address['long_name']
+                break
+        if point_name:
+            if point_name == road_name:
+                return point_attempt_result
+    return None
+            
+
+def road_attempt(lat, lon, road_name, distance, direction, attempts=8):
+    denominator = attempts/2
+    for attempt in range(0, attempts):
+        current_points = [(lat, lon)]
+        #get attempt direction, then attempt point
+        if attempt == 0:
+            numerator = 0
+        elif attempt%2 == 0:
             numerator = (attempts - attempt/2)*math.pi
         else:
             numerator = (int(attempt/2) + 1)*math.pi
         dir_attempt = direction + numerator/denominator
         point_attempt = new_point(lat, lon, distance, dir_attempt)
         current_points.append(point_attempt)
-        snap_results = GMaps.snap_to_roads(current_points)
-        point_attempt_result = snap_results[-1]
-        distance_point_attempt = distance_calculator(point_attempt_result['location']['latitude'], point_attempt_result['location']['longitude'], lat, lon)
-        if distance_point_attempt < 5:
+        point_attempt_result = GMaps.snap_to_roads(current_points)
+        point_attempt_result = point_attempt_result[1:]
+        '''
+        point_attempt_distance = distance_calculator(point_attempt_result['location']['latitude'], point_attempt_result['location']['longitude'], lat, lon)
+        if point_attempt_distance < distance/2.5:
             continue
-        point_attempt_result_id = point_attempt_result['placeId']
-        point_attempt_result_geocode = GMaps.reverse_geocode_place_id(point_attempt_result_id)[0]
-        point_attempt_result_name = None
-        for address in point_attempt_result_geocode['address_components']:
-            if 'route' in address['types']:
-                point_attempt_result_name = address['long_name']
-                break
-        
-        if point_attempt_result_name:
-            if point_attempt_result_name == road_name:
-                return point_attempt_result
+        '''
+        points_of_same_road = []
+        for point in point_attempt_result:
+            point_id = point['placeId']
+            point_geocode = GMaps.reverse_geocode_place_id(point_id)[0]
+            point_name = None
+            for address in point_geocode['address_components']:
+                if 'route' in address['types']:
+                    point_name = address['long_name']
+                    break
+            
+            if point_name:
+                if point_name == road_name:
+                    points_of_same_road.append(point)
+                else:
+                    break
+
+        if len(points_of_same_road) > 0:
+            return points_of_same_road
         
     return None
 
 def road_length(lat, lon):
     #static
-    distance = 25
+    distance = 50
+    initial_lat = lat
+    initial_lon = lon
 
     #get current road and id
     road = locationIdentifiers.get_road(lat, lon)
@@ -152,31 +194,43 @@ def road_length(lat, lon):
 
     #instantiate
     direction = 0
-    road_points = [(lat, lon)]
-    queue = [(lat, lon, direction)] #points to be explored
+    road_points = [(initial_lat, initial_lon)]
+    queue = [] #points to be explored
     ids = [id]
     directions = []
 
-    #get initial directions
-    initial = road_attempt(lat, lon, road_name, distance, 0)
-    if initial:
-        initial_lat = initial['location']['latitude']
-        initial_lon = initial['location']['longitude']
-        direction = direction_finder_rad(initial_lat, initial_lon, lat, lon)
-        queue.append((initial_lat, initial_lon, direction))
-        road_points.append((initial_lat, initial_lon))
 
-    initial_2 = road_attempt(lat, lon, road_name, distance, -direction)
-    if initial_2:
-        initial_lat = initial_2['location']['latitude']
-        initial_lon = initial_2['location']['longitude']
-        direction2 = direction_finder_rad(initial_lat, initial_lon, lat, lon)
-        if direction2 != direction:
-            queue.append((initial_lat, initial_lon, direction2))
-            road_points.append((initial_lat, initial_lon))
+    #get initial
+    first_attempt = nearest_road_attempt(initial_lat, initial_lon, road_name, direction)
+    if first_attempt:
+        first_attempt_lat = first_attempt['location']['latitude']
+        first_attempt_lon = first_attempt['location']['longitude']
+        one_way_test = [(initial_lat, initial_lon), (first_attempt_lat, first_attempt_lon)]
+        if len(GMaps.snap_to_roads(one_way_test)) == 1:
+            return "one way street foing from first attempt to given point"
+        one_way_test = [(first_attempt_lat, first_attempt_lon), (initial_lat, initial_lon)]
+        if len(GMaps.snap_to_roads(one_way_test)) == 1:
+            return "one way street going from first attempt to initial point"
 
+        direction = direction_finder_rad(first_attempt_lat, first_attempt_lon, initial_lat, initial_lon)
+    else:
+        return "not a road"
+
+    initial_1 = road_attempt(lat, lon, road_name, distance, direction)
+    if initial_1:
+        for i in range(len(initial_1)):
+            direction = direction_finder_rad(initial_1[i]['location']['latitude'], initial_1[i]['location']['longitude'], lat, lon)
+            lat = initial_1[i]['location']['latitude']
+            lon = initial_1[i]['location']['longitude']
+            road_points.append((lat, lon))
+            directions.append(direction)
+            if i == len(initial_1) - 1:
+                queue.append((lat, lon, direction))
+                lat = initial_lat
+                lon = initial_lon
+    
     #snap nearby points and see if its in the same road
-    while queue: 
+    while queue:
         lat, lon, dir = queue.pop(-1)
         #attempts
         attempt = road_attempt(lat, lon, road_name, distance, dir)
@@ -195,6 +249,21 @@ def road_length(lat, lon):
 
             #append to queue
             queue.append((attempt_lat, attempt_lon, direction))
+    '''
+    initial_2 = road_attempt(lat, lon, road_name, distance, direction + math.pi)
+    if initial_2:
+        for i in range(len(initial_2)):
+            direction = direction_finder_rad(initial_2[i]['location']['latitude'], initial_2[i]['location']['longitude'], lat, lon)
+            lat = initial_2[i]['location']['latitude']
+            lon = initial_2[i]['location']['longitude']
+            road_points.append((lat, lon))
+            directions.append(direction)
+            if i == len(initial_2) - 1:
+                queue.append((lat, lon, direction))
+                lat = initial_lat
+                lon = initial_lon
+    '''
 
 
-road_length(21.364075, -158.077205)
+#road_length(21.364075, -158.077205)
+road_length(40.805514, -73.964001)
