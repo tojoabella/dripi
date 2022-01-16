@@ -40,3 +40,29 @@ def vector_decomposition_2(distance, direction):
         return None
     
     return dy, dx
+
+def direction_finder_deg(lat2, lon2, lat1, lon1):
+    """
+    degrees from north, clockwise
+    """
+    dy = lat2 - lat1
+    dx = lon2 - lon1
+    #undefined when dy is 0
+    if dy == 0 and dx == 0:
+        return None
+    elif dy == 0 and dx > 0:
+        return 90
+    elif dy < 0 and dx == 0:
+        return 180
+    elif dy == 0 and dx < 0:
+        return 270
+    rad = math.atan(dx/dy)
+    deg = helper.radians_to_degrees(rad)
+    #quadrants
+    if dy < 0 and dx < 0:
+        deg = 180 + deg
+    elif dy < 0 and dx > 0:
+        deg = 180 + deg
+    elif dy > 0 and dx < 0:
+        deg = 360 + deg
+    return deg
