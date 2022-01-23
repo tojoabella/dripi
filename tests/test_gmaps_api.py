@@ -62,3 +62,18 @@ class TestGMaps(unittest.TestCase):
                                                    'types': ['route']}]
         actual_result = GMaps.reverse_geocode_place_id(id)
         self.assertEqual(actual_result, expected_result)
+    
+    def test_reverse_geocode_place_id_2(self):
+        id = 'ChIJuehGs6ZjAHwRuyO5bEyFlDY'
+        expected_result = None
+        actual_result = GMaps.reverse_geocode_place_id(id)
+        print(actual_result)
+        self.assertEqual(actual_result, expected_result)
+
+    def test_reverse_geocode_place_id_3(self):
+        id = 'ChIJI72m1qNjAHwRkCTjfgwBQm4'
+        expected_result = None
+        actual_result = GMaps.reverse_geocode_place_id(id)
+        print(actual_result)
+        self.assertEqual(actual_result, expected_result)
+

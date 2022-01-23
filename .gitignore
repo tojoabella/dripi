@@ -5,3 +5,4 @@ buttontest
 *__pycache__/
 *.pytest_cache
 runit.sh
+*.vscode

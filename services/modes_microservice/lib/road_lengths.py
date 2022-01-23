@@ -103,7 +103,6 @@ def nearest_road_attempt(lat, lon, road_name, direction, distance=10, attempts=8
         point_attempt_result = GMaps.nearest_roads([point_attempt])[1]
         point_name = None
         point_geocode = GMaps.reverse_geocode_place_id(point_attempt_result['placeId'])[0]
-        print(point_geocode)
         for address in point_geocode['address_components']:
             if 'route' in address['types']:
                 point_name = address['long_name']
@@ -174,19 +173,25 @@ def verify_road_attempt(lat, lon, attempt, road_points, directions, ids, queue):
         for i in range(len(attempt)):
             #update direction and append to directions
             direction = direction_finder_rad(attempt[i]['location']['latitude'], attempt[i]['location']['longitude'], lat, lon)
-            directions.append(direction)
 
-            #append to road_points
-            lat = attempt[i]['location']['latitude']
-            lon = attempt[i]['location']['longitude']
-            road_points.append((lat, lon))
+            #attempt may have same lat and lon but diff placeId. if same lat and lon, direction is None
+            if direction:
+                directions.append(direction)
 
-            #append to ids
-            ids.append(attempt[i]['placeId'])
+                #append to road_points
+                lat = attempt[i]['location']['latitude']
+                lon = attempt[i]['location']['longitude']
+                road_points.append((lat, lon))
+
+                #append to ids
+                ids.append(attempt[i]['placeId'])
+
+            else:
+                ids[-1] = ids[-1] + ", " + attempt[i]['placeId']
 
             #append to queue
-            if i == len(attempt) - 1:
-                queue.append((lat, lon, direction))
+                if i == len(attempt) - 1:
+                    queue.append((lat, lon, direction))
     return road_points, directions, ids, queue
 
 def snap_points_one_way(queue, road_points, directions, ids, road_name, distance):
