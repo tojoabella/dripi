@@ -57,7 +57,7 @@ def direction_finder_deg(lat2, lon2, lat1, lon1):
     elif dy == 0 and dx < 0:
         return 270
     rad = math.atan(dx/dy)
-    deg = helper.radians_to_degrees(rad)
+    deg = radians_to_degrees(rad)
     #quadrants
     if dy < 0 and dx < 0:
         deg = 180 + deg
