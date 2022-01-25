@@ -152,12 +152,13 @@ def road_attempt(lat, lon, road_name, distance, direction, attempts=8):
 
             if point_name:
                 if point_name == road_name:
+                    #if direction is None, then it's a dead end
                     #if direction from the first point to the original point is the same as the given direction, I am going back the opposite direction
                     if i == 0:
                         tmp_lat = point['location']['latitude']
                         tmp_lon = point['location']['longitude']
-                        tmp_dir = direction_finder_rad(tmp_lat, tmp_lon, lat, lon)
-                        if tmp_dir == direction:
+                        tmp_dir = direction_finder_rad(lat, lon, tmp_lat, tmp_lon)
+                        if not tmp_dir or round(tmp_dir, 3) == round(direction, 3):
                             break
                     points_of_same_road.append(point)
                 else:
@@ -190,8 +191,8 @@ def verify_road_attempt(lat, lon, attempt, road_points, directions, ids, queue):
                 ids[-1] = ids[-1] + ", " + attempt[i]['placeId']
 
             #append to queue
-                if i == len(attempt) - 1:
-                    queue.append((lat, lon, direction))
+            if i == len(attempt) - 1:
+                queue.append((lat, lon, direction))
     return road_points, directions, ids, queue
 
 def snap_points_one_way(queue, road_points, directions, ids, road_name, distance):
@@ -219,6 +220,7 @@ def two_way_road(initial_lat, initial_lon, road_name, distance, direction, road_
     return road_points, directions, ids
     
 def road_length(lat, lon):
+    print('hi')
     initial_lat = lat
     initial_lon = lon
 
@@ -231,7 +233,7 @@ def road_length(lat, lon):
     if "Freeway" in road_name or "Highway" in road_name:
         distance = 500
     elif "Street" in road_name:
-        distance = 50
+        distance = 100
     else:
         print("road name is: ", road_name)
         distance = 50
@@ -264,4 +266,4 @@ def road_length(lat, lon):
         return "not a road"
 
 
-road_length(21.364075, -158.077205)
+print(road_length(21.364075, -158.077205))
