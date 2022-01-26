@@ -139,33 +139,29 @@ def road_attempt(lat, lon, road_name, distance, direction, attempts=8):
         if point_attempt_distance < distance/2.5:
             continue
         '''
-        points_of_same_road = []
-        for i in range(len(point_attempt_result)):
-            point = point_attempt_result[i]
-            point_id = point['placeId']
-            point_geocode = GMaps.reverse_geocode_place_id(point_id)[0]
-            point_name = None
-            for address in point_geocode['address_components']:
-                if 'route' in address['types']:
-                    point_name = address['long_name']
-                    break
+        #if direction is None, then it's a dead end
+        #if direction from the first point to the original point is the same as the given direction, I am going back the opposite direction
+        last_lat = point_attempt_result[-1]['location']['latitude']
+        last_lon = point_attempt_result[-1]['location']['longitude']
+        if last_lat != lat and last_lon != lon and round(direction_finder_rad(lat, lon, last_lat, last_lon), 3) != round(direction, 3):
+            points_of_same_road = []
+            for i in range(len(point_attempt_result)):
+                point = point_attempt_result[i]
+                point_id = point['placeId']
+                point_geocode = GMaps.reverse_geocode_place_id(point_id)[0]
+                point_name = None
+                for address in point_geocode['address_components']:
+                    if 'route' in address['types']:
+                        point_name = address['long_name']
+                        break
 
-            if point_name:
-                if point_name == road_name:
-                    #if direction is None, then it's a dead end
-                    #if direction from the first point to the original point is the same as the given direction, I am going back the opposite direction
-                    if i == 0:
-                        tmp_lat = point['location']['latitude']
-                        tmp_lon = point['location']['longitude']
-                        tmp_dir = direction_finder_rad(lat, lon, tmp_lat, tmp_lon)
-                        if not tmp_dir or round(tmp_dir, 3) == round(direction, 3):
-                            break
+                if point_name and point_name == road_name:
                     points_of_same_road.append(point)
                 else:
                     break
 
-        if len(points_of_same_road) > 0:
-            return points_of_same_road
+            if len(points_of_same_road) > 0:
+                return points_of_same_road
         
     return None
 
@@ -220,7 +216,6 @@ def two_way_road(initial_lat, initial_lon, road_name, distance, direction, road_
     return road_points, directions, ids
     
 def road_length(lat, lon):
-    print('hi')
     initial_lat = lat
     initial_lon = lon
 
