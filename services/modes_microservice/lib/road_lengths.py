@@ -113,7 +113,7 @@ def nearest_road_attempt(lat, lon, road_name, direction, distance=10, attempts=8
     return None
             
 
-def road_attempt(lat, lon, road_name, distance, direction, attempts=8):
+def road_attempt(lat, lon, road_name, distance, direction, ids, attempts=8):
     """
     snap to road attempt
 
@@ -141,13 +141,20 @@ def road_attempt(lat, lon, road_name, distance, direction, attempts=8):
         '''
         #if direction is None, then it's a dead end
         #if direction from the first point to the original point is the same as the given direction, I am going back the opposite direction
-        last_lat = point_attempt_result[-1]['location']['latitude']
-        last_lon = point_attempt_result[-1]['location']['longitude']
-        if last_lat != lat and last_lon != lon and round(direction_finder_rad(lat, lon, last_lat, last_lon), 3) != round(direction, 3):
-            points_of_same_road = []
-            for i in range(len(point_attempt_result)):
-                point = point_attempt_result[i]
-                point_id = point['placeId']
+        valid_point_found = False
+        first_diff_point_found = False
+
+        points_of_same_road = []
+        for point in point_attempt_result:
+            point_lat = point['location']['latitude']
+            point_lon = point['location']['longitude']
+            point_id = point['placeId']
+            if point_id in ids:
+                points_of_same_road.append(point)
+                if not first_diff_point_found and not valid_point_found and point_lat != lat and point_lon != lon and round(direction_finder_rad(lat, lon, point_lat, point_lon), 3) != round(direction, 3):
+                    valid_point_found = True
+
+            else:
                 point_geocode = GMaps.reverse_geocode_place_id(point_id)[0]
                 point_name = None
                 for address in point_geocode['address_components']:
@@ -157,11 +164,16 @@ def road_attempt(lat, lon, road_name, distance, direction, attempts=8):
 
                 if point_name and point_name == road_name:
                     points_of_same_road.append(point)
+                    if not first_diff_point_found and not valid_point_found and point_lat != lat and point_lon != lon and round(direction_finder_rad(lat, lon, point_lat, point_lon), 3) != round(direction, 3):
+                        valid_point_found = True
                 else:
                     break
 
-            if len(points_of_same_road) > 0:
-                return points_of_same_road
+            if point_lat != lat and point_lon != lon:
+                first_diff_point_found = True
+
+        if valid_point_found:
+            return points_of_same_road
         
     return None
 
@@ -181,10 +193,10 @@ def verify_road_attempt(lat, lon, attempt, road_points, directions, ids, queue):
                 road_points.append((lat, lon))
 
                 #append to ids
-                ids.append(attempt[i]['placeId'])
+                ids.add(attempt[i]['placeId'])
 
             else:
-                ids[-1] = ids[-1] + ", " + attempt[i]['placeId']
+                ids.add(attempt[i]['placeId'])
 
             #append to queue
             if i == len(attempt) - 1:
@@ -196,20 +208,19 @@ def snap_points_one_way(queue, road_points, directions, ids, road_name, distance
     while queue:
         lat, lon, dir = queue.pop(-1)
         #attempts
-        attempt = road_attempt(lat, lon, road_name, distance, dir)
+        attempt = road_attempt(lat, lon, road_name, distance, dir, ids)
         road_points, directions, ids, queue = verify_road_attempt(lat, lon, attempt, road_points, directions, ids, queue)
     return road_points, directions, ids
 
 def two_way_road(initial_lat, initial_lon, road_name, distance, direction, road_points, queue, ids, directions):
-    initial_1 = road_attempt(initial_lat, initial_lon, road_name, distance, direction)
+    initial_1 = road_attempt(initial_lat, initial_lon, road_name, distance, direction, ids)
     road_points, directions, ids, queue = verify_road_attempt(initial_lat, initial_lon, initial_1, road_points, directions, ids, queue)
     road_points, directions, ids = snap_points_one_way(queue, road_points, directions, ids, road_name, distance)
 
     road_points.reverse()
     directions.reverse()
-    ids.reverse()
 
-    initial_2 = road_attempt(initial_lat, initial_lon, road_name, distance, direction + math.pi)
+    initial_2 = road_attempt(initial_lat, initial_lon, road_name, distance, direction + math.pi, ids)
     road_points, directions, ids, queue = verify_road_attempt(initial_lat, initial_lon, initial_2, road_points, directions, ids, queue)
     road_points, directions, ids = snap_points_one_way(queue, road_points, directions, ids, road_name, distance)
 
@@ -237,7 +248,7 @@ def road_length(lat, lon):
     direction = 0
     road_points = [(initial_lat, initial_lon)]
     queue = [] #points to be explored
-    ids = [id]
+    ids = {id}
     directions = []
 
     #get initial
