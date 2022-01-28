@@ -77,15 +77,21 @@ def direction_finder_rad(lat2, lon2, lat1, lon1):
         rad = 2*math.pi + rad
     return rad 
 
-def distance_calculator(lat2, lon2, lat1, lon1):
-    #https://cloud.google.com/blog/products/maps-platform/how-calculate-distances-map-maps-javascript-api
-    r = 6371071
-    lat2 = lat2 * (math.pi/180)
-    lat1 = lat1 * (math.pi/180)
-    difflat = lat2 - lat1
-    difflon = (lon2 - lon1) * (math.pi/180)
-    d = 2 * r * math.asin(math.sqrt(math.sin(difflat/2)*math.sin(difflat/2)+math.cos(lat1)*math.cos(lat2)*math.sin(difflon/2)*math.sin(difflon/2)))
-    return d
+def test_one_way_road(lat1, lon1, lat2, lon2):
+    """
+    0: two-way street
+    1: one way street going from first attempt to given point
+    2: one way street going from first attempt to initial point
+    """
+    point_1_to_point_2 = [(lat1, lon1), (lat2, lon2)]
+    if len(GMaps.snap_to_roads(point_1_to_point_2)) == 1:
+        return 1
+
+    point_2_to_point_1 = [(lat2, lon2), (lat1, lon1)]
+    if len(GMaps.snap_to_roads(point_2_to_point_1)) == 1:
+        return 2
+
+    return 0
 
 def nearest_road_attempt(lat, lon, road_name, direction, distance=10, attempts=8):
     denominator = attempts/2
@@ -134,11 +140,6 @@ def road_attempt(lat, lon, road_name, distance, direction, ids, attempts=8):
         current_points.append(point_attempt)
         point_attempt_result = GMaps.snap_to_roads(current_points)
         point_attempt_result = point_attempt_result[1:]
-        '''
-        point_attempt_distance = distance_calculator(point_attempt_result['location']['latitude'], point_attempt_result['location']['longitude'], lat, lon)
-        if point_attempt_distance < distance/2.5:
-            continue
-        '''
         #if direction is None, then it's a dead end
         #if direction from the first point to the original point is the same as the given direction, I am going back the opposite direction
         valid_point_found = False
@@ -212,20 +213,28 @@ def snap_points_one_way(queue, road_points, directions, ids, road_name, distance
         road_points, directions, ids, queue = verify_road_attempt(lat, lon, attempt, road_points, directions, ids, queue)
     return road_points, directions, ids
 
-def two_way_road(initial_lat, initial_lon, road_name, distance, direction, road_points, queue, ids, directions):
-    initial_1 = road_attempt(initial_lat, initial_lon, road_name, distance, direction, ids)
-    road_points, directions, ids, queue = verify_road_attempt(initial_lat, initial_lon, initial_1, road_points, directions, ids, queue)
+def two_way_road(initial_lat, initial_lon, road_name, direction, road_points, ids, directions):
+    #update distance if necessary
+    if "Freeway" in road_name or "Highway" in road_name:
+        distance = 1000
+    elif "Street" in road_name:
+        distance = 200
+    else:
+        print("road name is: ", road_name)
+        distance = 200
+
+    #instantiate
+    queue = [(initial_lat, initial_lon, direction)]
     road_points, directions, ids = snap_points_one_way(queue, road_points, directions, ids, road_name, distance)
 
     road_points.reverse()
     directions.reverse()
 
-    initial_2 = road_attempt(initial_lat, initial_lon, road_name, distance, direction + math.pi, ids)
-    road_points, directions, ids, queue = verify_road_attempt(initial_lat, initial_lon, initial_2, road_points, directions, ids, queue)
+    queue = [(initial_lat, initial_lon, direction + math.pi)]
     road_points, directions, ids = snap_points_one_way(queue, road_points, directions, ids, road_name, distance)
 
     return road_points, directions, ids
-    
+  
 def road_length(lat, lon):
     initial_lat = lat
     initial_lon = lon
@@ -235,39 +244,32 @@ def road_length(lat, lon):
     road_name = road['name']
     id = road['id']
 
-    #update distance if necessary
-    if "Freeway" in road_name or "Highway" in road_name:
-        distance = 500
-    elif "Street" in road_name:
-        distance = 100
-    else:
-        print("road name is: ", road_name)
-        distance = 50
-
     #instantiate
     direction = 0
     road_points = [(initial_lat, initial_lon)]
-    queue = [] #points to be explored
     ids = {id}
     directions = []
 
-    #get initial
+    #get direction of road at inital point
     first_attempt = nearest_road_attempt(initial_lat, initial_lon, road_name, direction)
     if first_attempt:
         first_attempt_lat = first_attempt['location']['latitude']
         first_attempt_lon = first_attempt['location']['longitude']
-        one_way_test = [(initial_lat, initial_lon), (first_attempt_lat, first_attempt_lon)]
-        if len(GMaps.snap_to_roads(one_way_test)) == 1:
-            return "one way street foing from first attempt to given point"
-        one_way_test = [(first_attempt_lat, first_attempt_lon), (initial_lat, initial_lon)]
-        if len(GMaps.snap_to_roads(one_way_test)) == 1:
-            return "one way street going from first attempt to initial point"
 
-        direction = direction_finder_rad(first_attempt_lat, first_attempt_lon, initial_lat, initial_lon)
-        road_points, directions, ids = two_way_road(initial_lat, initial_lon, road_name, distance, direction, road_points, queue, ids, directions)
-        return {'road_points': road_points,
-                'directions': directions,
-                'ids': ids}
+        #test one-way street
+        one_way_test = test_one_way_road(initial_lat, initial_lon, first_attempt_lat, first_attempt_lon)
+        if not one_way_test:
+            direction = direction_finder_rad(first_attempt_lat, first_attempt_lon, initial_lat, initial_lon)
+            road_points, directions, ids = two_way_road(initial_lat, initial_lon, road_name, direction, road_points, ids, directions)
+            return {'road_points': road_points,
+                    'directions': directions,
+                    'ids': ids}
+
+        elif one_way_test == 1:
+            return "one way street foing from first attempt to given point"
+        elif one_way_test == 2:
+            return "one way street going from first attempt to initial point"
+    
     else:
         return "not a road"
 

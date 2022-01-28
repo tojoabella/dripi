@@ -9,6 +9,15 @@ def degrees_to_radians(degrees):
 def radians_to_degrees(radians):
     return radians*180/math.pi
 
+def distance_calculator(lat2, lon2, lat1, lon1):
+    #https://cloud.google.com/blog/products/maps-platform/how-calculate-distances-map-maps-javascript-api
+    r = 6371071
+    lat2 = lat2 * (math.pi/180)
+    lat1 = lat1 * (math.pi/180)
+    difflat = lat2 - lat1
+    difflon = (lon2 - lon1) * (math.pi/180)
+    d = 2 * r * math.asin(math.sqrt(math.sin(difflat/2)*math.sin(difflat/2)+math.cos(lat1)*math.cos(lat2)*math.sin(difflon/2)*math.sin(difflon/2)))
+    return d
 
 
 def vector_decomposition_2(distance, direction):
