@@ -120,31 +120,46 @@ def nearest_road_attempt(lat, lon, road_name, direction, distance=10, attempts=8
                 return point_attempt_result
     return None
             
+def attempt_direction_generator(direction, attempts=8):
+    direction_attempts = []
+    denominator = attempts/2
+    for attempt in range(0, attempts):
+        if attempt == 0:
+            numerator = 0
+        elif attempt %2 == 0:
+            numerator = (attempts - attempt/2)*math.pi
+        else:
+            numerator = (int(attempt/2) + 1)*math.pi
+        dir_attempt = direction + numerator/denominator
+        direction_attempts.append(dir_attempt)
+    return direction_attempts
+
 
 def road_attempt(lat, lon, road_name, distance, direction, ids, attempts=8):
     """
     snap to road attempt
 
+    :param numerical lat: latitude of origin point
+    :param numberical lon: longitude of origin point
+    :param string road_name: road name of origin point
+    :param numerical distance: distance between origin point and all point attempts
+    :param numerical direction: direction (radians) for the first attempt. this is the direction of the road at the origin point
+    :param set of string ids: ids that the road name currently is known to contain
+
     :return: a list of points that have the same road names as the given road name
     """
-    denominator = attempts/2
-    for attempt in range(0, attempts):
-        current_points = [(lat, lon)]
-        #get attempt direction, then attempt point
-        if attempt == 0:
-            numerator = 0
-        elif attempt%2 == 0:
-            numerator = (attempts - attempt/2)*math.pi
-        else:
-            numerator = (int(attempt/2) + 1)*math.pi
-        dir_attempt = direction + numerator/denominator
+
+    #8 point attempts
+    direction_attempts = attempt_direction_generator(direction)
+    for dir_attempt in direction_attempts:
         point_attempt = new_point(lat, lon, distance, dir_attempt)
+        current_points = [(lat, lon)]
         current_points.append(point_attempt)
-        point_attempt_result = GMaps.snap_to_roads(current_points)
-        point_attempt_result = point_attempt_result[1:]
-        #if direction is None, then it's a dead end
-        #if direction from the first point to the original point is the same as the given direction, I am going back the opposite direction
-        valid_point_found = False
+        #snap to roads from origin point to the point attempt. make sure result doesn't include origin point
+        point_attempt_result = GMaps.snap_to_roads(current_points)[1:]
+
+        #if direction from the first point of point_attempt_result to the origin point is the same as the given direction, going back the opposite direction.
+        valid_point_found = False #true if 1) point_attempt_result has at least one point that is not the origin point; 2) that point is not in the opposite direction.
         first_diff_point_found = False
 
         points_of_same_road = []
@@ -152,30 +167,35 @@ def road_attempt(lat, lon, road_name, distance, direction, ids, attempts=8):
             point_lat = point['location']['latitude']
             point_lon = point['location']['longitude']
             point_id = point['placeId']
-            if point_id in ids:
+            if point_id in ids: #if point already in ids, no need to reverse geocode. add point to points_of_same_road
                 points_of_same_road.append(point)
                 if not first_diff_point_found and not valid_point_found and point_lat != lat and point_lon != lon and round(direction_finder_rad(lat, lon, point_lat, point_lon), 3) != round(direction, 3):
                     valid_point_found = True
 
-            else:
+            else: #else, must first get the name of the point by reverse geocoding. point may or may not have the same road name as origin point
                 point_geocode = GMaps.reverse_geocode_place_id(point_id)[0]
                 point_name = None
+                #get road name
                 for address in point_geocode['address_components']:
                     if 'route' in address['types']:
                         point_name = address['long_name']
                         break
-
+                
+                #if point attempt's road name is the same as that of the origin point, add point to points_of_same_road and add id to ids
                 if point_name and point_name == road_name:
                     points_of_same_road.append(point)
+                    ids.add(point_id)
                     if not first_diff_point_found and not valid_point_found and point_lat != lat and point_lon != lon and round(direction_finder_rad(lat, lon, point_lat, point_lon), 3) != round(direction, 3):
                         valid_point_found = True
-                else:
+                
+                else: #point doesn't belong on a road or the road name doesn't match that of origin point, stop adding points to points_of_same_road
                     break
-
+            
+            #if first_diff_point_found becomes true before valid_point_found, going in opposite direction
             if point_lat != lat and point_lon != lon:
                 first_diff_point_found = True
-
-        if valid_point_found:
+    
+        if valid_point_found: #once a valid point is found, can return the whole 
             return points_of_same_road
         
     return None
@@ -274,7 +294,7 @@ def road_length(lat, lon):
 
 if __name__=="__main__":
     cProfile.run('road_length(21.364075, -158.077205)')
-    cProfile.run('road_length(21.364075, -158.077205)', filename="prof.out")
+    cProfile.run('road_length(21.364075, -158.077205)', filename="rl_prof.out")
 
 
 #print(road_length(21.364075, -158.077205))
