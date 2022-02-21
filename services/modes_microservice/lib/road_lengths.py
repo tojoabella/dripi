@@ -2,6 +2,8 @@ import math
 from services.modes_microservice.lib.location_identifiers import locationIdentifiers
 from services.modes_microservice.lib.location_identifiers import GMaps
 
+import cProfile
+
 import services.modes_microservice.lib.helper as helper
 
 def vector_decomposition(distance, direction, dir_deg = False):
@@ -178,15 +180,14 @@ def road_attempt(lat, lon, road_name, distance, direction, ids, attempts=8):
         
     return None
 
-def verify_road_attempt(lat, lon, attempt, road_points, directions, ids, queue):
+def verify_road_attempt(lat, lon, attempt, road_points, ids, queue):
     if attempt:
         for i in range(len(attempt)):
-            #update direction and append to directions
+            #update direction
             direction = direction_finder_rad(attempt[i]['location']['latitude'], attempt[i]['location']['longitude'], lat, lon)
 
             #attempt may have same lat and lon but diff placeId. if same lat and lon, direction is None
             if direction:
-                directions.append(direction)
 
                 #append to road_points
                 lat = attempt[i]['location']['latitude']
@@ -202,18 +203,18 @@ def verify_road_attempt(lat, lon, attempt, road_points, directions, ids, queue):
             #append to queue
             if i == len(attempt) - 1:
                 queue.append((lat, lon, direction))
-    return road_points, directions, ids, queue
+    return road_points, ids, queue
 
-def snap_points_one_way(queue, road_points, directions, ids, road_name, distance):
+def snap_points_one_way(queue, road_points, ids, road_name, distance):
     #snap nearby points and see if its in the same road
     while queue:
         lat, lon, dir = queue.pop(-1)
         #attempts
         attempt = road_attempt(lat, lon, road_name, distance, dir, ids)
-        road_points, directions, ids, queue = verify_road_attempt(lat, lon, attempt, road_points, directions, ids, queue)
-    return road_points, directions, ids
+        road_points, ids, queue = verify_road_attempt(lat, lon, attempt, road_points, ids, queue)
+    return road_points, ids
 
-def two_way_road(initial_lat, initial_lon, road_name, direction, road_points, ids, directions):
+def two_way_road(initial_lat, initial_lon, road_name, direction, road_points, ids):
     #update distance if necessary
     if "Freeway" in road_name or "Highway" in road_name:
         distance = 1000
@@ -225,21 +226,20 @@ def two_way_road(initial_lat, initial_lon, road_name, direction, road_points, id
 
     #instantiate
     queue = [(initial_lat, initial_lon, direction)]
-    road_points, directions, ids = snap_points_one_way(queue, road_points, directions, ids, road_name, distance)
+    road_points, ids = snap_points_one_way(queue, road_points, ids, road_name, distance)
 
     road_points.reverse()
-    directions.reverse()
 
     queue = [(initial_lat, initial_lon, direction + math.pi)]
-    road_points, directions, ids = snap_points_one_way(queue, road_points, directions, ids, road_name, distance)
+    road_points, ids = snap_points_one_way(queue, road_points, ids, road_name, distance)
 
-    return road_points, directions, ids
-  
+    return road_points, ids
+
 def road_length(lat, lon):
     initial_lat = lat
     initial_lon = lon
 
-    #get current road and id
+    #get current road name and id
     road = locationIdentifiers.get_road(lat, lon)
     road_name = road['name']
     id = road['id']
@@ -248,7 +248,6 @@ def road_length(lat, lon):
     direction = 0
     road_points = [(initial_lat, initial_lon)]
     ids = {id}
-    directions = []
 
     #get direction of road at inital point
     first_attempt = nearest_road_attempt(initial_lat, initial_lon, road_name, direction)
@@ -260,9 +259,8 @@ def road_length(lat, lon):
         one_way_test = test_one_way_road(initial_lat, initial_lon, first_attempt_lat, first_attempt_lon)
         if not one_way_test:
             direction = direction_finder_rad(first_attempt_lat, first_attempt_lon, initial_lat, initial_lon)
-            road_points, directions, ids = two_way_road(initial_lat, initial_lon, road_name, direction, road_points, ids, directions)
+            road_points, ids = two_way_road(initial_lat, initial_lon, road_name, direction, road_points, ids)
             return {'road_points': road_points,
-                    'directions': directions,
                     'ids': ids}
 
         elif one_way_test == 1:
@@ -274,4 +272,9 @@ def road_length(lat, lon):
         return "not a road"
 
 
-print(road_length(21.364075, -158.077205))
+if __name__=="__main__":
+    cProfile.run('road_length(21.364075, -158.077205)')
+    cProfile.run('road_length(21.364075, -158.077205)', filename="prof.out")
+
+
+#print(road_length(21.364075, -158.077205))
