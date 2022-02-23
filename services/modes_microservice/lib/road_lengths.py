@@ -119,6 +119,21 @@ def attempt_direction_generator(direction, attempts=8):
         direction_attempts.append(dir_attempt)
     return direction_attempts
 
+def id_to_road_name(id):
+    """
+    get road name from id
+
+    :param string id: id of road
+
+    :return string: road name
+    """
+    point_geocode = GMaps.reverse_geocode_place_id(id)[0]
+
+    for address in point_geocode['address_components']:
+        if 'route' in address['types']:
+            return address['long_name']
+    return None
+
 def nearest_road_attempt(lat, lon, road_name, distance=10):
     """
     find the nearest road given a point
@@ -140,15 +155,10 @@ def nearest_road_attempt(lat, lon, road_name, distance=10):
     for dir_attempt in direction_attempts:
         point_attempt = new_point(lat, lon, distance, dir_attempt)
         point_attempt_result = GMaps.nearest_roads([point_attempt])[0]
-        point_name = None
-        point_geocode = GMaps.reverse_geocode_place_id(point_attempt_result['placeId'])[0]
-        for address in point_geocode['address_components']:
-            if 'route' in address['types']:
-                point_name = address['long_name']
-                break
-        if point_name:
-            if point_name == road_name:
-                return point_attempt_result
+
+        point_name = id_to_road_name(point_attempt_result['placeId'])
+        if point_name and point_name == road_name:
+            return point_attempt_result
     return None
 
 def road_attempt(lat, lon, road_name, distance, direction, ids):
@@ -191,13 +201,7 @@ def road_attempt(lat, lon, road_name, distance, direction, ids):
                     valid_point_found = True
 
             else: #else, must first get the name of the point by reverse geocoding. point may or may not have the same road name as origin point
-                point_geocode = GMaps.reverse_geocode_place_id(point_id)[0]
-                point_name = None
-                #get road name
-                for address in point_geocode['address_components']:
-                    if 'route' in address['types']:
-                        point_name = address['long_name']
-                        break
+                point_name = id_to_road_name(point_id)
                 
                 #if point attempt's road name is the same as that of the origin point, add point to points_of_same_road and add id to ids
                 if point_name and point_name == road_name:
