@@ -81,9 +81,11 @@ def direction_finder_rad(lat2, lon2, lat1, lon1):
 
 def test_one_way_road(lat1, lon1, lat2, lon2):
     """
-    0: two-way street
-    1: one way street going from first attempt to given point
-    2: one way street going from first attempt to initial point
+    given two points on road, test if road is one-way or two-way
+
+    0: two-way
+    1: one way going from first attempt to given point
+    2: one way going from first attempt to initial point
     """
     point_1_to_point_2 = [(lat1, lon1), (lat2, lon2)]
     if len(GMaps.snap_to_roads(point_1_to_point_2)) == 1:
@@ -95,32 +97,15 @@ def test_one_way_road(lat1, lon1, lat2, lon2):
 
     return 0
 
-def nearest_road_attempt(lat, lon, road_name, direction, distance=10, attempts=8):
-    denominator = attempts/2
-    for attempt in range(0, attempts):
-        #get attempt direction, then attempt point
-        if attempt == 0:
-            numerator = 0
-        elif attempt%2 == 0:
-            numerator = (attempts - attempt/2)*math.pi
-        else:
-            numerator = (int(attempt/2) + 1)*math.pi
-        
-        dir_attempt = direction + numerator/denominator
-        point_attempt = new_point(lat, lon, distance, dir_attempt)
-        point_attempt_result = GMaps.nearest_roads([point_attempt])[1]
-        point_name = None
-        point_geocode = GMaps.reverse_geocode_place_id(point_attempt_result['placeId'])[0]
-        for address in point_geocode['address_components']:
-            if 'route' in address['types']:
-                point_name = address['long_name']
-                break
-        if point_name:
-            if point_name == road_name:
-                return point_attempt_result
-    return None
-            
 def attempt_direction_generator(direction, attempts=8):
+    """
+    generate the order of directions to test
+
+    :param numerical direction: the direction (in radians) to test first and to subsequently test around
+    :param int attempts: the number of directions.
+
+    :return list of numerical direction_attempts: the list of directions to attempt
+    """
     direction_attempts = []
     denominator = attempts/2
     for attempt in range(0, attempts):
@@ -134,8 +119,39 @@ def attempt_direction_generator(direction, attempts=8):
         direction_attempts.append(dir_attempt)
     return direction_attempts
 
+def nearest_road_attempt(lat, lon, road_name, distance=10):
+    """
+    find the nearest road given a point
 
-def road_attempt(lat, lon, road_name, distance, direction, ids, attempts=8):
+    :param numerical lat: latitude of point
+    :param numerical lon: longitude of point
+    :param string road_name: road name
+    :param numerical distance: distance away from point to test
+
+    :return dict point_attempt_result: the result of the nearest road
+        location: dict of lat and lon
+            latititude:
+            longitude:
+        originalIndex:
+            will be 0
+    """
+    direction = 0
+    direction_attempts = attempt_direction_generator(direction)
+    for dir_attempt in direction_attempts:
+        point_attempt = new_point(lat, lon, distance, dir_attempt)
+        point_attempt_result = GMaps.nearest_roads([point_attempt])[0]
+        point_name = None
+        point_geocode = GMaps.reverse_geocode_place_id(point_attempt_result['placeId'])[0]
+        for address in point_geocode['address_components']:
+            if 'route' in address['types']:
+                point_name = address['long_name']
+                break
+        if point_name:
+            if point_name == road_name:
+                return point_attempt_result
+    return None
+
+def road_attempt(lat, lon, road_name, distance, direction, ids):
     """
     snap to road attempt
 
@@ -146,7 +162,9 @@ def road_attempt(lat, lon, road_name, distance, direction, ids, attempts=8):
     :param numerical direction: direction (radians) for the first attempt. this is the direction of the road at the origin point
     :param set of string ids: ids that the road name currently is known to contain
 
-    :return: a list of points that have the same road names as the given road name
+    :return list of tuple points_of_same_road: a list of (lat, lon) points that have the same road names as the given road name
+        numerical: lat
+        numerical: lon
     """
 
     #8 point attempts
@@ -195,13 +213,26 @@ def road_attempt(lat, lon, road_name, distance, direction, ids, attempts=8):
             if point_lat != lat and point_lon != lon:
                 first_diff_point_found = True
     
-        if valid_point_found: #once a valid point is found, can return the whole 
+        if valid_point_found: #once a valid point is found, can return the points of same road for that point attempt
             return points_of_same_road
         
     return None
 
-def verify_road_attempt(lat, lon, attempt, road_points, ids, queue):
-    if attempt:
+def verify_road_attempt(lat, lon, attempt, road_points, queue):
+    """
+    add new points to road_points list
+
+    :param numerical lat: latitude of origin point
+    :param numerical lon: longitude of origin point
+    :param list of tuple of (numerical, numerical) attempt: list of points of same road name to be added to road_points
+    :param list of tuple  of (numerical, numerical) road_points: list of points currently available points that make up the road
+    :param list of tuple of (numerical, numerical, string) queue: the list of points that belong to the road but haven't been explored for new points
+
+    :return tuple:
+    road_points: list of current points that make up the road
+    queue: add the last point added to road_points to the queue to make another road_attempt
+    """
+    if attempt: #if there are points to add
         for i in range(len(attempt)):
             #update direction
             direction = direction_finder_rad(attempt[i]['location']['latitude'], attempt[i]['location']['longitude'], lat, lon)
@@ -214,27 +245,48 @@ def verify_road_attempt(lat, lon, attempt, road_points, ids, queue):
                 lon = attempt[i]['location']['longitude']
                 road_points.append((lat, lon))
 
-                #append to ids
-                ids.add(attempt[i]['placeId'])
-
-            else:
-                ids.add(attempt[i]['placeId'])
-
             #append to queue
             if i == len(attempt) - 1:
                 queue.append((lat, lon, direction))
-    return road_points, ids, queue
+    return road_points, queue
 
 def snap_points_one_way(queue, road_points, ids, road_name, distance):
+    """
+    get all the points of a road (only in one direction) from a given point
+
+    :param list of tuple of (lat, lon, dir) queue: the queue contains origin points used to find new road points
+    :param list of tuple of (lat, lon) road_points: current road points
+    :param list of string ids: current ids
+    :param string road_name: road name
+    :param numerical distance: distance between origin point and all point attempts
+
+    :return tuple:
+        road_points:
+        ids:
+    """
     #snap nearby points and see if its in the same road
     while queue:
         lat, lon, dir = queue.pop(-1)
         #attempts
         attempt = road_attempt(lat, lon, road_name, distance, dir, ids)
-        road_points, ids, queue = verify_road_attempt(lat, lon, attempt, road_points, ids, queue)
+        road_points, queue = verify_road_attempt(lat, lon, attempt, road_points, queue)
     return road_points, ids
 
 def two_way_road(initial_lat, initial_lon, road_name, direction, road_points, ids):
+    """
+    get all points of a road (both directions) from a given point
+
+    :param numerical initial_lat: latitude
+    :param numerical initial_lon: longitude
+    :param string road_name: road name
+    :param numerical direction: initial direction to test from initial point
+    :param list of tuple of (numerical, numerical) road_points: data structure to hold road points
+    :param set of string ids: data structure to hold ids
+
+    :return tuple:
+        road_points:
+        ids:
+    """
     #update distance if necessary
     if "Freeway" in road_name or "Highway" in road_name:
         distance = 1000
@@ -256,6 +308,16 @@ def two_way_road(initial_lat, initial_lon, road_name, direction, road_points, id
     return road_points, ids
 
 def road_length(lat, lon):
+    """
+    main func: get road length
+
+    :param numerical lat: latitude of point
+    :param numerical lon: longitude of point
+
+    :return dict:
+        list of tuple of (numerical, numerical) road_points: points that make up the road
+        set of string ids: ids that make up the road
+    """
     initial_lat = lat
     initial_lon = lon
 
@@ -265,12 +327,11 @@ def road_length(lat, lon):
     id = road['id']
 
     #instantiate
-    direction = 0
     road_points = [(initial_lat, initial_lon)]
     ids = {id}
 
     #get direction of road at inital point
-    first_attempt = nearest_road_attempt(initial_lat, initial_lon, road_name, direction)
+    first_attempt = nearest_road_attempt(initial_lat, initial_lon, road_name)
     if first_attempt:
         first_attempt_lat = first_attempt['location']['latitude']
         first_attempt_lon = first_attempt['location']['longitude']
@@ -293,7 +354,7 @@ def road_length(lat, lon):
 
 
 if __name__=="__main__":
-    cProfile.run('road_length(21.364075, -158.077205)')
+    #cProfile.run('road_length(21.364075, -158.077205)')
     cProfile.run('road_length(21.364075, -158.077205)', filename="rl_prof.out")
 
 

@@ -196,7 +196,7 @@ class locationIdentifiers:
     @staticmethod
     def get_all_roads_v2(lat, lon):
         """
-        :return current_routes: list of dict
+        :return list of dict current_routes:
             {
                 (road_name): (place_id)
             }
