@@ -8,6 +8,11 @@ class ApplicationService(BaseApplicationService, DatabaseService):
     def __init__(self):
         #DatabaseService.__init__(self, database_url=database_url)
         pass
+
+    @staticmethod
+    def get_road_curvature(lat, lon):
+        res = road_lengths.road_length(lat, lon)
+        return res
     
     @staticmethod
     def get_localities(lat, lon):

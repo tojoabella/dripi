@@ -72,6 +72,19 @@ def get_road():
         return "None"
     return res
 
+@app.route('/get_road_curvature', methods=['GET'])
+def get_road_curvature():
+    """
+    get road curvature
+    """
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+
+    res = ApplicationService.get_road_curvature(lat, lng)
+    if res is None:
+        return "None"
+    return res
+
 
 if __name__ == '__main__':
     app.run(debug=True)
