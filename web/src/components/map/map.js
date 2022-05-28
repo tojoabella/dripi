@@ -1,53 +1,64 @@
 //const { performance } = require('perf_hooks');
+const create_map = ( lat, lng ) => {
+  return new google.maps.Map(document.getElementById('map'), {
+    center: { lat, lng },
+    zoom: 10,
+    mapTypeId: "terrain"
+  });
+};
 
+const create_info_window = () => {
+  return new google.maps.InfoWindow();
+};
+
+const get_current_position = (onSuccess, onError) => {
+//const get_current_position = () => {
+  //var startTime = performance.now();
+  //console.time('doSomething')
+  if (navigator.geolocation) {
+    return navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  }
+  return onError(new Error('Geolocation is not supported by your browser.'));
+  //console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
+  //console.timeEnd('doSomething');
+};
 
 function initMap() {
-    let map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 21.478252, lng: -157.996700 },
-      zoom: 10,
-      mapTypeId: "terrain"
-    });
-    
+    let map = create_map(21.478252, -157.996700);
 
-    let infoWindow = new google.maps.InfoWindow();
+    let infoWindow = create_info_window();
+
     const locationButton = document.createElement("button");
     locationButton.textContent = "Pan to Current Location";
     locationButton.classList.add("custom-map-control-button");
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
   
+    
     locationButton.addEventListener("click", () => {
-      // Try HTML5 geolocation.
-      //var startTime = performance.now();
-      console.time('doSomething')
-
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            console.log(position);
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-            //var endTime = performance.now();
-            //console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
-            console.timeEnd('doSomething');
-
-  
-            infoWindow.setPosition(pos);
-            infoWindow.setContent("Location found.");
-            infoWindow.open(map);
-            //map.setCenter(pos);
-          },
-          () => {
-            handleLocationError(true, infoWindow, map.getCenter());
-          }
-        );
-      } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-      }
+      get_current_position(
+        (success) => {
+          const pos = {
+            lat: success.coords.latitude,
+            lng: success.coords.longitude,
+          };
+          infoWindow.setPosition(pos);
+          infoWindow.setContent("Location found.");
+          infoWindow.open(map);
+          //map.setCenter(pos);
+          //map.panTo(pos);
+        },
+        (error) => {
+          handleLocationError(error.message, infoWindow, map.getCenter());
+        }
+      );
     });
+  
+    function handleLocationError(error_message, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(error_message);
+      infoWindow.open(map);
+    }
+    
   
     const flightPlanCoordinates = [
       { lat: 37.772, lng: -122.214 },

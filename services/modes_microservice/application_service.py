@@ -27,12 +27,6 @@ class ApplicationService(BaseApplicationService, DatabaseService):
         return res
     
     @staticmethod
-    def get_road(lat, lon):
-        res = locationIdentifiers.get_neighborhood(lat, lon)
-        res = {'neighborhood': res}
-        return res
-    
-    @staticmethod
     def get_roads(lat, lon, format):
         if format:
             if format == 'detailed':

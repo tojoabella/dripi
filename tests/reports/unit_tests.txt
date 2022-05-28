@@ -1,7 +1,7 @@
 ============================= test session starts ==============================
 platform darwin -- Python 3.10.0, pytest-6.2.5, py-1.11.0, pluggy-1.0.0 -- /Users/tojo/opt/miniconda3/envs/dripienv/bin/python
 cachedir: .pytest_cache
-rootdir: /Users/tojo/Desktop/dripi/tests
+rootdir: /Users/tojo/Desktop/projects/dripi/tests
 collecting ... collected 37 items
 
 test_gmaps_api.py::TestGMaps::test_nearest_roads PASSED
@@ -33,13 +33,13 @@ test_location_identifiers.py::TestLocationIdentity::test_neighborhood_1 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_road_1 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_road_2 PASSED
 test_location_identifiers.py::TestLocationIdentity::test_road_3 PASSED
-test_road_lengths.py::TestRoadLength::test_vector_decomposition_1 PASSED
-test_road_lengths.py::TestRoadLength::test_vector_decomposition_2 PASSED
-test_road_lengths.py::TestRoadLength::test_vector_decomposition_3 PASSED
-test_road_lengths.py::TestRoadLength::test_vector_decomposition_4 PASSED
-test_road_lengths.py::TestRoadLength::test_vector_decomposition_5 PASSED
-test_road_lengths.py::TestRoadLength::test_vector_decomposition_6 PASSED
-test_road_lengths.py::TestRoadLength::test_vector_decomposition_7 PASSED
-test_road_lengths.py::TestRoadLength::test_vector_decomposition_8 PASSED
+test_road_points.py::TestRoadLength::test_vector_decomposition_1 PASSED
+test_road_points.py::TestRoadLength::test_vector_decomposition_2 PASSED
+test_road_points.py::TestRoadLength::test_vector_decomposition_3 PASSED
+test_road_points.py::TestRoadLength::test_vector_decomposition_4 PASSED
+test_road_points.py::TestRoadLength::test_vector_decomposition_5 PASSED
+test_road_points.py::TestRoadLength::test_vector_decomposition_6 PASSED
+test_road_points.py::TestRoadLength::test_vector_decomposition_7 PASSED
+test_road_points.py::TestRoadLength::test_vector_decomposition_8 PASSED
 
-============================== 37 passed in 4.89s ==============================
+============================== 37 passed in 4.15s ==============================
