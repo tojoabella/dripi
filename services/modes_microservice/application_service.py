@@ -1,7 +1,7 @@
 from services.base_application_service import BaseApplicationService
 from services.modes_microservice.database_service import DatabaseService
 from services.modes_microservice.lib.location_identifiers import locationIdentifiers
-import services.modes_microservice.lib.road_lengths as road_lengths
+import services.modes_microservice.lib.road_points as road_points
 
 class ApplicationService(BaseApplicationService, DatabaseService):
     
@@ -10,8 +10,8 @@ class ApplicationService(BaseApplicationService, DatabaseService):
         pass
 
     @staticmethod
-    def get_road_curvature(lat, lon):
-        res = road_lengths.road_length(lat, lon)
+    def get_road_points(lat, lon):
+        res = road_points.road_points(lat, lon)
         return res
     
     @staticmethod

@@ -103,4 +103,3 @@ class TestGMaps(unittest.TestCase):
                             'types': ['route']}]
         actual_result = GMaps.reverse_geocode_place_id(id)
         self.assertEqual(actual_result, expected_result)
-

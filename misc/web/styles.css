@@ -159,7 +159,7 @@ h1 {
     position: relative;
     width: 225px;
 }
-.container_tile {
+.mode {
     margin: 0;
     position: absolute;
     top: 50%;
@@ -170,7 +170,7 @@ h1 {
     width:200px;
     text-align: center;
 }
-.container_tile:hover {
+.mode:hover {
     cursor:pointer;
 }
 

@@ -3,7 +3,7 @@
 
 function initMap() {
     let map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 21.418764, lng: -157.931359 },
+      center: { lat: 21.478252, lng: -157.996700 },
       zoom: 10,
       mapTypeId: "terrain"
     });
@@ -37,7 +37,7 @@ function initMap() {
             infoWindow.setPosition(pos);
             infoWindow.setContent("Location found.");
             infoWindow.open(map);
-            map.setCenter(pos);
+            //map.setCenter(pos);
           },
           () => {
             handleLocationError(true, infoWindow, map.getCenter());

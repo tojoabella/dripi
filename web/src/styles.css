@@ -143,7 +143,7 @@ h1 {
     border: solid 0px white;
     opacity: 1;
 }
-.container_tile {
+.mode {
     height:175px;
     width:200px;
     margin-top:13px;
@@ -152,6 +152,6 @@ h1 {
     padding: 1em;
 }
 
-.container_tile:hover {
+.mode:hover {
     cursor:pointer;
 }

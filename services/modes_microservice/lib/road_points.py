@@ -1,9 +1,8 @@
 import math
-from services.modes_microservice.lib.location_identifiers import locationIdentifiers
-from services.modes_microservice.lib.location_identifiers import GMaps
-
 import cProfile
 
+from services.modes_microservice.lib.location_identifiers import locationIdentifiers
+from services.modes_microservice.lib.location_identifiers import GMaps
 import services.modes_microservice.lib.helper as helper
 
 def vector_decomposition(distance, direction, dir_deg = False):
@@ -311,7 +310,7 @@ def two_way_road(initial_lat, initial_lon, road_name, direction, road_points, id
 
     return road_points, ids
 
-def road_length(lat, lon):
+def road_points(lat, lon):
     """
     main func: get road length
 
@@ -358,8 +357,7 @@ def road_length(lat, lon):
 
 
 if __name__=="__main__":
-    #cProfile.run('road_length(21.364075, -158.077205)')
-    cProfile.run('road_length(21.364075, -158.077205)', filename="rl_prof.out")
+    #cProfile.run('road_points(21.364075, -158.077205)')
+    cProfile.run('road_points(21.364075, -158.077205)', filename="rl_prof.out")
 
-
-#print(road_length(21.364075, -158.077205))
+#print(road_points(21.364075, -158.077205))

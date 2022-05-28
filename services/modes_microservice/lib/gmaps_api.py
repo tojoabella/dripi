@@ -15,11 +15,11 @@ class GMaps:
 
         :return list of dictionaries:
             {
-                'address_components': list of dictionaries: {
+                'address_components': [{
                     'long_name': string
                     'short_name': string
                     'types': list of string
-                },
+                }],
                 'formatted_address': string,
                 'geometry': dictionary,
                 'place_id': string,
@@ -37,11 +37,11 @@ class GMaps:
 
         :return list of dictionaries:
             {
-                'address_components': list of dictionaries: {
+                'address_components': [{
                     'long_name': string
                     'short_name': string
                     'types': list of string
-                },
+                }],
                 'formatted_address': string,
                 'geometry': dictionary,
                 'place_id': string,
@@ -67,11 +67,36 @@ class GMaps:
     @classmethod
     def snap_to_roads(cls, points):
         """
+        from list of points to list of roads in placeId format
+
         :param list of tuples of floats points:
             e.g. [(21.529143, -158.039847), (21.545911, -158.045314)]
+        
+        :return list of dictionaries:
+            {
+                'location': {
+                    'latitude': float, 
+                    'longitude': float
+                }, 
+                'originalIndex': int,
+                'placeId': string
+            }
         """
         return cls.gmaps.snap_to_roads(points, interpolate=True)
     
     @classmethod
     def nearest_roads(cls, points):
+        """
+        from list of points to list of 
+
+        :return list of dictionaries:
+            {
+                'location': {
+                    'latitude': float,
+                    'longitude': float
+                }, 
+                'originalIndex': int, 
+                'placeId': string
+            }
+        """
         return cls.gmaps.nearest_roads(points)

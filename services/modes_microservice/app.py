@@ -72,15 +72,15 @@ def get_road():
         return "None"
     return res
 
-@app.route('/get_road_curvature', methods=['GET'])
-def get_road_curvature():
+@app.route('/get_road_points', methods=['GET'])
+def get_road_points():
     """
-    get road curvature
+    get road points
     """
     lat = request.args.get('lat')
     lng = request.args.get('lng')
 
-    res = ApplicationService.get_road_curvature(lat, lng)
+    res = ApplicationService.get_road_points(lat, lng)
     if res is None:
         return "None"
     return res
