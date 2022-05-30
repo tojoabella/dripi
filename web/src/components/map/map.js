@@ -11,7 +11,7 @@ const create_info_window = () => {
   return new google.maps.InfoWindow();
 };
 
-const get_current_position = (onSuccess, onError) => {
+const get_current_position = (onSuccess, onError = () => {}) => {
 //const get_current_position = () => {
   //var startTime = performance.now();
   //console.time('doSomething')
@@ -23,18 +23,24 @@ const get_current_position = (onSuccess, onError) => {
   //console.timeEnd('doSomething');
 };
 
-function initMap() {
-    let map = create_map(21.478252, -157.996700);
+const track_location = (onSuccess, onError = () => { }) => {
+  if (navigator.geolocation) {
+    return navigator.geolocation.watchPosition(onSuccess, onError);
+  }
+  return onError(new Error('Geolocation is not supported by your browser.'));
+};
 
+
+
+function initMap() {
+  /* INITIATE MAP */
+    let map = create_map(21.478252, -157.996700);
     let infoWindow = create_info_window();
 
-    const locationButton = document.createElement("button");
-    locationButton.textContent = "Pan to Current Location";
-    locationButton.classList.add("custom-map-control-button");
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-  
-    
-    locationButton.addEventListener("click", () => {
+    /* PAN BUTTON */
+    let pan_button = document.getElementById('map_pan_button');
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(pan_button);
+    pan_button.addEventListener("click", () => {
       get_current_position(
         (success) => {
           const pos = {
@@ -44,13 +50,21 @@ function initMap() {
           infoWindow.setPosition(pos);
           infoWindow.setContent("Location found.");
           infoWindow.open(map);
-          //map.setCenter(pos);
-          //map.panTo(pos);
+          map.panTo(pos);
+          map.setZoom(13);
         },
         (error) => {
           handleLocationError(error.message, infoWindow, map.getCenter());
         }
       );
+    });
+
+    /* RESET MAP BUTTON */
+    let reset_button = document.getElementById('map_reset_button');
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(reset_button);
+    reset_button.addEventListener("click", () => {
+      map.panTo({lat: 21.478252, lng: -157.996700});
+      map.setZoom(10);
     });
   
     function handleLocationError(error_message, infoWindow, pos) {
@@ -58,7 +72,6 @@ function initMap() {
       infoWindow.setContent(error_message);
       infoWindow.open(map);
     }
-    
   
     const flightPlanCoordinates = [
       { lat: 37.772, lng: -122.214 },
