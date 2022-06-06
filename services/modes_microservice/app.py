@@ -1,6 +1,7 @@
 from flask import Flask, Response, request
 from flask_cors import CORS
 import logging
+import json
 
 from services.modes_microservice.application_service import ApplicationService
 
@@ -27,6 +28,7 @@ def get_localities():
     lng = request.args.get('lng')
 
     res = ApplicationService.get_localities(lat, lng)
+    res = Response(json.dumps(res, default=str), status=200, content_type="application/json")
     if res is None:
         return "None"
     return res
@@ -40,6 +42,7 @@ def get_neighborhood():
     lng = request.args.get('lng')
 
     res = ApplicationService.get_neighborhood(lat, lng)
+    res = Response(json.dumps(res, default=str), status=200, content_type="application/json")
     if res is None:
         return "None"
     return res
@@ -59,15 +62,33 @@ def get_roads():
         return "None"
     return res
 
+@app.route('/get_road_dev', methods=['GET'])
+def get_road_dev():
+    """
+    get road for developers
+    
+    :return {id: ___, name: ___}
+    """
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+
+    res = ApplicationService.get_road_dev(lat, lng)
+    if res is None:
+        return "None"
+    return res
+
 @app.route('/get_road', methods=['GET'])
 def get_road():
     """
     get road
+
+    :return string
     """
     lat = request.args.get('lat')
     lng = request.args.get('lng')
 
     res = ApplicationService.get_road(lat, lng)
+    res = Response(json.dumps(res, default=str), status=200, content_type="application/json")
     if res is None:
         return "None"
     return res

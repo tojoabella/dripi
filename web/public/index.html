@@ -40,7 +40,7 @@
 
 <!--------- SIDE BAR --------->
 <label class="sticky side_bar" id="side_bar">
-  <p id="modes" class="item_relative_horizontally_center">MODES</p>
+  <p id="" class="item_relative_horizontally_center">MODES</p>
   <ul>
     <li><a class="side_bar_element constant">street change alerter</a></li>
     <li><a class="side_bar_element constant">city change alerter</a></li>
@@ -70,11 +70,17 @@
     <div id="map"></div>
     <button id="map_pan_button">Pan to current location</button>
     <button id="map_reset_button">Reset map</button>
-
     <!----- !MAP ----->
 
     <!----- INFO ----->
-    <div id="map_info"></div>
+    <div id="map_info" class="container">
+      <div id="coordinates">Coordinates: </div>
+      <div id="road_name">Street: </div>
+      <div id="city_name">City: </div>
+      <div id="locality_name">Locality: </div>
+      <div id="road_length">Road Length: </div>
+      <div id="speed_limit">Speed Limit: </div>
+    </div>
     <!----- !INFO ----->
 
     <!----- MODES ----->

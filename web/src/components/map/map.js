@@ -83,5 +83,45 @@ function initMap() {
       { lat: -27.467, lng: 153.027 },
     ];
     add_polylines(polyline_coords, map);
-  }
 
+    const pos = {
+      lat: 21.478252,
+      lng: -157.996700,
+    };
+    mode_1(pos, map);
+}
+
+/*
+function httpGetAsync(theUrl, callback){
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+*/
+function httpGet(theUrl) {
+  let xmlHttpReq = new XMLHttpRequest();
+  xmlHttpReq.open("GET", theUrl, false); 
+  xmlHttpReq.send(null);
+  return xmlHttpReq.responseText;
+}
+
+/* MODES */
+
+const mode_1 = (pos, map) => {
+  /* get road */
+  let latitude = pos["lat"];
+  let longitude = pos["lng"];
+  let url = "http://127.0.0.1:5000//get_road?lat=" + latitude + "&lng=" + longitude;
+  let response = httpGet(url);
+  response = JSON.parse(response);
+  console.log(response);
+  let infoWindow = create_info_window();
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(response);
+  infoWindow.open(map);
+  document.getElementById("road_name").innerHTML = "Road: " + response;
+};

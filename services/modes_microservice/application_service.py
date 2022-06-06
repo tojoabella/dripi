@@ -17,7 +17,7 @@ class ApplicationService(BaseApplicationService, DatabaseService):
     @staticmethod
     def get_localities(lat, lon):
         res = locationIdentifiers.get_all_localities(lat, lon)
-        res = {'localities': res}
+        #res = {'localities': res}
         return res
     
     @staticmethod
@@ -38,6 +38,11 @@ class ApplicationService(BaseApplicationService, DatabaseService):
         else:
             res = locationIdentifiers.get_all_roads(lat, lon)
         res = {'roads': res}
+        return res
+    
+    @staticmethod
+    def get_road_dev(lat, lon):
+        res = locationIdentifiers.get_road_dev(lat, lon)
         return res
     
     @staticmethod

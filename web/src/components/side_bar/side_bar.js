@@ -1,7 +1,7 @@
 
 export function homepage_side_bar() {
-    /* toggle sidebar */
-    document.getElementById('modes').addEventListener('click', () => {
+    /* toggle sidebar when clicking "modes"*/
+    document.getElementById('side_bar').getElementsByTagName('p')[0].addEventListener('click', () => {
         document.getElementById('side_bar').getElementsByTagName('ul')[0].classList.toggle('d-none');
     });
 

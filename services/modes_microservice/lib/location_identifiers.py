@@ -92,7 +92,7 @@ class locationIdentifiers:
                 print(f"{i}: {geocodes[i]}")
     
     @staticmethod
-    def get_road(lat, lon, printall=False):
+    def get_road_dev(lat, lon, printall=False):
         """
         get the road related to the geocode that has type 'route'. Most likely only one road even if overlapping roads (i.e. 21.396117, -157.984485)
 
@@ -118,6 +118,32 @@ class locationIdentifiers:
                     return {'name': address_name,
                             'id': place_id}
                     #return {address_name: place_id}
+        except:
+            print("FAILED GET_ROAD ATTEMPT")
+            print(f"the ({lat}, {lon}) the geocodes are:")
+            for i in range(len(geocodes)):
+                print(f"{i}: {geocodes[i]}")
+    
+    @staticmethod
+    def get_road(lat, lon, printall=False):
+        """
+        get the road related to the geocode that has type 'route'. Most likely only one road even if overlapping roads (i.e. 21.396117, -157.984485)
+
+        :return string: address_name
+        """
+        geocodes = GMaps.reverse_geocode(lat, lon)
+        try:
+            if printall:
+                for i in range(len(geocodes)):
+                    print(f"{i}: {geocodes[i]}")
+
+            for geocode in geocodes:
+                if 'route' in geocode['types']:
+                    for address in geocode['address_components']:
+                        if 'route' in address['types']:
+                            address_name = address['long_name']
+                            break
+                    return address_name
         except:
             print("FAILED GET_ROAD ATTEMPT")
             print(f"the ({lat}, {lon}) the geocodes are:")
