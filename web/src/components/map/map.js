@@ -89,6 +89,7 @@ function initMap() {
       lng: -157.996700,
     };
     mode_1(pos, map);
+    mode_2(pos, map);
 }
 
 /*
@@ -124,4 +125,24 @@ const mode_1 = (pos, map) => {
   infoWindow.setContent(response);
   infoWindow.open(map);
   document.getElementById("road_name").innerHTML = "Road: " + response;
+};
+
+const mode_2 = (pos) => {
+  /* get localities */
+  let latitude = pos["lat"];
+  let longitude = pos["lng"];
+  let url = "http://127.0.0.1:5000//get_localities?lat=" + latitude + "&lng=" + longitude;
+  let response = httpGet(url);
+  response = JSON.parse(response);
+  console.log(response);
+  let text = "";
+  for (let i = 0; i < response.length; i++) {
+    if (i == response.length - 1){
+      text += response[i];
+    }
+    else{
+      text += response[i] + ", ";
+    }
+  }
+  document.getElementById("locality_name").innerHTML = "Localities: " + text;
 };
