@@ -88,6 +88,7 @@ function initMap() {
       lat: 21.478252,
       lng: -157.996700,
     };
+    add_coordinates(pos);
     mode_1(pos, map);
     mode_2(pos);
     mode_3(pos);
@@ -112,6 +113,12 @@ function httpGet(theUrl) {
 }
 
 /* MODES */
+
+const add_coordinates = (pos) => {
+  let latitude = pos["lat"];
+  let longitude = pos["lng"];
+  document.getElementById("coordinates").innerHTML = "Coordinates: " + latitude + ", " + longitude;
+}
 
 const mode_1 = (pos, map) => {
   /* get road */
