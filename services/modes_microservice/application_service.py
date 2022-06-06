@@ -23,7 +23,7 @@ class ApplicationService(BaseApplicationService, DatabaseService):
     @staticmethod
     def get_neighborhood(lat, lon):
         res = locationIdentifiers.get_neighborhood(lat, lon)
-        res = {'neighborhood': res}
+        #res = {'neighborhood': res}
         return res
     
     @staticmethod

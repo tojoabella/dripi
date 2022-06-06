@@ -89,7 +89,8 @@ function initMap() {
       lng: -157.996700,
     };
     mode_1(pos, map);
-    mode_2(pos, map);
+    mode_2(pos);
+    mode_3(pos);
 }
 
 /*
@@ -145,4 +146,15 @@ const mode_2 = (pos) => {
     }
   }
   document.getElementById("locality_name").innerHTML = "Localities: " + text;
+};
+
+const mode_3 = (pos) => {
+  /* get neighborhood */
+  let latitude = pos["lat"];
+  let longitude = pos["lng"];
+  let url = "http://127.0.0.1:5000//get_neighborhood?lat=" + latitude + "&lng=" + longitude;
+  let response = httpGet(url);
+  response = JSON.parse(response);
+  console.log(response);
+  document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + response;
 };
