@@ -1,3 +1,4 @@
+/* HELPERS */
 const create_map = ( lat, lng ) => {
   return new google.maps.Map(document.getElementById('map'), {
     center: { lat, lng },
@@ -10,6 +11,7 @@ const create_info_window = () => {
   return new google.maps.InfoWindow();
 };
 
+/* DEPRECATED: NOW USING PROMISES/ASYNC/AWAIT INSTEAD OF CALLBACKS
 const get_current_position = (onSuccess, onError = () => {}) => {
   if (navigator.geolocation) {
     return navigator.geolocation.getCurrentPosition(onSuccess, onError);
@@ -23,6 +25,32 @@ const track_location = (onSuccess, onError = () => { }) => {
   }
   return onError(new Error('Geolocation is not supported by your browser.'));
 };
+*/
+
+function get_current_position() {
+  var options = {
+    enableHighAccuracy: true,
+    timeout:    5000,
+    maximumAge: 0,
+  };
+
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => { resolve(pos); }, 
+      (err) => { reject(err); }, 
+      options);
+  });
+}
+
+function on_track_location_success(){
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.watchPosition(
+      (pos) => { resolve(pos) },
+      (err) => { reject(err) }
+    );
+  });
+}
+
 
 const add_polylines = (coords, map) => {
   const flightPath = new google.maps.Polyline({
@@ -35,65 +63,98 @@ const add_polylines = (coords, map) => {
   flightPath.setMap(map);
 };
 
-function initMap() {
-  /* INITIATE MAP */
-    let map = create_map(21.478252, -157.996700);
-    let infoWindow = create_info_window();
+var current_position;
 
-    /* PAN BUTTON */
-    let pan_button = document.getElementById('map_pan_button');
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(pan_button);
-    pan_button.addEventListener("click", () => {
-      get_current_position(
-        (success) => {
-          const pos = {
-            lat: success.coords.latitude,
-            lng: success.coords.longitude,
-          };
-          infoWindow.setPosition(pos);
-          infoWindow.setContent("Location found.");
-          infoWindow.open(map);
-          map.panTo(pos);
-          map.setZoom(13);
-        },
-        (error) => {
-          handleLocationError(error.message, infoWindow, map.getCenter());
-        }
-      );
-    });
-
-    /* RESET MAP BUTTON */
-    let reset_button = document.getElementById('map_reset_button');
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(reset_button);
-    reset_button.addEventListener("click", () => {
-      map.panTo({lat: 21.478252, lng: -157.996700});
-      map.setZoom(10);
-    });
-  
-    function handleLocationError(error_message, infoWindow, pos) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(error_message);
-      infoWindow.open(map);
-    }
-  
-    const polyline_coords = [
-      { lat: 37.772, lng: -122.214 },
-      { lat: 21.291, lng: -157.821 },
-      { lat: -18.142, lng: 178.431 },
-      { lat: -27.467, lng: 153.027 },
-    ];
-    add_polylines(polyline_coords, map);
-
-    const pos = {
-      lat: 21.478252,
-      lng: -157.996700,
-    };
-    add_coordinates(pos);
-    mode_1(pos, map);
-    mode_2(pos);
-    mode_3(pos);
+function set_current_position(pos) {
+  current_position = pos;
 }
 
+async function initMap() {
+  /* INITIATE MAP */
+  let map = create_map(21.478252, -157.996700);
+  let infoWindow = create_info_window();
+
+  /* PAN BUTTON */
+  let pan_button = document.getElementById('map_pan_button');
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(pan_button);
+  pan_button.addEventListener("click", () => {
+    get_current_position(
+      (success) => {
+        const pos = {
+          lat: success.coords.latitude,
+          lng: success.coords.longitude,
+        };
+        infoWindow.setPosition(pos);
+        infoWindow.setContent("Location found.");
+        infoWindow.open(map);
+        map.panTo(pos);
+        map.setZoom(13);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  });
+
+  /* RESET MAP BUTTON */
+  let reset_button = document.getElementById('map_reset_button');
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(reset_button);
+  reset_button.addEventListener("click", () => {
+    map.panTo({lat: 21.478252, lng: -157.996700});
+    map.setZoom(10);
+  });
+
+  function handleLocationError(error_message, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(error_message);
+    infoWindow.open(map);
+  }
+
+  const polyline_coords = [
+    { lat: 37.772, lng: -122.214 },
+    { lat: 21.291, lng: -157.821 },
+    { lat: -18.142, lng: 178.431 },
+    { lat: -27.467, lng: 153.027 },
+  ];
+  add_polylines(polyline_coords, map);
+
+  let response = await get_current_position();
+  let pos = {
+    lat: response.coords.latitude,
+    lng: response.coords.longitude,
+  };
+  console.log(pos);
+  set_current_position(pos);
+  add_coordinates(current_position);
+  mode_1(current_position, map);
+  mode_2(current_position);
+  mode_3(current_position);
+
+  /*
+    (success) => {
+      const pos = {
+        lat: success.coords.latitude,
+        lng: success.coords.longitude,
+      };
+
+      set_current_position(pos);
+      console.log(current_position);
+      
+    },
+    (error) => {
+      handleLocationError(error.message, infoWindow, map.getCenter());
+    }
+  );
+  */
+
+}
+
+/*
+add_coordinates(current_position);
+mode_1(current_position, map);
+mode_2(current_position);
+mode_3(current_position);
+*/
 /*
 function httpGetAsync(theUrl, callback){
     var xmlHttp = new XMLHttpRequest();
@@ -165,3 +226,50 @@ const mode_3 = (pos) => {
   console.log(response);
   document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + response;
 };
+
+function round_number(num, dec) {
+  return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
+}
+
+function on_track_location_success(position){
+  const pos = {
+    lat: position.coords.latitude,
+    lng: position.coords.longitude,
+  };
+  add_coordinates(pos);
+  pos[lat] = round_number(pos[lat], 4);
+  pos[lng] = round_number(pos[lng], 4);
+  return pos;
+}
+
+/*
+document.getElementById('start').addEventListener("click", () => {
+  
+  let current_position = get_current_position(
+    (success) => {
+      const pos = {
+        lat: success.coords.latitude,
+        lng: success.coords.longitude,
+      };
+      pos[lat] = round_number(pos[lat], 4);
+      pos[lng] = round_number(pos[lng], 4);
+      return pos;
+    },
+    (error) => {
+      handleLocationError(error.message, infoWindow, map.getCenter());
+    }
+  );
+  */
+  
+  /*
+  let new_position = track_location(
+    on_track_location_success,
+    (error) => {
+      handleLocationError(error.message, infoWindow, map.getCenter());
+    }
+  );
+  */
+
+/*
+});
+*/
