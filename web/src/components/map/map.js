@@ -79,23 +79,17 @@ async function initMap() {
   /* PAN BUTTON */
   let pan_button = document.getElementById('map_pan_button');
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(pan_button);
-  pan_button.addEventListener("click", () => {
-    get_current_position(
-      (success) => {
-        const pos = {
-          lat: success.coords.latitude,
-          lng: success.coords.longitude,
-        };
-        infoWindow.setPosition(pos);
-        infoWindow.setContent("Location found.");
-        infoWindow.open(map);
-        map.panTo(pos);
-        map.setZoom(13);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  pan_button.addEventListener("click", async () => {
+    let response = await get_current_position();
+    let pos = {
+      lat: response.coords.latitude,
+      lng: response.coords.longitude,
+    };
+    infoWindow.setPosition(pos);
+    infoWindow.setContent("Location found.");
+    infoWindow.open(map);
+    map.panTo(pos);
+    map.setZoom(13);
   });
 
   /* RESET MAP BUTTON */
