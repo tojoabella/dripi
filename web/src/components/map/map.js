@@ -71,6 +71,24 @@ function set_current_position(pos) {
   current_position = pos;
 }
 
+/*
+function httpGetAsync(theUrl, callback){
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+*/
+function httpGet(theUrl) {
+  let xmlHttpReq = new XMLHttpRequest();
+  xmlHttpReq.open("GET", theUrl, false); 
+  xmlHttpReq.send(null);
+  return xmlHttpReq.responseText;
+}
+
 async function initMap() {
   /* INITIATE MAP */
   map = create_map(21.478252, -157.996700);
@@ -122,62 +140,41 @@ async function initMap() {
   console.log(pos);
   set_current_position(pos);
   add_coordinates(current_position);
-  mode_1(current_position, map);
-  mode_2(current_position);
-  mode_3(current_position);
-
-  /*
-    (success) => {
-      const pos = {
-        lat: success.coords.latitude,
-        lng: success.coords.longitude,
-      };
-
-      set_current_position(pos);
-      console.log(current_position);
-      
-    },
-    (error) => {
-      handleLocationError(error.message, infoWindow, map.getCenter());
-    }
-  );
-  */
-
+  add_road_info(current_position);
+  add_locality_info(current_position);
+  add_neighborhood_info(current_position);
 }
 
-/*
-add_coordinates(current_position);
-mode_1(current_position, map);
-mode_2(current_position);
-mode_3(current_position);
-*/
-/*
-function httpGetAsync(theUrl, callback){
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-    xmlHttp.send(null);
-}
-*/
-function httpGet(theUrl) {
-  let xmlHttpReq = new XMLHttpRequest();
-  xmlHttpReq.open("GET", theUrl, false); 
-  xmlHttpReq.send(null);
-  return xmlHttpReq.responseText;
-}
-
-/* MODES */
-
+/* MAP INFO */
 const add_coordinates = (pos) => {
   let latitude = pos["lat"];
   let longitude = pos["lng"];
   document.getElementById("coordinates").innerHTML = "Coordinates: " + latitude + ", " + longitude;
 }
 
-const mode_1 = (pos, map) => {
+const add_road_info = (pos) =>{
+  let road = mode_1(pos);
+  document.getElementById("road_name").innerHTML = "Road: " + road;
+}
+
+const add_locality_info = (pos) =>{
+  let localities = mode_2(pos);
+  document.getElementById("locality_name").innerHTML = "Localities: " + localities;
+}
+
+const add_neighborhood_info = (pos) =>{
+    let neighborhood = mode_3(pos);
+    if (neighborhood != null) {
+      document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + neighborhood;
+    }
+    else{
+        document.getElementById("neighborhood_name").innerHTML = "Neighborhood: NONE";
+    }
+  }
+
+/* MODES */
+
+const mode_1 = (pos) => {
   /* get road */
   let latitude = pos["lat"];
   let longitude = pos["lng"];
@@ -185,11 +182,7 @@ const mode_1 = (pos, map) => {
   let response = httpGet(url);
   response = JSON.parse(response);
   console.log(response);
-  let infoWindow = create_info_window();
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(response);
-  infoWindow.open(map);
-  document.getElementById("road_name").innerHTML = "Road: " + response;
+  return response;
 };
 
 const mode_2 = (pos) => {
@@ -209,7 +202,8 @@ const mode_2 = (pos) => {
       text += response[i] + ", ";
     }
   }
-  document.getElementById("locality_name").innerHTML = "Localities: " + text;
+  return text;
+  // document.getElementById("locality_name").innerHTML = "Localities: " + text;
 };
 
 const mode_3 = (pos) => {
@@ -220,7 +214,8 @@ const mode_3 = (pos) => {
   let response = httpGet(url);
   response = JSON.parse(response);
   console.log(response);
-  document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + response;
+  return response;
+  //document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + response;
 };
 
 function round_number(num, dec) {
