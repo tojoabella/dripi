@@ -1,3 +1,7 @@
+/* INSTANTIATE */
+var current_position;
+var map;
+
 /* HELPERS */
 const create_map = ( lat, lng ) => {
   return new google.maps.Map(document.getElementById('map'), {
@@ -63,15 +67,13 @@ const add_polylines = (coords, map) => {
   flightPath.setMap(map);
 };
 
-var current_position;
-
 function set_current_position(pos) {
   current_position = pos;
 }
 
 async function initMap() {
   /* INITIATE MAP */
-  let map = create_map(21.478252, -157.996700);
+  map = create_map(21.478252, -157.996700);
   let infoWindow = create_info_window();
 
   /* PAN BUTTON */
