@@ -9,8 +9,9 @@
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  
-  <script src="../src/components/map/map.js"></script>
+
+  <script type="module" src="../src/components/map/init.js"></script>
+
 
   <link rel="stylesheet" href="../src/styles.css">
   <link rel="stylesheet" href="../src/components/top_bar/top_bar.css">
@@ -61,9 +62,10 @@
 <!---------MAIN: TOP BUTTONS AND MODES-OVERVIEW --------->
 <div id="main_container" class=""> 
     <!----- TOP BUTTONS ----->
-    <button id="start" class="text-center top-button">
-      <!--<input type="button" class="dripibtn inactive_item" onclick="window.open('test1.html');" value="Start">-->
-    </button>
+    <div id="start" class="text-center top-button">
+      <input type="button" class="dripibtn inactive_item" value="Start">
+    </div>
+
     <!-----!TOP BUTTONS ----->
 
     <!----- MAP ----->
@@ -241,10 +243,7 @@
 <script type="module" src="../src/app.js"></script>
 
 <!-- MAP -->
-<script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvzjP9KjXDSPGtBzclIe0mwCs5t6YsHvM&callback=initMap">
-</script>
-
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvzjP9KjXDSPGtBzclIe0mwCs5t6YsHvM&callback=initMap"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <noscript>You need to enable JavaScript to view the full site.</noscript>
