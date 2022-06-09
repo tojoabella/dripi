@@ -1,6 +1,5 @@
 /* INSTANTIATE */
-var current_position;
-var map;
+let map;
 
 /* HELPERS */
 const create_map = ( lat, lng ) => {
@@ -46,7 +45,7 @@ function get_current_position() {
   });
 }
 
-function on_track_location_success(){
+function track_location(){
   return new Promise((resolve, reject) => {
     navigator.geolocation.watchPosition(
       (pos) => { resolve(pos) },
@@ -54,7 +53,6 @@ function on_track_location_success(){
     );
   });
 }
-
 
 const add_polylines = (coords, map) => {
   const flightPath = new google.maps.Polyline({
@@ -138,11 +136,13 @@ async function initMap() {
     lng: response.coords.longitude,
   };
   console.log(pos);
+  /*
   set_current_position(pos);
   add_coordinates(current_position);
   add_road_info(current_position);
   add_locality_info(current_position);
   add_neighborhood_info(current_position);
+  */
 }
 
 /* MAP INFO */
@@ -203,7 +203,6 @@ const mode_2 = (pos) => {
     }
   }
   return text;
-  // document.getElementById("locality_name").innerHTML = "Localities: " + text;
 };
 
 const mode_3 = (pos) => {
@@ -215,7 +214,6 @@ const mode_3 = (pos) => {
   response = JSON.parse(response);
   console.log(response);
   return response;
-  //document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + response;
 };
 
 function round_number(num, dec) {
@@ -233,34 +231,4 @@ function on_track_location_success(position){
   return pos;
 }
 
-/*
-document.getElementById('start').addEventListener("click", () => {
-  
-  let current_position = get_current_position(
-    (success) => {
-      const pos = {
-        lat: success.coords.latitude,
-        lng: success.coords.longitude,
-      };
-      pos[lat] = round_number(pos[lat], 4);
-      pos[lng] = round_number(pos[lng], 4);
-      return pos;
-    },
-    (error) => {
-      handleLocationError(error.message, infoWindow, map.getCenter());
-    }
-  );
-  */
-  
-  /*
-  let new_position = track_location(
-    on_track_location_success,
-    (error) => {
-      handleLocationError(error.message, infoWindow, map.getCenter());
-    }
-  );
-  */
-
-/*
-});
-*/
+window.initMap = initMap;
