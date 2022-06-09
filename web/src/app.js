@@ -12,6 +12,7 @@ mode_toggler();
 
 /* INSTANTIATE */
 const number_of_modes = 15;
+let track_location_id;
 let current_coords;
 let current_road;
 let current_localities;
@@ -26,7 +27,6 @@ function update_active_modes(){
             active_modes.add(mode);
         }
     }
-    console.log(active_modes);
 }
 
 const track_location = (onSuccess, onError = () => { }) => {
@@ -38,7 +38,6 @@ const track_location = (onSuccess, onError = () => { }) => {
 
 function run_updates(pos){
 
-    console.log("running updates");
     map_info.update_coordinates(pos);
     current_coords = pos;
 
@@ -83,9 +82,16 @@ function on_track_location_success(position){
 
 document.getElementById('start').addEventListener('click', async () => {
     update_active_modes();
-    track_location(
+    track_location_id = track_location(
         on_track_location_success,
         (error) => {
           handleLocationError(error.message, infoWindow, map.getCenter());
         });
-  });
+});
+
+document.getElementById('stop').addEventListener('click', () => {
+    if (track_location_id) {
+        navigator.geolocation.clearWatch(track_location_id);
+        track_location_id = null;
+    }
+});
