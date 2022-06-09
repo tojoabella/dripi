@@ -1,85 +1,58 @@
 /* MAP INFO */
-export const add_coordinates = (pos) => {
+import * as api_queries from "./api_queries.js";
+
+/* GETS */
+export const get_road_info = () => {
+    let text = document.getElementById("road_name").textContent();
+    return text;
+};
+
+export const get_locality_info = () => {
+    let text = document.getElementById("locality_name").textContent();
+    return text;
+};
+
+export const get_neighborhood_info = () => {
+    let text = document.getElementById("neighborhood_name").textContent();
+    return text;
+};
+
+
+/* UPDATES */
+export const update_coordinates = (pos) => {
     let latitude = pos["lat"];
     let longitude = pos["lng"];
     document.getElementById("coordinates").innerHTML = "Coordinates: " + latitude + ", " + longitude;
-  }
+}
   
-export const add_road_info = (pos) =>{
-    let road = mode_1(pos);
+export const update_road_info_given_pos = (pos) =>{
+    let road = api_queries.get_road(pos);
+    document.getElementById("road_name").innerHTML = "Road: " + road;
+}
+
+export const update_road_info_given_road = (road) =>{
     document.getElementById("road_name").innerHTML = "Road: " + road;
 }
   
-export const add_locality_info = (pos) =>{
-    let localities = mode_2(pos);
+export const update_locality_info_given_pos = (pos) =>{
+    let localities = api_queries.get_localities(pos);
+    document.getElementById("locality_name").innerHTML = "Localities: " + localities;
+}
+
+export const update_locality_info_given_localities = (localities) =>{
     document.getElementById("locality_name").innerHTML = "Localities: " + localities;
 }
   
-export const add_neighborhood_info = (pos) =>{
-    let neighborhood = mode_3(pos);
+export const update_neighborhood_info_given_pos = (pos) =>{
+    let neighborhood = api_queries.get_neighborhood(pos);
     if (neighborhood != null) {
-    document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + neighborhood;
+        document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + neighborhood;
     }
     else{
         document.getElementById("neighborhood_name").innerHTML = "Neighborhood: NONE";
     }
  }
-  
-/* MODES */
-  
-export const mode_1 = (pos) => {
-    /* get road */
-    let latitude = pos["lat"];
-    let longitude = pos["lng"];
-    let url = "http://127.0.0.1:5000//get_road?lat=" + latitude + "&lng=" + longitude;
-    let response = httpGet(url);
-    response = JSON.parse(response);
-    console.log(response);
-    return response;
-};
-  
-export const mode_2 = (pos) => {
-    /* get localities */
-    let latitude = pos["lat"];
-    let longitude = pos["lng"];
-    let url = "http://127.0.0.1:5000//get_localities?lat=" + latitude + "&lng=" + longitude;
-    let response = httpGet(url);
-    response = JSON.parse(response);
-    console.log(response);
-    let text = "";
-    for (let i = 0; i < response.length; i++) {
-      if (i == response.length - 1){
-        text += response[i];
-      }
-      else{
-        text += response[i] + ", ";
-      }
-    }
-    return text;
-};
-  
-export const mode_3 = (pos) => {
-    /* get neighborhood */
-    let latitude = pos["lat"];
-    let longitude = pos["lng"];
-    let url = "http://127.0.0.1:5000//get_neighborhood?lat=" + latitude + "&lng=" + longitude;
-    let response = httpGet(url);
-    response = JSON.parse(response);
-    console.log(response);
-    return response;
-};
-  
-export function round_number(num, dec) {
-    return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
-  }
-  
-export function on_track_location_success(position){
-    const pos = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-    };
-    add_coordinates(pos);
-    pos[lat] = round_number(pos[lat], 4);
-    pos[lng] = round_number(pos[lng], 4);
-    return pos;
-}
+
+ export const update_neighborhood_info_given_neighborhood = (neighborhood) =>{
+    document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + neighborhood;
+ }

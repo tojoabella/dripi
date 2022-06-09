@@ -3,25 +3,31 @@ import {homepage_top_bar} from './components/top_bar/top_bar.js';
 import {theme_toggler} from './components/theme_toggler.js';
 import {mode_toggler} from './components/modes/modes.js';
 import * as map_info from './components/map/map_info.js';
+import * as api_queries from "./components/map/api_queries.js";
 
 homepage_side_bar();
 homepage_top_bar();
 theme_toggler();
 mode_toggler();
 
-/*
-document.getElementById('start').addEventListener('click', () => {
-    var modes = document.getElementsByClassName('mode');
-    for (let i = 0; i < modes.length; i++) {
-        mode = modes[i];
-        if (mode.classList.contains('active')) {
-            mode.classList.remove('show');
+/* INSTANTIATE */
+const number_of_modes = 15;
+let current_coords;
+let current_road;
+let current_localities;
+let current_neighborhood;
+let active_modes = new Set();
+
+function update_active_modes(){
+    active_modes.clear();
+    for (let i = 1; i <= number_of_modes; i++) {
+        let mode = "mode" + i;
+        if (document.getElementById(mode).classList.contains('active_item')){
+            active_modes.add(mode);
         }
     }
-});
-*/
-
-let current_position;
+    console.log(active_modes);
+}
 
 const track_location = (onSuccess, onError = () => { }) => {
     if (navigator.geolocation) {
@@ -31,11 +37,34 @@ const track_location = (onSuccess, onError = () => { }) => {
 };
 
 function run_updates(pos){
-    map_info.add_coordinates(pos);
-    map_info.add_locality_info(pos);
-    map_info.add_neighborhood_info(pos);
-    map_info.add_road_info(pos);
+
+    console.log("running updates");
+    map_info.update_coordinates(pos);
+    current_coords = pos;
+
+    let new_localities = api_queries.get_localities(pos);
+    if (new_localities != current_localities){
+        map_info.update_locality_info_given_localities(new_localities);
+        current_localities = new_localities;
+    }
+
+    let new_neighborhood = api_queries.get_neighborhood(pos);
+    if (new_neighborhood != current_neighborhood){
+        map_info.update_neighborhood_info_given_neighborhood(new_neighborhood);
+        current_neighborhood = new_neighborhood;
+    }
+
+    let new_road = api_queries.get_road(pos);
+    if (new_road != current_road){
+        map_info.update_road_info_given_road(new_road);
+        current_road = new_road;
+    }
+
 }
+
+function round_number(num, dec) {
+    return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
+  }
 
 function on_track_location_success(position){
     const pos = {
@@ -47,18 +76,13 @@ function on_track_location_success(position){
     pos.lng = round_number(pos.lng, 4);
     console.log(pos);
 
-    if (!current_position) {
-        current_position = pos;
-    }
-    else{
-        console.log("here");
-        if (pos != current_position){
-            run_updates(pos);
-        }
+    if ((!current_coords) || (pos != current_coords)) {
+        run_updates(pos);
     }
   }
 
 document.getElementById('start').addEventListener('click', async () => {
+    update_active_modes();
     track_location(
         on_track_location_success,
         (error) => {
