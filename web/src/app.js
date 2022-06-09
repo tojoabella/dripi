@@ -91,6 +91,16 @@ document.getElementById('start').addEventListener('click', async () => {
         (error) => {
           handleLocationError(error.message, infoWindow, map.getCenter());
         });
+
+    
+    let stop_button = document.getElementById('stop')
+    if (stop_button.classList.contains('active_item')){
+        stop_button.classList.remove('active_item');
+        stop_button.classList.add('inactive_item');
+    }
+
+    document.getElementById('start').classList.add('active_item');
+    document.getElementById('start').classList.remove('inactive_item');
 });
 
 document.getElementById('stop').addEventListener('click', () => {
@@ -98,6 +108,15 @@ document.getElementById('stop').addEventListener('click', () => {
         navigator.geolocation.clearWatch(track_location_id);
         track_location_id = null;
     }
+
+    let start_button = document.getElementById('start')
+    if (start_button.classList.contains('active_item')){
+        start_button.classList.remove('active_item');
+        start_button.classList.add('inactive_item');
+    }
+
+    document.getElementById('stop').classList.add('active_item');
+    document.getElementById('stop').classList.remove('inactive_item');
 });
 
 document.getElementById('clear').addEventListener('click', () => {
@@ -107,4 +126,16 @@ document.getElementById('clear').addEventListener('click', () => {
     current_localities = "";
     current_neighborhood = "";
     active_modes.clear();
+
+
+    let start_button = document.getElementById('start')
+    if (start_button.classList.contains('active_item')){
+        start_button.classList.remove('active_item');
+        start_button.classList.add('inactive_item');
+    }
+    let stop_button = document.getElementById('stop');
+    if (stop_button.classList.contains('active_item')){
+        stop_button.classList.remove('active_item');
+        stop_button.classList.add('inactive_item');
+    }
 });
