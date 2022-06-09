@@ -90,12 +90,13 @@ function httpGet(theUrl) {
 async function initMap() {
   /* INITIATE MAP */
   map = create_map(21.478252, -157.996700);
-  let infoWindow = create_info_window();
+  let infoWindow;
 
   /* PAN BUTTON */
   let pan_button = document.getElementById('map_pan_button');
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(pan_button);
   pan_button.addEventListener("click", async () => {
+    infoWindow = create_info_window();
     let response = await get_current_position();
     let pos = {
       lat: response.coords.latitude,
@@ -114,6 +115,9 @@ async function initMap() {
   reset_button.addEventListener("click", () => {
     map.panTo({lat: 21.478252, lng: -157.996700});
     map.setZoom(10);
+    if (infoWindow){
+      infoWindow.close();
+    }
   });
 
   function handleLocationError(error_message, infoWindow, pos) {
@@ -129,106 +133,6 @@ async function initMap() {
     { lat: -27.467, lng: 153.027 },
   ];
   add_polylines(polyline_coords, map);
-
-  let response = await get_current_position();
-  let pos = {
-    lat: response.coords.latitude,
-    lng: response.coords.longitude,
-  };
-  console.log(pos);
-  /*
-  set_current_position(pos);
-  add_coordinates(current_position);
-  add_road_info(current_position);
-  add_locality_info(current_position);
-  add_neighborhood_info(current_position);
-  */
-}
-
-/* MAP INFO */
-const add_coordinates = (pos) => {
-  let latitude = pos["lat"];
-  let longitude = pos["lng"];
-  document.getElementById("coordinates").innerHTML = "Coordinates: " + latitude + ", " + longitude;
-}
-
-const add_road_info = (pos) =>{
-  let road = mode_1(pos);
-  document.getElementById("road_name").innerHTML = "Road: " + road;
-}
-
-const add_locality_info = (pos) =>{
-  let localities = mode_2(pos);
-  document.getElementById("locality_name").innerHTML = "Localities: " + localities;
-}
-
-const add_neighborhood_info = (pos) =>{
-    let neighborhood = mode_3(pos);
-    if (neighborhood != null) {
-      document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + neighborhood;
-    }
-    else{
-        document.getElementById("neighborhood_name").innerHTML = "Neighborhood: NONE";
-    }
-  }
-
-/* MODES */
-
-const mode_1 = (pos) => {
-  /* get road */
-  let latitude = pos["lat"];
-  let longitude = pos["lng"];
-  let url = "http://127.0.0.1:5000//get_road?lat=" + latitude + "&lng=" + longitude;
-  let response = httpGet(url);
-  response = JSON.parse(response);
-  console.log(response);
-  return response;
-};
-
-const mode_2 = (pos) => {
-  /* get localities */
-  let latitude = pos["lat"];
-  let longitude = pos["lng"];
-  let url = "http://127.0.0.1:5000//get_localities?lat=" + latitude + "&lng=" + longitude;
-  let response = httpGet(url);
-  response = JSON.parse(response);
-  console.log(response);
-  let text = "";
-  for (let i = 0; i < response.length; i++) {
-    if (i == response.length - 1){
-      text += response[i];
-    }
-    else{
-      text += response[i] + ", ";
-    }
-  }
-  return text;
-};
-
-const mode_3 = (pos) => {
-  /* get neighborhood */
-  let latitude = pos["lat"];
-  let longitude = pos["lng"];
-  let url = "http://127.0.0.1:5000//get_neighborhood?lat=" + latitude + "&lng=" + longitude;
-  let response = httpGet(url);
-  response = JSON.parse(response);
-  console.log(response);
-  return response;
-};
-
-function round_number(num, dec) {
-  return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
-}
-
-function on_track_location_success(position){
-  const pos = {
-    lat: position.coords.latitude,
-    lng: position.coords.longitude,
-  };
-  add_coordinates(pos);
-  pos[lat] = round_number(pos[lat], 4);
-  pos[lng] = round_number(pos[lng], 4);
-  return pos;
 }
 
 window.initMap = initMap;
