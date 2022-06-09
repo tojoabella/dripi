@@ -39,3 +39,12 @@ export const get_neighborhood = (pos) => {
     return response;
 };
   
+export const get_road_points = (pos) => {
+  /* get road points */
+  let latitude = pos["lat"];
+  let longitude = pos["lng"];
+  let url = "http://127.0.0.1:5000//get_road_points?lat=" + latitude + "&lng=" + longitude;
+  let response = httpGet(url);
+  response = JSON.parse(response);
+  return response;
+}; 

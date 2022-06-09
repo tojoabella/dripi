@@ -102,4 +102,9 @@ document.getElementById('stop').addEventListener('click', () => {
 
 document.getElementById('clear').addEventListener('click', () => {
     map_info.clear_map_info();
+    current_coords = null;
+    current_road = "";
+    current_localities = "";
+    current_neighborhood = "";
+    active_modes.clear();
 });
