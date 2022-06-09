@@ -70,12 +70,11 @@ function on_track_location_success(position){
       lat: position.coords.latitude,
       lng: position.coords.longitude,
     };
-    console.log(pos);
     pos.lat = round_number(pos.lat, 4);
     pos.lng = round_number(pos.lng, 4);
-    console.log(pos);
 
-    if ((!current_coords) || (pos != current_coords)) {
+    if ((!current_coords) || ((pos.lat != current_coords.lat) && (pos.lng != current_coords.lng) )) {
+        if (current_coords) {console.log("previous position: " + current_coords.lat + ", " + current_coords.lng); console.log("new position: " + pos.lat + ", " + pos.lng);}
         run_updates(pos);
     }
   }

@@ -7,7 +7,6 @@ export const get_road = (pos) => {
     let url = "http://127.0.0.1:5000//get_road?lat=" + latitude + "&lng=" + longitude;
     let response = httpGet(url);
     response = JSON.parse(response);
-    console.log(response);
     return response;
 };
   
@@ -18,7 +17,6 @@ export const get_localities = (pos) => {
     let url = "http://127.0.0.1:5000//get_localities?lat=" + latitude + "&lng=" + longitude;
     let response = httpGet(url);
     response = JSON.parse(response);
-    console.log(response);
     let text = "";
     for (let i = 0; i < response.length; i++) {
       if (i == response.length - 1){
@@ -38,7 +36,6 @@ export const get_neighborhood = (pos) => {
     let url = "http://127.0.0.1:5000//get_neighborhood?lat=" + latitude + "&lng=" + longitude;
     let response = httpGet(url);
     response = JSON.parse(response);
-    console.log(response);
     return response;
 };
   
