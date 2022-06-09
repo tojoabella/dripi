@@ -14,9 +14,9 @@ mode_toggler();
 const number_of_modes = 15;
 let track_location_id;
 let current_coords;
-let current_road;
-let current_localities;
-let current_neighborhood;
+let current_road = "";
+let current_localities = "";
+let current_neighborhood = "";
 let active_modes = new Set();
 
 function update_active_modes(){
@@ -49,7 +49,12 @@ function run_updates(pos){
 
     let new_neighborhood = api_queries.get_neighborhood(pos);
     if (new_neighborhood != current_neighborhood){
-        map_info.update_neighborhood_info_given_neighborhood(new_neighborhood);
+        if (new_neighborhood == null) {
+            map_info.update_neighborhood_info_given_neighborhood("NONE");
+        }
+        else{
+            map_info.update_neighborhood_info_given_neighborhood(new_neighborhood);
+        }
         current_neighborhood = new_neighborhood;
     }
 
