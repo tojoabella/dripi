@@ -99,3 +99,7 @@ document.getElementById('stop').addEventListener('click', () => {
         track_location_id = null;
     }
 });
+
+document.getElementById('clear').addEventListener('click', () => {
+    map_info.clear_map_info();
+});

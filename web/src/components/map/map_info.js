@@ -56,3 +56,11 @@ export const update_neighborhood_info_given_pos = (pos) =>{
  export const update_neighborhood_info_given_neighborhood = (neighborhood) =>{
     document.getElementById("neighborhood_name").innerHTML = "Neighborhood: " + neighborhood;
  }
+
+ /* RESTORE MAP_INFO */
+ export const clear_map_info = () => {
+    document.getElementById("coordinates").innerHTML = "Coordinates: ";
+    document.getElementById("road_name").innerHTML = "Road: ";
+    document.getElementById("locality_name").innerHTML = "Localities: ";
+    document.getElementById("neighborhood_name").innerHTML = "Neighborhood: ";
+}
