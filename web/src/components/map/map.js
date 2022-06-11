@@ -45,15 +45,6 @@ function get_current_position() {
   });
 }
 
-function track_location(){
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.watchPosition(
-      (pos) => { resolve(pos) },
-      (err) => { reject(err) }
-    );
-  });
-}
-
 const add_polylines = (coords, map) => {
   const flightPath = new google.maps.Polyline({
     path: coords,
@@ -64,28 +55,6 @@ const add_polylines = (coords, map) => {
   });
   flightPath.setMap(map);
 };
-
-function set_current_position(pos) {
-  current_position = pos;
-}
-
-/*
-function httpGetAsync(theUrl, callback){
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-    xmlHttp.send(null);
-}
-*/
-function httpGet(theUrl) {
-  let xmlHttpReq = new XMLHttpRequest();
-  xmlHttpReq.open("GET", theUrl, false); 
-  xmlHttpReq.send(null);
-  return xmlHttpReq.responseText;
-}
 
 async function initMap() {
   /* INITIATE MAP */
