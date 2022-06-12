@@ -62,6 +62,11 @@ function run_updates(pos){
     if (new_road != current_road){
         map_info.update_road_info_given_road(new_road);
         current_road = new_road;
+
+        if ("mode1" in active_modes){
+            document.getElementById('alert_history').innerHTML = new_road + "<br>" + document.getElementById('alert_history').innerHTML;
+        }
+    
     }
 
 }
