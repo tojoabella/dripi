@@ -12,12 +12,16 @@ mode_toggler();
 
 /* INSTANTIATE */
 const number_of_modes = 15;
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 let track_location_id;
 let current_coords;
 let current_road = "";
 let current_localities = "";
 let current_neighborhood = "";
 let active_modes = new Set();
+
+//on page load
+document.getElementById('alert_history_text').innerHTML = `Alert History (${timezone})`;
 
 function update_active_modes(){
     active_modes.clear();
@@ -37,10 +41,17 @@ const track_location = (onSuccess, onError = () => { }) => {
 };
 
 function run_updates(pos){
+    let time = new Date();
+    let current_time = time_converter(time.getHours(), time.getMinutes());
+    let alert;
 
     map_info.update_coordinates(pos);
     current_coords = pos;
-    document.getElementById('alert_history').innerHTML = pos.lat + "<br>" + document.getElementById('alert_history').innerHTML;
+    // below is for testing purposes
+    alert = `${current_time} --- change in coords --- ${pos.lat}`
+    document.getElementById('alert_history').innerHTML = `${alert} <br> ${document.getElementById('alert_history').innerHTML}`;
+    
+    //current_time + "    " + pos.lat + "<br>" + document.getElementById('alert_history').innerHTML;
 
     let new_localities = api_queries.get_localities(pos);
     if (new_localities != current_localities){
@@ -65,10 +76,25 @@ function run_updates(pos){
         current_road = new_road;
 
         if ("mode1" in active_modes){
-            document.getElementById('alert_history').innerHTML = new_road + "<br>" + document.getElementById('alert_history').innerHTML;
+            alert = `${current_time} --- road change --- ${new_road}`;
+            document.getElementById('alert_history').innerHTML = `${alert} <br> ${document.getElementById('alert_history').innerHTML}`;
         }
     }
 
+}
+
+function time_converter(hour, minute){
+    if (minute < 10){
+        minute = "0" + minute;
+    }
+    if (hour > 12){
+        hour = hour - 12;
+        return `${hour}:${minute}pm`;
+    }
+    if (hour == 0){
+        return `12:${minute}am`;
+    }
+    return `${hour}:${minute}am`;
 }
 
 function round_number(num, dec) {
