@@ -7,3 +7,17 @@
 #map * {
     color: black;
 }
+
+#map_info{
+    width:60%;
+}
+
+#alert_history_text,#current_location_information{
+    text-align: center;
+    text-decoration: underline;
+}
+
+#alert_history{
+    height:125px;
+    overflow: visible;
+}

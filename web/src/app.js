@@ -40,6 +40,7 @@ function run_updates(pos){
 
     map_info.update_coordinates(pos);
     current_coords = pos;
+    document.getElementById('alert_history').innerHTML = pos.lat + "<br>" + document.getElementById('alert_history').innerHTML;
 
     let new_localities = api_queries.get_localities(pos);
     if (new_localities != current_localities){
@@ -66,7 +67,6 @@ function run_updates(pos){
         if ("mode1" in active_modes){
             document.getElementById('alert_history').innerHTML = new_road + "<br>" + document.getElementById('alert_history').innerHTML;
         }
-    
     }
 
 }

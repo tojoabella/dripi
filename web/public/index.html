@@ -71,16 +71,22 @@
     <!----- !MAP ----->
 
     <!----- INFO ----->
-    <div id="map_info" class="container">
-      <div id="coordinates">Coordinates: </div>
-      <div id="road_name">Road: </div>
-      <div id="locality_name">Localities: </div>
-      <div id="neighborhood_name">Neighborhood: </div>
-      <div id="road_length">Road Length: </div>
-      <div id="speed_limit">Speed Limit: </div>
-    </div>
-
-    <div id="alert_history" class="container overflow-auto">
+    <div id="map_info" class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div id="current_location_information">Current Location Information</div>
+          <div id="coordinates">Coordinates: </div>
+          <div id="road_name">Road: </div>
+          <div id="locality_name">Localities: </div>
+          <div id="neighborhood_name">Neighborhood: </div>
+          <div id="road_length">Road Length: </div>
+          <div id="speed_limit">Speed Limit: </div>
+        </div>
+        <div id="history" class="col">
+          <div id="alert_history_text">Alert History</div>
+          <div id="alert_history" class="overflow-scroll border"></div>
+        </div>
+      </div>
     </div>
     <!----- !INFO ----->
 
